@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Api_authService } from 'app/services/api_auth.service';
+import { Api_authService } from '../../app/services/api_auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,21 +15,23 @@ import { Api_authService } from 'app/services/api_auth.service';
         <form class="auth-form" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>Email :</label>
-            <input 
-              type="email" 
-              class="form-input" 
-              [(ngModel)]="email" 
+            <input
+              type="email"
+              class="form-input"
+              [(ngModel)]="email"
               name="email"
-              required>
+              required
+            />
           </div>
           <div class="form-group">
             <label>Mot de passe :</label>
-            <input 
-              type="password" 
-              class="form-input" 
+            <input
+              type="password"
+              class="form-input"
               [(ngModel)]="password"
               name="password"
-              required>
+              required
+            />
           </div>
           <button type="submit" class="auth-button">Se connecter</button>
           <p class="auth-link">
@@ -38,7 +40,7 @@ import { Api_authService } from 'app/services/api_auth.service';
         </form>
       </div>
     </section>
-  `
+  `,
 })
 export class LoginComponent {
   email: string = '';
@@ -48,20 +50,22 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.email && this.password) {
-      this.authService.login({
-        email: this.email,
-        password: this.password
-      }).subscribe({
-        next: (response: { jwt: string; }) => {
-          // Store JWT token and redirect
-          localStorage.setItem('token', response.jwt);
-          // TODO: Redirect to home page
-        },
-        error: (error: any) => {
-          console.error('Login failed:', error);
-          // TODO: Show error message to user
-        }
-      });
+      this.authService
+        .login({
+          email: this.email,
+          password: this.password,
+        })
+        .subscribe({
+          next: (response: { jwt: string }) => {
+            // Store JWT token and redirect
+            localStorage.setItem('token', response.jwt);
+            // TODO: Redirect to home page
+          },
+          error: (error: any) => {
+            console.error('Login failed:', error);
+            // TODO: Show error message to user
+          },
+        });
     }
   }
 }

@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Api_authService } from 'app/services/api_auth.service';
+import { Api_authService } from '../../app/services/api_auth.service';
 
 @Component({
   selector: 'app-register',
@@ -15,57 +15,63 @@ import { Api_authService } from 'app/services/api_auth.service';
         <form class="auth-form" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>Nom :</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               class="form-input"
               [(ngModel)]="firstName"
               name="firstName"
-              required>
+              required
+            />
           </div>
           <div class="form-group">
             <label>Prénom :</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               class="form-input"
               [(ngModel)]="lastName"
               name="lastName"
-              required>
+              required
+            />
           </div>
           <div class="form-group">
             <label>Email :</label>
-            <input 
-              type="email" 
+            <input
+              type="email"
               class="form-input"
               [(ngModel)]="email"
               name="email"
-              required>
+              required
+            />
           </div>
           <div class="form-group">
             <label>Téléphone :</label>
-            <input 
-              type="tel" 
+            <input
+              type="tel"
               class="form-input"
               [(ngModel)]="phone"
               name="phone"
-              required>
+              required
+            />
           </div>
           <div class="form-group">
             <label>Mot de passe :</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               class="form-input"
               [(ngModel)]="password"
               name="password"
-              required>
+              required
+            />
           </div>
           <div class="form-group">
             <label>Confirmer le mot de passe :</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               class="form-input"
               [(ngModel)]="confirmPassword"
               name="confirmPassword"
-              required>
+              required
+            />
           </div>
           <button type="submit" class="auth-button">S'inscrire</button>
           <p class="auth-link">
@@ -74,7 +80,7 @@ import { Api_authService } from 'app/services/api_auth.service';
         </form>
       </div>
     </section>
-  `
+  `,
 })
 export class RegisterComponent {
   firstName: string = '';
@@ -93,18 +99,20 @@ export class RegisterComponent {
     }
 
     if (this.email && this.password) {
-      this.authService.register({
-        email: this.email,
-        password: this.password
-      }).subscribe({
-        next: (response: any) => {
-          // TODO: Show success message and redirect to login
-        },
-        error: (error: any) => {
-          console.error('Registration failed:', error);
-          // TODO: Show error message to user
-        }
-      });
+      this.authService
+        .register({
+          email: this.email,
+          password: this.password,
+        })
+        .subscribe({
+          next: (response: any) => {
+            // TODO: Show success message and redirect to login
+          },
+          error: (error: any) => {
+            console.error('Registration failed:', error);
+            // TODO: Show error message to user
+          },
+        });
     }
   }
 }
