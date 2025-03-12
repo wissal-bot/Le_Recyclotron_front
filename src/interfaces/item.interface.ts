@@ -21,5 +21,6 @@ export interface PartialItem {
 }
 
 export interface ItemWithCategories extends Item {
+imageUrl: any;
   categories: Category[];
 }
