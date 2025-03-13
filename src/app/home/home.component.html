@@ -1,0 +1,34 @@
+<section class="about-section">
+  <div class="about-content">
+    <div class="image-container">
+      <img src="assets/store.jpg" alt="Notre magasin" class="store-image" />
+    </div>
+    <div class="text-content">
+      <h2>À PROPOS DE NOUS</h2>
+      <p>
+        Bienvenue chez Le Recyclotron, votre destination éco-responsable pour
+        donner une seconde vie aux objets. Notre mission est de promouvoir le
+        recyclage et la réutilisation tout en créant une communauté engagée pour
+        un avenir plus durable.
+      </p>
+      <button class="member-button" routerLink="/register">
+        Devenir membre
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="products-grid">
+  <div class="product-card" *ngFor="let item of items">
+    <img
+      [src]="item.imageUrl || 'assets/shirt-icon.png'"
+      [alt]="item.name"
+      class="product-icon"
+    />
+    <p class="product-title">{{ item.name }}</p>
+    <p class="product-status">{{ item.status }}</p>
+    <button class="plus-button" [routerLink]="['/product', item.id]">
+      Voir plus
+    </button>
+  </div>
+</section>

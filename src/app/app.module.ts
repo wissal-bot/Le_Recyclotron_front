@@ -16,19 +16,24 @@ import { Api_itemService } from './services/api_item.service';
 import { Api_paymentService } from './services/api_payment.service';
 import { Api_registrationService } from './services/api_registration.service';
 import { Api_userService } from './services/api_user.service';
+import { CguComponent } from './pages/cgu/cgu.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { PolitiqueComponent } from './pages/politique/politique.component';
+import { ProductComponent } from './product/product.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CguComponent,
+    ContactComponent,
+    PolitiqueComponent,
+    ProductComponent,
+    HomeComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
     Api_authService,
     Api_categoryService,
@@ -36,7 +41,7 @@ import { Api_userService } from './services/api_user.service';
     Api_itemService,
     Api_paymentService,
     Api_registrationService,
-    Api_userService
+    Api_userService,
   ],
 })
-export class AppModule { }
+export class AppModule {}

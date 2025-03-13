@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.components';
-import { ProductComponent } from '../product/product.components';
-import { LoginComponent } from '../auth/login/login.components';
-import { RegisterComponent } from '../auth/register/register.components';
-import { ContactComponent } from '../pages/contact/contact.components';
-import { PolitiqueComponent } from '../pages/politique/politique.components';
-import { CguComponent } from '../pages/cgu/cgu.components';
+import { HomeComponent } from './home/home.component';
+import { ProductComponent } from './product/product.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { PolitiqueComponent } from './pages/politique/politique.component';
+import { CguComponent } from './pages/cgu/cgu.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,5 +14,5 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'politique', component: PolitiqueComponent },
-  { path: 'cgu', component: CguComponent }
+  { path: 'cgu', component: CguComponent },
 ];
