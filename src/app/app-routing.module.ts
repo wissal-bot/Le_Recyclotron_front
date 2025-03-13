@@ -5,6 +5,10 @@ import { ProductComponent } from './product/product.component';
 import { CguComponent } from './pages/cgu/cgu.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PolitiqueComponent } from './pages/politique/politique.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { LoginComponent } from './auth/login/login.component';
+// Import the login component when you create it
+// import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -13,7 +17,8 @@ const routes: Routes = [
   { path: 'cgu', component: CguComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'politique', component: PolitiqueComponent },
-  { path: '**', redirectTo: '' }, // Redirect to home for any unknown routes
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({

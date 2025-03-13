@@ -1,24 +1,33 @@
 <footer class="footer">
-  <nav class="footer-nav">
-    <a routerLink="[/]" class="footer-link">Accueil</a>
-    <a routerLink="[/contact]" class="footer-link">Contact</a>
-    <a routerLink="[/politique]" class="footer-link"
-      >Politique et confidentialité</a
-    >
-    <a routerLink="[/cgu]" class="footer-link">CGU</a>
-  </nav>
-  <div class="social-icons">
-    <a href="#" class="social-link"
-      ><img src="assets/instagram.png" alt="Instagram"
-    /></a>
-    <a href="#" class="social-link"
-      ><img src="assets/facebook.png" alt="Facebook"
-    /></a>
-    <a href="#" class="social-link"
-      ><img src="assets/linkedin.png" alt="LinkedIn"
-    /></a>
-    <a href="#" class="social-link"
-      ><img src="assets/twitter.png" alt="Twitter"
-    /></a>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img
+          src="/assets/logo_recyclotron.png"
+          alt="Logo Recyclotron"
+          class="logo"
+        />
+        <p>© 2023 Le Recyclotron. Tous droits réservés.</p>
+      </div>
+
+      <div class="footer-links">
+        <a [routerLink]="['/contact']">Contact</a>
+        <a [routerLink]="['/cgu']">CGU</a>
+        <a [routerLink]="['/politique']">Politique de confidentialité</a>
+      </div>
+
+      <div class="social-links">
+        <!-- Add social media links if needed -->
+        <a href="#" target="_blank" aria-label="Facebook">
+          <i class="fa fa-facebook"></i>
+        </a>
+        <a href="#" target="_blank" aria-label="Instagram">
+          <i class="fa fa-instagram"></i>
+        </a>
+        <a href="#" target="_blank" aria-label="Twitter">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </div>
+    </div>
   </div>
 </footer>

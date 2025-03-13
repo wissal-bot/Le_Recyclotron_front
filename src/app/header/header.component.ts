@@ -4,8 +4,12 @@ import { Component } from '@angular/core';
   selector: 'app-header',
   standalone: false,
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
+  menuActive = false;
 
+  toggleMenu() {
+    this.menuActive = !this.menuActive;
+  }
 }
