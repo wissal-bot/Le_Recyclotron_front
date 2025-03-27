@@ -6,12 +6,13 @@ import {
   InputCategory,
   CategoryWithChildren,
 } from '../../interfaces/category.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Api_categoryService {
-  private readonly API_URL = 'http://localhost:3000/api';
+  private readonly API_URL = environment.API_URL;
 
   constructor(private http: HttpClient) {}
 

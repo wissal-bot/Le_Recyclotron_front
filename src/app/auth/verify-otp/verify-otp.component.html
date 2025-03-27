@@ -1,0 +1,51 @@
+<div class="verify-otp-container">
+  <div class="otp-card">
+    <h2>Vérifier votre code OTP</h2>
+    <p *ngIf="email">
+      Un code de vérification a été envoyé à <strong>{{ email }}</strong>
+    </p>
+
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="otp">Code OTP (6 chiffres)</label>
+        <input
+          type="text"
+          id="otp"
+          formControlName="otp"
+          placeholder="Entrez le code à 6 chiffres"
+          maxlength="6"
+          autocomplete="one-time-code"
+        />
+
+        <div
+          class="error-message"
+          *ngIf="otpForm.get('otp')?.touched && otpForm.get('otp')?.invalid"
+        >
+          <span *ngIf="otpForm.get('otp')?.errors?.['required']"
+            >Le code OTP est requis</span
+          >
+          <span *ngIf="otpForm.get('otp')?.errors?.['pattern']"
+            >Le code OTP doit contenir 6 chiffres</span
+          >
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="error">{{ error }}</div>
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="otpForm.invalid || loading"
+      >
+        {{ loading ? "Vérification en cours..." : "Vérifier" }}
+      </button>
+
+      <div class="additional-actions">
+        <button type="button" class="link-button" (click)="resendOtp()">
+          Renvoyer le code
+        </button>
+        <a routerLink="/login" class="link">Retour à la connexion</a>
+      </div>
+    </form>
+  </div>
+</div>

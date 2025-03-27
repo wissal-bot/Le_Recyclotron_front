@@ -1,29 +1,60 @@
-<section class="product-detail" *ngIf="item">
-  <div class="product-content">
-    <div class="product-image">
-      <img
-        [src]="item.imageUrl || 'assets/shirt-icon.png'"
-        [alt]="item.name"
-        class="product-img"
-      />
+<div class="product-container">
+  <div *ngIf="loading" class="loading-spinner">
+    Chargement des détails du produit...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+    <button class="back-button" (click)="goBack()">Retour à l'accueil</button>
+  </div>
+
+  <div *ngIf="!loading && !error && !item" class="not-found">
+    <h2>Article non trouvé</h2>
+    <p>L'article que vous recherchez n'existe pas ou a été supprimé.</p>
+    <button class="back-button" (click)="goBack()">Retour à l'accueil</button>
+  </div>
+
+  <div *ngIf="!loading && item" class="product-details">
+    <div class="product-header">
+      <h1>{{ item.name }}</h1>
+      <button class="back-button" (click)="goBack()">Retour</button>
     </div>
-    <div class="product-info">
-      <h2>{{ item.name }}</h2>
-      <p class="product-description">{{ item.description }}</p>
-      <div class="product-categories" *ngIf="item.categories?.length">
-        <h3>Catégories:</h3>
-        <ul>
-          <li *ngFor="let category of item.categories">{{ category.name }}</li>
-        </ul>
+
+    <div class="product-content">
+      <div class="product-image-container">
+        <img
+          [src]="getImageUrl(item.imageUrl)"
+          [alt]="item.name"
+          class="product-image"
+        />
       </div>
-      <p class="product-status">État: {{ item.status }}</p>
-      <button
-        class="reserve-button"
-        (click)="reserveItem()"
-        [disabled]="item.status !== 'disponible'"
-      >
-        {{ item.status === "disponible" ? "Réserver" : "Non disponible" }}
-      </button>
+
+      <div class="product-info">
+        <div class="info-section">
+          <h2>Description</h2>
+          <p>{{ item.description || "Aucune description disponible" }}</p>
+        </div>
+
+        <div class="info-section">
+          <h2>Catégories</h2>
+          <div
+            *ngIf="item.categories && item.categories.length > 0"
+            class="categories-list"
+          >
+            <span *ngFor="let category of item.categories" class="category-tag">
+              {{ category.name }}
+            </span>
+          </div>
+          <p *ngIf="!item.categories || item.categories.length === 0">
+            Aucune catégorie
+          </p>
+        </div>
+
+        <div class="actions">
+          <button class="action-button primary">Réserver</button>
+          <button class="action-button secondary">Ajouter au panier</button>
+        </div>
+      </div>
     </div>
   </div>
-</section>
+</div>

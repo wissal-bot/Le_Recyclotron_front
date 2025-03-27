@@ -1,3 +1,164 @@
+header {
+  background-color: #f5f3f0; /* Warm, wood-like background color */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border-bottom: 2px solid #e0d6c8; /* Subtle wooden border */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px; /* Increased padding for better spacing */
+  height: 64px;
+  max-width: 1200px;
+  margin: 0 auto; /* This centers the header content */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 32px; /* Fixed size for logo */
+  margin-right: 10px;
+}
+
+.logo a {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #4d7f3e; /* Natural green color for recycling theme */
+  text-decoration: none;
+}
+
+/* Centered navigation menu */
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin: 0 12px; /* Even spacing between items */
+}
+
+nav a {
+  color: #5a4835; /* Darker wood-like color for text */
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+  color: #4d7f3e; /* Green color on hover */
+  background-color: rgba(77, 127, 62, 0.1);
+}
+
+/* Auth buttons with wood-like appearance */
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.login-btn {
+  background-color: transparent;
+  color: #5a4835;
+  border: 1px solid #5a4835;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: rgba(90, 72, 53, 0.1);
+}
+
+.signup-btn {
+  background-color: #4d7f3e;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.signup-btn:hover {
+  background-color: #3c6230;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobile-menu-btn span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-color);
+  margin: 5px 0;
+  border-radius: 3px;
+  transition: var(--transition);
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0 20px; /* Smaller padding on mobile */
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  nav ul {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: none;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  nav li {
+    margin: 10px 0;
+  }
+
+  .auth-buttons {
+    display: none;
+  }
+}
+
+/* Ensure the header doesn't collapse on small screens */
+@media (max-width: 576px) {
+  .logo a {
+    font-size: 1rem;
+  }
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -79,14 +240,13 @@
   gap: 1rem;
 }
 
+.header-actions .logo {
+  height: 40px;
+}
+
 .auth-link {
   text-decoration: none;
   color: #333;
-}
-
-.logo {
-  height: 40px;
-  width: auto;
 }
 
 @media (min-width: 768px) {

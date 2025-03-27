@@ -6,12 +6,13 @@ import {
   InputItem,
   ItemWithCategories,
 } from '../../interfaces/item.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Api_itemService {
-  private readonly API_URL = 'http://localhost:3000/api';
+  private readonly API_URL = environment.API_URL;
 
   constructor(private http: HttpClient) {}
 
@@ -27,9 +28,10 @@ export class Api_itemService {
     return this.http.get<ItemWithCategories>(`${this.API_URL}/item/${id}`);
   }
 
-  getItemByStatus(status: string): Observable<ItemWithCategories[]> {
+  getItemByStatus(status: number): Observable<ItemWithCategories[]> {
+    console.log(`${this.API_URL}/item/status/${status}`);
     return this.http.get<ItemWithCategories[]>(
-      `${this.API_URL}/item/${status}`
+      `${this.API_URL}/item/status/${status}`
     );
   }
 

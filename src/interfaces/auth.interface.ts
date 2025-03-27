@@ -14,8 +14,9 @@ export interface RegisterRequest {
 }
 
 export interface OtpVerification {
-  id: string;
+  email: string; // Change from id to email to match component usage
   otp: string;
+  userId?: string; // Add userId to the interface
 }
 
 export interface Role {

@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { User, CreateUser } from '../../interfaces/user.interface';
 import { Payment } from '../../interfaces/payment.interface';
 import { Registration } from '../../interfaces/registration.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Api_userService {
-  private readonly API_URL = 'http://localhost:3000/api';
+  private readonly API_URL = environment.API_URL;
 
   constructor(private http: HttpClient) {}
 

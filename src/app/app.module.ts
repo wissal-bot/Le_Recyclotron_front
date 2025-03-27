@@ -24,7 +24,13 @@ import { ProductComponent } from './product/product.component';
 import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [
+  declarations: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -33,13 +39,6 @@ import { HomeComponent } from './home/home.component';
     PolitiqueComponent,
     ProductComponent,
     HomeComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
   ],
   providers: [
     Api_authService,
@@ -50,6 +49,6 @@ import { HomeComponent } from './home/home.component';
     Api_registrationService,
     Api_userService,
   ],
-  bootstrap: [AppComponent], // Only AppComponent should be bootstrapped
+  // Removed bootstrap array as AppComponent is a standalone component
 })
 export class AppModule {}

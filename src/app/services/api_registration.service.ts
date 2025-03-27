@@ -5,12 +5,13 @@ import {
   Registration,
   InputRegistration,
 } from '../../interfaces/registration.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Api_registrationService {
-  private readonly API_URL = 'http://localhost:3000/api';
+  private readonly API_URL = environment.API_URL;
 
   constructor(private http: HttpClient) {}
 

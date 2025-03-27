@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Event, InputEvent } from '../../interfaces/event.interface';
 import { Registration } from '../../interfaces/registration.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Api_eventService {
-  private readonly API_URL = 'http://localhost:3000/api';
+  private readonly API_URL = environment.API_URL;
 
   constructor(private http: HttpClient) {}
 

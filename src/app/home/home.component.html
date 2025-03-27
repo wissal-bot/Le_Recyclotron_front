@@ -1,34 +1,88 @@
-<section class="about-section">
-  <div class="about-content">
-    <div class="image-container">
-      <img src="assets/store.jpg" alt="Notre magasin" class="store-image" />
-    </div>
-    <div class="text-content">
+<div class="home-container">
+  <!-- Hero section -->
+  <section class="hero-section">
+    <h1>Bienvenue au Recyclotron</h1>
+    <p>Découvrez nos articles recyclés disponibles à la vente</p>
+  </section>
+
+  <!-- Main about section (full width) -->
+  <section class="about-section-full">
+    <div class="about-content">
       <h2>À PROPOS DE NOUS</h2>
       <p>
         Bienvenue chez Le Recyclotron, votre destination éco-responsable pour
         donner une seconde vie aux objets. Notre mission est de promouvoir le
         recyclage et la réutilisation tout en créant une communauté engagée pour
-        un avenir plus durable.
+        un avenir plus durable. Nous collectons, restaurons et donnons une
+        nouvelle vie à des objets qui autrement auraient fini à la décharge.
       </p>
-      <button class="member-button" routerLink="/register">
-        Devenir membre
+      <button class="member-button">Devenir membre</button>
+    </div>
+  </section>
+
+  <!-- Three feature cards -->
+  <section class="features-section">
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="assets/icons/recycle.svg" alt="Recycler" />
+        </div>
+        <h3>Recycler</h3>
+        <p>
+          Nous redonnons vie à vos objets usagés. Apportez vos objets et nous
+          les préparerons pour une seconde vie.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="assets/icons/community.svg" alt="Communauté" />
+        </div>
+        <h3>Communauté</h3>
+        <p>
+          Rejoignez notre communauté engagée pour un mode de vie durable et
+          participez à nos ateliers et événements.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <img src="assets/icons/shop.svg" alt="Boutique" />
+        </div>
+        <h3>Boutique</h3>
+        <p>
+          Découvrez notre sélection d'articles recyclés uniques à prix
+          abordables pour un style éco-responsable.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Loading, error states and product grid removed from container for cleaner layout -->
+<div *ngIf="loading" class="loading-spinner">Chargement des articles...</div>
+
+<div *ngIf="error" class="error-message container">
+  {{ error }}
+</div>
+
+<div
+  *ngIf="!loading && !error && items.length === 0"
+  class="empty-message container"
+>
+  Aucun article disponible actuellement.
+</div>
+
+<!-- Products grid - kept as a separate section -->
+<section class="products-grid" *ngIf="!loading && items.length > 0">
+  <h2 class="section-title">Nos produits</h2>
+  <div class="products-container">
+    <div class="product-card" *ngFor="let item of items">
+      <img [src]="getImageUrl(item)" [alt]="item.name" class="product-icon" />
+      <p class="product-title">{{ item.name }}</p>
+      <button class="plus-button" [routerLink]="['/product', item.id]">
+        Voir plus
       </button>
     </div>
-  </div>
-</section>
-
-<section class="products-grid">
-  <div class="product-card" *ngFor="let item of items">
-    <img
-      [src]="item.imageUrl || 'assets/shirt-icon.png'"
-      [alt]="item.name"
-      class="product-icon"
-    />
-    <p class="product-title">{{ item.name }}</p>
-    <p class="product-status">{{ item.status }}</p>
-    <button class="plus-button" [routerLink]="['/product', item.id]">
-      Voir plus
-    </button>
   </div>
 </section>
