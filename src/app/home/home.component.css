@@ -79,11 +79,13 @@
 }
 
 /* Updated Products Grid */
-.products-grid {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 80px;
-  padding: 20px;
+.products-grid,
+.products-container,
+.product-card,
+.product-icon,
+.product-title,
+.plus-button {
+  display: none;
 }
 
 .section-title {
@@ -91,6 +93,42 @@
   color: var(--primary-dark);
   font-size: 2rem;
   margin-bottom: 40px;
+}
+
+/* Make sure the buttons are styled correctly */
+.shop-button {
+  display: inline-block;
+  background-color: var(--primary-color, #4caf50);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-top: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.shop-button:hover {
+  background-color: var(--primary-dark, #388e3c);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.member-button {
+  background-color: var(--primary-dark, #388e3c);
+  color: white;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.member-button:hover {
+  background-color: var(--primary-color, #4caf50);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .products-container {
@@ -147,14 +185,17 @@
   background-color: var(--primary-dark);
 }
 
-/* Full-width About Section */
+/* Full-width About Section - Meadow style */
 .about-section-full {
-  background-color: var(--primary-light);
+  background-color: #e8f5e9; /* Light meadow green background */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><path fill="none" stroke="rgba(76, 175, 80, 0.1)" stroke-width="1" d="M0,100 C80,70 120,130 200,100 C280,70 320,130 400,100 M0,200 C80,170 120,230 200,200 C280,170 320,230 400,200 M0,300 C80,270 120,330 200,300 C280,270 320,330 400,300"/></svg>');
   padding: 80px 20px;
   margin-bottom: 60px;
   width: 100%;
-  color: var(--text-color);
+  color: #2e7d32; /* Forest green text */
   text-align: center;
+  border-top: 4px solid #81c784; /* Light green border */
+  border-bottom: 4px solid #81c784;
 }
 
 .about-section-full .about-content {
@@ -165,7 +206,7 @@
 .about-section-full h2 {
   font-size: 2.2rem;
   margin-bottom: 30px;
-  color: var(--primary-dark);
+  color: #2e7d32; /* Forest green */
 }
 
 .about-section-full p {
@@ -178,23 +219,23 @@
 }
 
 .about-section-full .member-button {
-  background-color: var(--primary-dark);
+  background-color: #4caf50; /* Medium green */
   color: white;
   padding: 14px 28px;
   font-size: 1.1rem;
-  border-radius: 6px;
+  border-radius: 20px; /* More rounded for a softer look */
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .about-section-full .member-button:hover {
-  background-color: var(--primary-color);
+  background-color: #2e7d32; /* Darker green on hover */
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
 }
 
-/* Feature Cards Section */
+/* Feature Cards Section with meadow style */
 .features-section {
   margin-bottom: 80px;
   width: 100%;
@@ -212,19 +253,37 @@
 
 .feature-card {
   background-color: white;
-  border-radius: 12px;
+  border: none; /* Remove wooden border */
+  border-radius: 20px; /* More rounded corners */
   padding: 40px 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   text-align: center;
   flex: 1;
   min-width: 300px;
   max-width: 380px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15); /* Green shadow */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Meadow pattern overlay */
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/></svg>');
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 0;
 }
 
 .feature-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 15px 30px rgba(76, 175, 80, 0.25);
+  background-color: #f1f8e9; /* Very light green on hover */
 }
 
 .feature-icon {
@@ -233,23 +292,86 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .feature-icon img {
   width: 60px;
   height: 60px;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.1)); /* Lighter shadow */
 }
 
 .feature-card h3 {
   font-size: 1.4rem;
   margin-bottom: 15px;
-  color: var(--primary-dark);
+  color: #2e7d32; /* Forest green */
+  position: relative;
+  z-index: 1;
+  font-weight: 600;
 }
 
 .feature-card p {
-  color: var(--text-color);
+  color: #388e3c; /* Medium green */
   font-size: 1rem;
   line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* Adding button to the Boutique feature card with meadow style */
+.shop-button {
+  display: inline-block;
+  background-color: #4caf50; /* Medium green */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 20px; /* More rounded */
+  font-weight: 500;
+  margin-top: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  border: none;
+}
+
+.shop-button:hover {
+  background-color: #2e7d32; /* Dark green */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* Hero section with meadow theme */
+.hero-section {
+  text-align: center;
+  padding: 120px 20px;
+  background: linear-gradient(135deg, #c5e1a5 0%, #81c784 100%);
+  color: #1b5e20;
+  border-radius: 20px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add a subtle pattern of small circles to simulate grass or meadow */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="rgba(255, 255, 255, 0.3)"/></svg>');
+  opacity: 0.6;
+}
+
+.hero-section h1 {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  position: relative; /* To appear above the pattern */
+  color: #1b5e20; /* Dark green */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive styles */

@@ -1,0 +1,25 @@
+<div class="product-card">
+  <div class="product-image">
+    <img [src]="getImageUrl(item)" [alt]="item.name" />
+  </div>
+  <div class="product-info">
+    <h2>{{ item.name }}</h2>
+    <p *ngIf="item.description" class="product-description">
+      {{ item.description | slice : 0 : 100
+      }}{{ item.description && item.description.length > 100 ? "..." : "" }}
+    </p>
+    <div
+      class="product-categories"
+      *ngIf="item.categories && item.categories.length > 0"
+    >
+      <span *ngFor="let category of item.categories" class="category-tag">
+        {{ category.name }}
+      </span>
+    </div>
+    <div class="product-actions">
+      <a [routerLink]="['/product', item.id]" class="view-details-btn"
+        >Voir détails</a
+      >
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center content */
+  align-items: center;
 }
 
 .loading-spinner {
@@ -19,20 +19,20 @@
 .not-found {
   text-align: center;
   padding: 40px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
+  background-color: #f1f8e9;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
   margin-top: 30px;
 }
 
 .error-message h2,
 .not-found h2 {
-  color: #f44336;
+  color: #e53935;
   margin-top: 0;
 }
 
 .product-details {
-  width: 100%; /* Full width */
+  width: 100%;
 }
 
 .product-header {
@@ -40,42 +40,83 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  width: 100%; /* Full width */
+  width: 100%;
+  background-color: #e8f5e9;
+  padding: 20px 30px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add pattern to header */
+.product-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="rgba(255, 255, 255, 0.3)"/></svg>');
+  opacity: 0.6;
 }
 
 .product-header h1 {
   font-size: 2rem;
   margin: 0;
-  color: var(--text-color);
+  color: #2e7d32;
+  position: relative;
+  z-index: 1;
 }
 
 .back-button {
-  background-color: var(--medium-gray);
-  color: var(--text-color);
+  background-color: white;
+  color: #2e7d32;
   border: none;
   padding: 10px 20px;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
 }
 
 .back-button:hover {
-  background-color: var(--dark-gray);
+  background-color: #2e7d32;
   color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(46, 125, 50, 0.2);
 }
 
 .product-content {
   display: flex;
   gap: 40px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
   overflow: hidden;
+  position: relative;
+}
+
+/* Add subtle pattern to product content */
+.product-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/></svg>');
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 0;
 }
 
 .product-image-container {
   flex: 1;
   max-width: 500px;
+  position: relative;
+  z-index: 1;
 }
 
 .product-image {
@@ -89,6 +130,8 @@
 .product-info {
   flex: 1;
   padding: 30px;
+  position: relative;
+  z-index: 1;
 }
 
 .info-section {
@@ -96,15 +139,17 @@
 }
 
 .info-section h2 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-top: 0;
   margin-bottom: 10px;
-  color: var(--primary-dark);
+  color: #2e7d32;
+  font-weight: 600;
 }
 
 .info-section p {
   margin: 0;
   line-height: 1.6;
+  color: #388e3c;
 }
 
 .categories-list {
@@ -114,9 +159,9 @@
 }
 
 .category-tag {
-  background-color: var(--primary-light);
-  color: var(--primary-dark);
-  padding: 5px 10px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 5px 12px;
   border-radius: 20px;
   font-size: 0.9rem;
 }
@@ -126,7 +171,7 @@
   background-color: #4caf50;
   color: white;
   padding: 5px 10px;
-  border-radius: 4px;
+  border-radius: 20px;
   font-weight: 500;
 }
 
@@ -139,28 +184,32 @@
 .action-button {
   padding: 12px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: 20px;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .action-button.primary {
-  background-color: var(--primary-color);
+  background-color: #4caf50;
   color: white;
 }
 
 .action-button.primary:hover {
-  background-color: var(--primary-dark);
+  background-color: #2e7d32;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
 }
 
 .action-button.secondary {
-  background-color: var(--secondary-color);
+  background-color: #ff9800;
   color: white;
 }
 
 .action-button.secondary:hover {
-  background-color: var(--secondary-dark);
+  background-color: #f57c00;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(255, 152, 0, 0.3);
 }
 
 @media (max-width: 768px) {

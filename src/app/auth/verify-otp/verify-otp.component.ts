@@ -21,7 +21,7 @@ export class VerifyOtpComponent implements OnInit {
   error: string | null = null;
   loading = false;
   email: string | null = null;
-  userId: string | null = null;
+  id: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -38,13 +38,13 @@ export class VerifyOtpComponent implements OnInit {
     // Get email and userId from route parameters
     this.route.queryParamMap.subscribe((params) => {
       this.email = params.get('email');
-      this.userId = params.get('userId');
+      this.id = params.get('userId');
 
       if (!this.email) {
         this.error = 'Email parameter is missing. Please go back to login.';
       }
 
-      if (!this.userId) {
+      if (!this.id) {
         console.warn('UserId is missing. OTP verification might fail.');
       }
     });
@@ -62,9 +62,8 @@ export class VerifyOtpComponent implements OnInit {
 
     this.authService
       .verifyOTP({
-        email: this.email,
         otp: otpValue,
-        userId: this.userId || undefined,
+        id: this.id || '',
       })
       .subscribe({
         next: (response) => {

@@ -1,56 +1,177 @@
-/* Common auth styles */
+/* Common auth styles with meadow theme */
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 64px);
-  padding: 40px 20px;
-  background-color: var(--bg-light);
+  min-height: calc(100vh - 120px);
+  padding: 60px 20px;
+  background-color: #f1f8e9;
+  width: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="none" stroke="rgba(76, 175, 80, 0.1)" stroke-width="1" d="M0,25 C20,17.5 30,32.5 50,25 C70,17.5 80,32.5 100,25 M0,50 C20,42.5 30,57.5 50,50 C70,42.5 80,57.5 100,50 M0,75 C20,67.5 30,82.5 50,75 C70,67.5 80,82.5 100,75"/></svg>');
 }
 
 .auth-card {
-  background-color: var(--bg);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  padding: 30px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
   width: 100%;
   max-width: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle pattern to auth card */
+.auth-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/></svg>');
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 0;
 }
 
 .auth-title {
   text-align: center;
   margin-bottom: 30px;
+  color: #2e7d32;
+  font-size: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #388e3c;
+  font-size: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #a5d6a7;
+  border-radius: 20px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 1;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  background-color: white;
 }
 
 .error-message {
-  color: #f44336;
-  margin-bottom: 15px;
+  color: #e53935;
+  margin: 6px 0 15px;
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
 }
 
 .success-message {
-  color: var(--primary);
   background-color: rgba(76, 175, 80, 0.1);
-  padding: 12px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  color: #2e7d32;
+  padding: 15px;
+  border-radius: 20px;
+  margin-bottom: 25px;
+  font-size: 1rem;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(76, 175, 80, 0.2);
 }
 
 .submit-btn {
   width: 100%;
-  margin-top: 10px;
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 20px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: #2e7d32;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+}
+
+.submit-btn:disabled {
+  background-color: #c8e6c9;
+  cursor: not-allowed;
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .form-links {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 25px;
+  position: relative;
+  z-index: 1;
 }
 
 .form-link {
-  color: var(--primary);
+  color: #4caf50;
   text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .form-link:hover {
+  color: #2e7d32;
   text-decoration: underline;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin-top: 3px;
+  accent-color: #4caf50;
+}
+
+.checkbox-label {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.checkbox-label a {
+  color: #4caf50;
+  text-decoration: underline;
+}
+
+.checkbox-label a:hover {
+  color: #2e7d32;
 }

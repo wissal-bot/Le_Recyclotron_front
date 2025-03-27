@@ -35,6 +35,7 @@
 
   display: block;
   min-height: 100vh;
+  width: 100%;
 }
 
 h1 {
@@ -157,18 +158,20 @@ main {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  align-items: center; /* Center horizontally */
-  width: 100%;
+  align-items: center;
+  width: 100vw; /* Full viewport width */
+  max-width: 100%; /* Prevent horizontal overflow */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 .main-content {
   flex: 1;
-  margin-top: 64px; /* Adjust based on your header height */
-  padding-bottom: 40px; /* Space for footer */
   width: 100%; /* Full width */
   display: flex;
   flex-direction: column;
   align-items: center; /* Center content horizontally */
+  margin-top: 64px; /* Use margin-top instead of padding-top */
+  padding-bottom: 40px; /* Space for footer */
 }
 
 @media (max-width: 768px) {
@@ -189,4 +192,10 @@ main {
     background: var(--red-to-pink-to-purple-horizontal-gradient);
     margin-block: 1.5rem;
   }
+}
+
+/* Ensure footer goes full width */
+app-footer {
+  width: 100%;
+  display: block;
 }

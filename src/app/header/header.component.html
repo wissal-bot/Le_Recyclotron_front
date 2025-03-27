@@ -1,33 +1,69 @@
-<header class="header">
-  <button class="menu-button" (click)="toggleMenu()">
-    <div class="menu-line"></div>
-    <div class="menu-line"></div>
-    <div class="menu-line"></div>
-  </button>
-  <h1 class="title"><a [routerLink]="['/']">LE RECYCLOTRON</a></h1>
+<header>
+  <div class="header-container">
+    <div class="logo">
+      <a routerLink="/">Le Recyclotron</a>
+    </div>
 
-  <!-- Navigation menu -->
-  <nav class="main-nav" [class.active]="menuActive">
-    <ul>
-      <li>
-        <a
-          [routerLink]="['/']"
-          [routerLinkActive]="['active']"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Accueil</a
-        >
-      </li>
-      <!-- Add any other main navigation items here -->
-    </ul>
-  </nav>
+    <nav>
+      <ul [class.active]="menuActive">
+        <li>
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Accueil</a
+          >
+        </li>
+        <li>
+          <a routerLink="/product-list" routerLinkActive="active">Vitrine</a>
+        </li>
+        <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+      </ul>
+    </nav>
 
-  <div class="header-actions">
-    <a [routerLink]="['/login']" class="auth-link">Se connecter</a>
-    <a [routerLink]="['/register']" class="auth-link">S'inscrire</a>
-    <img
-      src="/assets/logo_recyclotron.png"
-      alt="Logo Recyclotron"
-      class="logo"
-    />
+    <div class="auth-buttons">
+      <!-- Show these buttons when user is not logged in -->
+      <ng-container *ngIf="!isLoggedIn">
+        <a routerLink="/login" class="login-btn">Se connecter</a>
+        <a routerLink="/register" class="signup-btn">S'inscrire</a>
+      </ng-container>
+
+      <!-- Profile dropdown menu when user is logged in -->
+      <div
+        *ngIf="isLoggedIn"
+        class="profile-dropdown"
+        (clickOutside)="closeProfileMenu()"
+      >
+        <div class="profile-avatar" (click)="toggleProfileMenu()">
+          <img
+            [src]="userProfileImage || '../../assets/icons/user_profile.svg'"
+            alt="Profile"
+          />
+          <div class="avatar-indicator" *ngIf="profileMenuOpen"></div>
+        </div>
+
+        <div class="dropdown-menu" [class.open]="profileMenuOpen">
+          <div class="dropdown-header">
+            <span class="user-name">{{ userName }}</span>
+            <span class="user-email">{{ userEmail }}</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a routerLink="/profile" class="dropdown-item">
+            <i class="profile-icon"></i>
+            <span>Mon profil</span>
+          </a>
+          <a (click)="logout()" class="dropdown-item">
+            <i class="logout-icon"></i>
+            <span>Déconnexion</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <button class="mobile-menu-btn" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>

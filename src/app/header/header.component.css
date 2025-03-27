@@ -1,22 +1,24 @@
 header {
-  background-color: #f5f3f0; /* Warm, wood-like background color */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #f1f8e9;
+  box-shadow: 0 2px 10px rgba(76, 175, 80, 0.2);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  border-bottom: 2px solid #e0d6c8; /* Subtle wooden border */
+  border-bottom: 2px solid #a5d6a7;
+  width: 100%;
+  height: 64px;
 }
 
 .header-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 0 40px; /* Increased padding for better spacing */
+  padding: 0 40px;
   height: 64px;
   max-width: 1200px;
-  margin: 0 auto; /* This centers the header content */
+  margin: 0 auto;
 }
 
 .logo {
@@ -25,14 +27,14 @@ header {
 }
 
 .logo img {
-  height: 32px; /* Fixed size for logo */
+  height: 32px;
   margin-right: 10px;
 }
 
 .logo a {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #4d7f3e; /* Natural green color for recycling theme */
+  color: #2e7d32;
   text-decoration: none;
 }
 
@@ -51,25 +53,25 @@ nav ul {
 }
 
 nav li {
-  margin: 0 12px; /* Even spacing between items */
+  margin: 0 12px;
 }
 
 nav a {
-  color: #5a4835; /* Darker wood-like color for text */
+  color: #388e3c;
   text-decoration: none;
   font-weight: 500;
   padding: 8px 12px;
-  border-radius: 4px;
+  border-radius: 20px;
   transition: all 0.3s ease;
 }
 
 nav a:hover,
 nav a.active {
-  color: #4d7f3e; /* Green color on hover */
-  background-color: rgba(77, 127, 62, 0.1);
+  color: #2e7d32;
+  background-color: rgba(76, 175, 80, 0.1);
 }
 
-/* Auth buttons with wood-like appearance */
+/* Auth buttons with meadow appearance */
 .auth-buttons {
   display: flex;
   gap: 15px;
@@ -77,27 +79,30 @@ nav a.active {
 
 .login-btn {
   background-color: transparent;
-  color: #5a4835;
-  border: 1px solid #5a4835;
+  color: #388e3c;
+  border: 1px solid #4caf50;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 20px;
   transition: all 0.3s ease;
 }
 
 .login-btn:hover {
-  background-color: rgba(90, 72, 53, 0.1);
+  background-color: rgba(76, 175, 80, 0.1);
+  transform: translateY(-2px);
 }
 
 .signup-btn {
-  background-color: #4d7f3e;
+  background-color: #4caf50;
   color: white;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 20px;
   transition: all 0.3s ease;
 }
 
 .signup-btn:hover {
-  background-color: #3c6230;
+  background-color: #2e7d32;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
 }
 
 .mobile-menu-btn {
@@ -162,9 +167,8 @@ nav a.active {
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 1rem;
-  position: relative;
   background-color: #f8f9fa;
 }
 
@@ -249,6 +253,28 @@ nav a.active {
   color: #333;
 }
 
+.user-greeting {
+  color: #388e3c;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.logout-btn {
+  background-color: #e57373; /* Light red */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #ef5350; /* Darker red on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(229, 115, 115, 0.3);
+}
+
 @media (min-width: 768px) {
   .main-nav {
     display: block;
@@ -267,4 +293,131 @@ nav a.active {
   .menu-button {
     display: none;
   }
+}
+
+/* Profile dropdown styling */
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-avatar {
+  width: 28px; /* Réduit davantage de 32px à 28px */
+  height: 28px; /* Réduit davantage de 32px à 28px */
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #a5d6a7;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.profile-avatar:hover {
+  border-color: #4caf50;
+  transform: scale(1.05);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-indicator {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 8px; /* Réduit davantage de 10px à 8px */
+  height: 8px; /* Réduit davantage de 10px à 8px */
+  background-color: #4caf50;
+  border-radius: 50%;
+  border: 1px solid #f1f8e9; /* Réduit l'épaisseur de la bordure de 2px à 1px */
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  overflow: hidden;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-header {
+  padding: 15px;
+  background-color: #f1f8e9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #2e7d32;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.user-email {
+  font-size: 0.85rem;
+  color: #388e3c;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #e8f5e9;
+  margin: 0;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: #388e3c;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f8e9;
+  color: #2e7d32;
+}
+
+.dropdown-item i {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-icon::before {
+  content: "\1F464"; /* Unicode for user icon */
+}
+
+.logout-icon::before {
+  content: "\2192"; /* Unicode for arrow/exit icon */
+}
+
+/* User greeting - preserve for reference but it's not used anymore */
+.user-greeting {
+  display: none;
+}
+
+.logout-btn {
+  display: none;
 }

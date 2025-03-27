@@ -1,33 +1,34 @@
 <footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img
-          src="/assets/logo_recyclotron.png"
-          alt="Logo Recyclotron"
-          class="logo"
-        />
-        <p>© 2023 Le Recyclotron. Tous droits réservés.</p>
-      </div>
-
-      <div class="footer-links">
-        <a [routerLink]="['/contact']">Contact</a>
-        <a [routerLink]="['/cgu']">CGU</a>
-        <a [routerLink]="['/politique']">Politique de confidentialité</a>
-      </div>
-
-      <div class="social-links">
-        <!-- Add social media links if needed -->
-        <a href="#" target="_blank" aria-label="Facebook">
-          <i class="fa fa-facebook"></i>
-        </a>
-        <a href="#" target="_blank" aria-label="Instagram">
-          <i class="fa fa-instagram"></i>
-        </a>
-        <a href="#" target="_blank" aria-label="Twitter">
-          <i class="fa fa-twitter"></i>
-        </a>
-      </div>
+  <div class="footer-content">
+    <div class="footer-logo">
+      <img
+        src="/assets/logo_recyclotron.png"
+        alt="Logo Recyclotron"
+        class="logo"
+      />
+      <p>© 2023 Le Recyclotron. Tous droits réservés.</p>
     </div>
+
+    <div class="footer-links">
+      <a [routerLink]="['/contact']">Contact</a>
+      <a [routerLink]="['/cgu']">CGU</a>
+      <a [routerLink]="['/politique']">Politique de confidentialité</a>
+    </div>
+
+    <div class="social-links">
+      <!-- Add social media links if needed -->
+      <a href="#" target="_blank" aria-label="Facebook">
+        <i class="fa fa-facebook"></i>
+      </a>
+      <a href="#" target="_blank" aria-label="Instagram">
+        <i class="fa fa-instagram"></i>
+      </a>
+      <a href="#" target="_blank" aria-label="Twitter">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </div>
+  </div>
+  <div class="copyright">
+    &copy; {{ currentYear }} Le Recyclotron. Tous droits réservés.
   </div>
 </footer>

@@ -1,0 +1,73 @@
+.product-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.product-list-header {
+  text-align: center;
+  margin-bottom: 40px;
+  background-color: #e8f5e9;
+  padding: 40px 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add meadow pattern to header */
+.product-list-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="rgba(255, 255, 255, 0.3)"/></svg>');
+  opacity: 0.6;
+  z-index: 0;
+}
+
+.product-list-header h1 {
+  font-size: 2.5rem;
+  color: #2e7d32;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.product-list-header p {
+  font-size: 1.1rem;
+  color: #388e3c;
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.loading-spinner,
+.error-message,
+.empty-message {
+  text-align: center;
+  padding: 40px;
+  background-color: #f1f8e9;
+  border-radius: 20px;
+  color: #388e3c;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .product-list-header h1 {
+    font-size: 2rem;
+  }
+}

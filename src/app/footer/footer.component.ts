@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -9,6 +9,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css'],
 })
-export class FooterComponent {
-  // Component logic here
+export class FooterComponent implements OnInit {
+  currentYear: number = new Date().getFullYear();
+
+  constructor() {}
+
+  ngOnInit(): void {}
 }

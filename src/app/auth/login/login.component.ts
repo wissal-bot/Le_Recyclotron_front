@@ -52,24 +52,27 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
+    const email = this.loginForm.get('email')?.value;
+
     this.authService.login(this.loginForm.value).subscribe({
       next: (response) => {
         this.loading = false;
 
-        if (response.requireOtp) {
-          // Redirect to OTP verification with email and userId
+        if (!response) {
+          this.error = 'Invalid server response';
+          return;
+        }
+
+        if (response.id) {
+          // We have an ID, redirect to OTP verification
           this.router.navigate(['/verify-otp'], {
             queryParams: {
-              email: this.loginForm.get('email')?.value,
-              userId: response.userId,
+              email: email, // Use the email from the form
+              userId: response.id,
             },
           });
-        } else if (response.jwt) {
-          // Store JWT and redirect to home
-          localStorage.setItem('token', response.jwt);
-          this.router.navigate(['/']);
         } else {
-          this.error = 'Invalid server response';
+          this.error = 'No ID in server response. Please try again.';
         }
       },
       error: (err) => {

@@ -2,7 +2,6 @@
   <!-- Hero section -->
   <section class="hero-section">
     <h1>Bienvenue au Recyclotron</h1>
-    <p>Découvrez nos articles recyclés disponibles à la vente</p>
   </section>
 
   <!-- Main about section (full width) -->
@@ -54,35 +53,10 @@
           Découvrez notre sélection d'articles recyclés uniques à prix
           abordables pour un style éco-responsable.
         </p>
+        <a routerLink="/product-list" class="shop-button">Voir la vitrine</a>
       </div>
     </div>
   </section>
 </div>
 
-<!-- Loading, error states and product grid removed from container for cleaner layout -->
-<div *ngIf="loading" class="loading-spinner">Chargement des articles...</div>
-
-<div *ngIf="error" class="error-message container">
-  {{ error }}
-</div>
-
-<div
-  *ngIf="!loading && !error && items.length === 0"
-  class="empty-message container"
->
-  Aucun article disponible actuellement.
-</div>
-
-<!-- Products grid - kept as a separate section -->
-<section class="products-grid" *ngIf="!loading && items.length > 0">
-  <h2 class="section-title">Nos produits</h2>
-  <div class="products-container">
-    <div class="product-card" *ngFor="let item of items">
-      <img [src]="getImageUrl(item)" [alt]="item.name" class="product-icon" />
-      <p class="product-title">{{ item.name }}</p>
-      <button class="plus-button" [routerLink]="['/product', item.id]">
-        Voir plus
-      </button>
-    </div>
-  </div>
-</section>
+<!-- Remove these error and loading states that shouldn't be visible on home -->

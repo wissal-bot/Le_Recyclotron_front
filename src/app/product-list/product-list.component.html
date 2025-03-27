@@ -1,0 +1,26 @@
+<div class="product-list-container">
+  <div class="product-list-header">
+    <h1>Notre Vitrine</h1>
+    <p>
+      Découvrez notre sélection d'articles recyclés disponibles à l'achat ou à
+      la réservation.
+    </p>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">Chargement des articles...</div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error && items.length === 0" class="empty-message">
+    Aucun article disponible actuellement.
+  </div>
+
+  <div *ngIf="!loading && items.length > 0" class="product-grid">
+    <app-product-card
+      *ngFor="let item of items"
+      [item]="item"
+    ></app-product-card>
+  </div>
+</div>
