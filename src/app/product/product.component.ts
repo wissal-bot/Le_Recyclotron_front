@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Location } from '@angular/common';
 import { Api_itemService } from '../services/api_item.service';
 import { ItemWithCategories } from '../../interfaces/item.interface';
 
@@ -20,6 +21,7 @@ export class ProductComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private location: Location,
     private itemService: Api_itemService
   ) {}
 
@@ -73,6 +75,7 @@ export class ProductComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/']);
+    // Use Location service to navigate back to the previous page
+    this.location.back();
   }
 }

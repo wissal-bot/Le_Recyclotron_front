@@ -5,13 +5,13 @@
 
   <div *ngIf="error" class="error-message">
     {{ error }}
-    <button class="back-button" (click)="goBack()">Retour à l'accueil</button>
+    <button class="back-button" (click)="goBack()">Retour</button>
   </div>
 
   <div *ngIf="!loading && !error && !item" class="not-found">
     <h2>Article non trouvé</h2>
     <p>L'article que vous recherchez n'existe pas ou a été supprimé.</p>
-    <button class="back-button" (click)="goBack()">Retour à l'accueil</button>
+    <button class="back-button" (click)="goBack()">Retour</button>
   </div>
 
   <div *ngIf="!loading && item" class="product-details">
@@ -34,25 +34,17 @@
           <h2>Description</h2>
           <p>{{ item.description || "Aucune description disponible" }}</p>
         </div>
-
-        <div class="info-section">
-          <h2>Catégories</h2>
-          <div
-            *ngIf="item.categories && item.categories.length > 0"
-            class="categories-list"
+        <h2>Catégories</h2>
+        <div class="categories-list">
+          <span
+            *ngIf="!item.categories || item.categories.length === 0"
+            class="no-categories"
           >
-            <span *ngFor="let category of item.categories" class="category-tag">
-              {{ category.name }}
-            </span>
-          </div>
-          <p *ngIf="!item.categories || item.categories.length === 0">
             Aucune catégorie
-          </p>
-        </div>
-
-        <div class="actions">
-          <button class="action-button primary">Réserver</button>
-          <button class="action-button secondary">Ajouter au panier</button>
+          </span>
+          <span *ngFor="let category of item.categories" class="category-tag">
+            {{ category.name || category }}
+          </span>
         </div>
       </div>
     </div>
