@@ -16,35 +16,53 @@
 
   <div *ngIf="!loading && item" class="product-details">
     <div class="product-header">
-      <h1>{{ item.name }}</h1>
       <button class="back-button" (click)="goBack()">Retour</button>
     </div>
 
     <div class="product-content">
-      <div class="product-image-container">
-        <img
-          [src]="getImageUrl(item.imageUrl)"
-          [alt]="item.name"
-          class="product-image"
-        />
-      </div>
+      <h2 class="product-title">{{ item.name }}</h2>
 
-      <div class="product-info">
-        <div class="info-section">
-          <h2>Description</h2>
-          <p>{{ item.description || "Aucune description disponible" }}</p>
+      <div class="product-content-body">
+        <div class="product-image-container">
+          <img
+            [src]="getImageUrl(item.imageUrl)"
+            [alt]="item.name"
+            class="product-image"
+          />
         </div>
-        <h2>Catégories</h2>
-        <div class="categories-list">
-          <span
-            *ngIf="!item.categories || item.categories.length === 0"
-            class="no-categories"
-          >
-            Aucune catégorie
-          </span>
-          <span *ngFor="let category of item.categories" class="category-tag">
-            {{ category.name || category }}
-          </span>
+
+        <div class="product-info">
+          <div class="info-section">
+            <h2>Catégories</h2>
+            <div class="categories-list">
+              <span
+                *ngIf="!item.categories || item.categories.length === 0"
+                class="no-categories"
+              >
+                Aucune catégorie
+              </span>
+              <ng-container *ngFor="let category of item.categories">
+                <span class="tag">
+                  {{
+                    category && category.name
+                      ? category.name
+                      : category || "Catégorie inconnue"
+                  }}
+                </span>
+              </ng-container>
+            </div>
+
+            <!-- Material section moved below categories -->
+            <div class="material-section">
+              <h2>Matériau</h2>
+              <span *ngIf="item.material" class="tag">
+                {{ item.material }}
+              </span>
+              <span *ngIf="!item.material" class="no-material">
+                Aucun matériau spécifié
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

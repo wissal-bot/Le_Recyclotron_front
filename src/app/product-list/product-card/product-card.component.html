@@ -4,10 +4,8 @@
   </div>
   <div class="product-info">
     <h2>{{ item.name }}</h2>
-    <p *ngIf="item.description" class="product-description">
-      {{ item.description | slice : 0 : 100
-      }}{{ item.description && item.description.length > 100 ? "..." : "" }}
-    </p>
+
+    <!-- Categories section moved above material -->
     <div
       class="product-categories"
       *ngIf="item.categories && item.categories.length > 0"
@@ -16,6 +14,12 @@
         {{ category.name }}
       </span>
     </div>
+
+    <!-- Material section moved below categories -->
+    <div class="product-material" *ngIf="item.material">
+      <span class="material-tag">{{ item.material }}</span>
+    </div>
+
     <div class="product-actions">
       <a [routerLink]="['/product', item.id]" class="view-details-btn"
         >Voir détails</a

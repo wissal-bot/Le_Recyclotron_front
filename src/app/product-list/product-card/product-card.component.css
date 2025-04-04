@@ -74,15 +74,27 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
-.category-tag {
+.product-material {
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.category-tag, .material-tag {
   background-color: #e8f5e9;
   color: #2e7d32;
   padding: 5px 12px;
   border-radius: 20px;
   font-size: 0.85rem;
+}
+
+.material-tag {
+  background-color: #e0f2f1;
+  color: #00796b;
 }
 
 .product-actions {

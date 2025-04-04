@@ -5,8 +5,8 @@ import {
   Category,
   InputCategory,
   CategoryWithChildren,
-} from '../../interfaces/category.interface';
-import { environment } from '../../environments/environment';
+} from '../../../interfaces/category.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

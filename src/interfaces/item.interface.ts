@@ -3,24 +3,25 @@ import { Category } from './category.interface';
 export interface Item {
   id: string;
   name: string;
-  description: string;
+  material: string;
   status: string;
-  categories?: Category[];
+  imageUrl: string;
 }
 
 export interface InputItem {
   name: string;
-  description: string;
+  material: string;
   status: string;
+  imageUrl: string;
 }
 
 export interface PartialItem {
   name?: string;
-  description?: string;
+  material?: string;
   status?: string;
+  imageUrl?: string;
 }
 
 export interface ItemWithCategories extends Item {
-imageUrl: any;
   categories: Category[];
 }

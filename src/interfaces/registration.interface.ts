@@ -1,16 +1,16 @@
 export interface Registration {
-  id: string;
-  userId: string;
-  eventId: string;
-  registrationDate: Date;
+  id: number;
+  seats: number;
+  userId: number;
+  eventId: number;
 }
 
 export interface InputRegistration {
+  seats: number;
   userId: string;
   eventId: string;
 }
 
 export interface UpdateRegistration {
-  userId?: string;
-  eventId?: string;
+  seats?: number;
 }

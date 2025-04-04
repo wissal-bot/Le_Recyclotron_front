@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Api_itemService } from '../services/api_item.service';
+import { DomSanitizer } from '@angular/platform-browser';
+// Correction du chemin d'importation de Api_itemService
+import { Api_itemService } from '../services/api/api_item.service';
 import { ItemWithCategories } from '../../interfaces/item.interface';
+import { EventService } from '../services/event.service';
+
+interface FeatureCard {
+  title: string;
+  description: string;
+  iconSrc: string;
+  routerLink: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -17,13 +26,38 @@ export class HomeComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
+  // Propriété pour stocker les événements à venir
+  upcomingEvents: any[] = [];
+  eventLoading = true;
+  eventError: string | null = null;
+
+  // Données pour les cartes de fonctionnalités
+  featureCards: FeatureCard[] = [
+    {
+      title: 'Soutenir',
+      description:
+        'Rejoignez notre communauté engagée avec une donation ou un abonnement mensuel. Ensemble, nous faisons la différence !',
+      iconSrc: '../../assets/icons/community.svg',
+      routerLink: '/payment', // Modifié de '/community' à '/payment'
+    },
+    {
+      title: 'Vitrine',
+      description:
+        "Découvrez notre sélection d'articles recyclés uniques à prix abordables pour un style éco-responsable.",
+      iconSrc: '../../assets/icons/shop.svg',
+      routerLink: '/product-list',
+    },
+  ];
+
   constructor(
     private itemService: Api_itemService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
     this.loadSalableItems();
+    this.loadUpcomingEvents(); // Chargement des événements depuis l'API
   }
 
   loadSalableItems(): void {
@@ -115,5 +149,50 @@ export class HomeComponent implements OnInit {
 
     // Default placeholder image
     return 'assets/placeholder.png';
+  }
+
+  // Méthode pour charger les événements à venir, avec filtrage pour le mois actuel et non passés
+  loadUpcomingEvents(): void {
+    this.eventLoading = true;
+    this.eventError = null;
+    console.log('Chargement des événements du mois en cours...');
+
+    // Utiliser la nouvelle méthode getCurrentMonthEvents() qui tient compte de la date et de l'heure
+    this.eventService.getCurrentMonthEvents().subscribe({
+      next: (events) => {
+        this.upcomingEvents = events;
+        this.eventLoading = false;
+        console.log(
+          'Événements du mois actuel et à venir:',
+          this.upcomingEvents
+        );
+      },
+      error: (err) => {
+        this.eventError = 'Impossible de charger les événements.';
+        this.eventLoading = false;
+        console.error('Erreur lors du chargement des événements:', err);
+      },
+    });
+  }
+
+  // Méthode pour formater la date des événements avec l'heure
+  formatEventDate(date: string | Date): string {
+    const eventDate = new Date(date);
+
+    // Format pour la date (jour, mois, année)
+    const dateFormatted = eventDate.toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+
+    // Format pour l'heure (heures:minutes)
+    const timeFormatted = eventDate.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    // Retourner date et heure
+    return `${dateFormatted} à ${timeFormatted}`;
   }
 }

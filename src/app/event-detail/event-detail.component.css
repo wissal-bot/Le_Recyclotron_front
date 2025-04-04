@@ -1,0 +1,191 @@
+.event-detail-container {
+  max-width: 1200px;
+  margin: 80px auto 40px;
+  padding: 20px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  color: #388e3c;
+}
+
+.error-message,
+.not-found {
+  text-align: center;
+  padding: 40px;
+  background-color: #f1f8e9;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
+  margin-top: 30px;
+}
+
+.error-message h2,
+.not-found h2 {
+  color: #e53935;
+  margin-top: 0;
+}
+
+.event-details {
+  width: 100%;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  width: 100%;
+  background-color: #e8f5e9;
+  padding: 20px 30px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add pattern to header */
+.event-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="rgba(255, 255, 255, 0.3)"/></svg>');
+  opacity: 0.6;
+}
+
+.event-header h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: #2e7d32;
+  position: relative;
+  z-index: 1;
+}
+
+.back-button {
+  background-color: white;
+  color: #2e7d32;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+.back-button:hover {
+  background-color: #2e7d32;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(46, 125, 50, 0.2);
+}
+
+.event-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
+  overflow: hidden;
+  padding: 30px;
+  position: relative;
+}
+
+/* Add subtle pattern to event content */
+.event-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/></svg>');
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.event-image-container {
+  width: 100%;
+  max-height: 400px;
+  overflow: hidden;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-info {
+  position: relative;
+  z-index: 1;
+}
+
+.info-section {
+  margin-bottom: 25px;
+}
+
+.info-section h2 {
+  font-size: 1.3rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #2e7d32;
+  font-weight: 600;
+  border-bottom: 1px solid #e8f5e9;
+  padding-bottom: 5px;
+}
+
+.event-date {
+  color: #388e3c;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.event-description {
+  color: #333333;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+@media (min-width: 768px) {
+  .event-content {
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  .event-image-container {
+    flex: 1;
+    max-width: 50%;
+  }
+
+  .event-info {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .event-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .event-content {
+    padding: 20px;
+  }
+
+  .event-image-container {
+    max-height: 250px;
+  }
+}

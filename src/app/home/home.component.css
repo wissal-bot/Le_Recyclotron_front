@@ -1,11 +1,11 @@
 .home-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center content */
+  align-items: center;
 }
 
 /* Simplified home styles */
@@ -240,50 +240,62 @@
   margin-bottom: 80px;
   width: 100%;
   padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .feature-cards {
   display: flex;
   justify-content: center;
   gap: 30px;
-  flex-wrap: wrap;
-  max-width: 1200px;
+  flex-wrap: nowrap; /* Empêche le retour à la ligne */
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
 }
 
+/* Modifier les styles des cartes pour les transformer en boutons cliquables */
 .feature-card {
   background-color: white;
-  border: none; /* Remove wooden border */
-  border-radius: 20px; /* More rounded corners */
+  border: none;
+  border-radius: 20px;
   padding: 40px 30px;
   text-align: center;
   flex: 1;
-  min-width: 300px;
-  max-width: 380px;
+  min-width: 250px; /* Réduit de 300px à 250px pour mieux s'adapter à une ligne */
+  max-width: none; /* Supprime la largeur maximale pour permettre l'expansion */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15); /* Green shadow */
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
   position: relative;
   overflow: hidden;
-}
-
-/* Meadow pattern overlay */
-.feature-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="10" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="10" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="30" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="50" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="70" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="10" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="30" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="50" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="70" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/><circle cx="90" cy="90" r="1" fill="rgba(76, 175, 80, 0.05)"/></svg>');
-  pointer-events: none;
-  opacity: 0.8;
-  z-index: 0;
+  cursor: pointer; /* Ajouter un curseur pointer pour indiquer que c'est cliquable */
+  text-decoration: none; /* Supprime le soulignement pour les liens */
+  color: inherit; /* Maintient la couleur du texte */
 }
 
 .feature-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 30px rgba(76, 175, 80, 0.25);
   background-color: #f1f8e9; /* Very light green on hover */
+}
+
+.feature-card::after {
+  content: "";
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 20px;
+  height: 20px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%234CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>');
+  background-size: cover;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover::after {
+  transform: translateX(5px);
+  opacity: 1;
 }
 
 .feature-icon {
@@ -319,6 +331,21 @@
   z-index: 1;
 }
 
+/* Adapter la carte d'actualités */
+.news-card {
+  flex: 2; /* Prend deux fois plus de place que les autres cartes */
+  max-width: none;
+  width: auto; /* Laisse la largeur s'ajuster automatiquement */
+  padding: 40px;
+}
+
+/* Désactiver les styles de bouton qui ne sont plus nécessaires */
+.shop-button,
+.event-button,
+.member-button {
+  display: none; /* Masquer les boutons qui ne sont plus nécessaires */
+}
+
 /* Adding button to the Boutique feature card with meadow style */
 .shop-button {
   display: inline-block;
@@ -336,6 +363,28 @@
 }
 
 .shop-button:hover {
+  background-color: #2e7d32; /* Dark green */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+}
+
+/* Styling for the event button - similar to shop button */
+.event-button {
+  display: inline-block;
+  background-color: #4caf50; /* Medium green */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 20px; /* More rounded */
+  font-weight: 500;
+  margin-top: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  border: none;
+}
+
+.event-button:hover {
   background-color: #2e7d32; /* Dark green */
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
@@ -374,6 +423,110 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Nouvelles classes pour la disposition des cartes */
+.top-cards,
+.bottom-card {
+  width: 100%;
+  display: flex;
+  margin-bottom: 0;
+}
+
+/* Styles pour la prévisualisation des événements */
+.events-preview {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.event-preview-item {
+  display: flex;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: rgba(76, 175, 80, 0.05);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  cursor: pointer; /* Indique que l'élément est cliquable */
+  text-decoration: none;
+  color: inherit;
+}
+
+.event-preview-item:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.15);
+}
+
+/* Modifier le style de la date pour inclure l'heure */
+.event-preview-date {
+  min-width: 140px; /* Augmenté pour accommoder l'heure */
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 20px;
+  font-size: 0.9rem; /* Légèrement plus petit pour accommoder plus de texte */
+}
+
+.event-preview-details {
+  flex: 1;
+}
+
+.event-preview-details h4 {
+  margin: 0 0 10px 0;
+  color: #2e7d32;
+  font-size: 1.2rem;
+}
+
+.event-preview-details p {
+  margin: 0;
+  color: #333;
+}
+
+.no-events-message {
+  margin: 30px 0;
+  font-style: italic;
+  color: #555;
+}
+
+/* Styles pour l'état de chargement des événements */
+.event-loading {
+  padding: 20px;
+  text-align: center;
+  color: #4caf50;
+  font-style: italic;
+}
+
+/* Styles pour les erreurs de chargement des événements */
+.event-error {
+  padding: 15px;
+  margin: 20px 0;
+  background-color: rgba(255, 0, 0, 0.05);
+  border-left: 4px solid #f44336;
+  color: #d32f2f;
+  border-radius: 4px;
+}
+
+/* Bouton de réessai pour les erreurs de chargement */
+.btn-retry {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn-retry:hover {
+  background-color: #d32f2f;
+}
+
 /* Responsive styles */
 @media (max-width: 992px) {
   .feature-cards {
@@ -381,7 +534,7 @@
   }
 
   .feature-card {
-    min-width: 250px;
+    min-width: 200px;
   }
 }
 
@@ -414,7 +567,17 @@
     font-size: 1.1rem;
   }
 
+  .feature-cards {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+
   .feature-card {
     min-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .news-card {
+    flex: 1;
   }
 }

@@ -1,19 +1,69 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { ProductComponent } from './product/product.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { CguComponent } from './pages/cgu/cgu.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { PolitiqueComponent } from './pages/politique/politique.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'product/:id', component: ProductComponent },
-  { path: 'product-list', component: ProductListComponent },
-  { path: 'cgu', component: CguComponent },
-  { path: 'contact', component: ContactComponent },
-  { path: 'politique', component: PolitiqueComponent },
+  {
+    path: '',
+    loadComponent: () =>
+      import('./home/home.component').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./home/home.component').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'product/:id',
+    loadComponent: () =>
+      import('./product/product.component').then((m) => m.ProductComponent),
+  },
+  {
+    path: 'product-list',
+    loadComponent: () =>
+      import('./product-list/product-list.component').then(
+        (m) => m.ProductListComponent
+      ),
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./profile/profile.component').then((m) => m.ProfileComponent),
+  },
+  {
+    path: 'event',
+    loadComponent: () =>
+      import('./event/event.component').then((m) => m.EventComponent),
+  },
+  {
+    path: 'event/:id',
+    loadComponent: () =>
+      import('./event-detail/event-detail.component').then(
+        (m) => m.EventDetailComponent
+      ),
+  },
+  {
+    path: 'payment',
+    loadComponent: () =>
+      import('./payment/payment.component').then((m) => m.PaymentComponent),
+  },
+  {
+    path: 'cgu',
+    loadComponent: () =>
+      import('./pages/cgu/cgu.component').then((m) => m.CguComponent),
+  },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./pages/contact/contact.component').then(
+        (m) => m.ContactComponent
+      ),
+  },
+  {
+    path: 'politique',
+    loadComponent: () =>
+      import('./pages/politique/politique.component').then(
+        (m) => m.PolitiqueComponent
+      ),
+  },
   {
     path: 'login',
     loadComponent: () =>
@@ -34,6 +84,7 @@ export const routes: Routes = [
       ),
   },
   {
+<<<<<<< HEAD
     // path: 'dashboardUser',
     // loadComponent: () =>
     //   // import('./user/dashboard-user/user.component').then(
@@ -41,4 +92,9 @@ export const routes: Routes = [
     //   ),
   },
   { path: '**', redirectTo: '' }, // Add a wildcard route
+=======
+    path: '**',
+    redirectTo: '',
+  },
+>>>>>>> 4febef04398ae804b3a1676611e42bf64c9a2e6e
 ];

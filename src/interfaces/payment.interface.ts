@@ -1,40 +1,25 @@
 export interface SubscriptionBody {
-  paymentMethodId: string;
+  customerId: string;
+  priceId: string;
+  userId: number;
 }
 
 export interface DonationBody {
-  amount: number;
+  amount: number; // amount > 0
   paymentMethodId: string;
+  userId: number;
 }
 
 export interface PaymentMethodBody {
+  customerId: string;
   paymentMethodId: string;
-  isDefault: boolean;
-}
-
-// Added interfaces to match route responses
-export interface SubscriptionResponse {
-  subscriptionId: any;
-}
-
-export interface PaymentResponse {
-  message: string;
 }
 
 export interface Payment {
-  id: string;
-  userId: string;
+  id: number;
+  userId: number;
+  id_stripe_payment: string;
   amount: number;
+  type: number;
   status: string;
-  type: 'subscription' | 'donation';
-  createdAt: Date;
-}
-
-export interface WebhookData {
-  [key: string]: any;
-}
-
-export interface WebhookResponse {
-  received: boolean;
-  message: string;
 }

@@ -14,8 +14,8 @@ import {
   OtpVerification,
   User,
   LoginResponse,
-} from '../../interfaces/auth.interface';
-import { environment } from '../../environments/environment';
+} from '../../../interfaces/auth.interface';
+import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
 
 @Injectable({

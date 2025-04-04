@@ -5,8 +5,8 @@ import {
   Item,
   InputItem,
   ItemWithCategories,
-} from '../../interfaces/item.interface';
-import { environment } from '../../environments/environment';
+} from '../../../interfaces/item.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

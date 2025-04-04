@@ -57,6 +57,57 @@ a:hover {
   align-items: center; /* Center content */
 }
 
+/* Ajout de styles globaux pour que chaque page utilise toute la largeur */
+.container,
+.container-fluid,
+app-root,
+main,
+section,
+.row,
+.col,
+div[class^="col-"] {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* Assurer que tous les composants utilisent 100% de la largeur de main.main-content */
+main.main-content {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+main.main-content > * {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Pour chaque composant racine d'une page */
+app-home,
+app-event,
+app-product-list,
+app-product,
+app-profile,
+app-community,
+app-login,
+app-register,
+app-verify-otp,
+app-cgu,
+app-contact,
+app-politique,
+app-event-detail {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Assurer que le contenu principal prend toute la largeur */
+app-root {
+  display: block;
+  width: 100%;
+}
+
 /* Typography */
 h1,
 h2,

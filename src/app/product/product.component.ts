@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
-import { Api_itemService } from '../services/api_item.service';
+import { Api_itemService } from '../services/api/api_item.service';
 import { ItemWithCategories } from '../../interfaces/item.interface';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
@@ -20,7 +20,6 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private location: Location,
     private itemService: Api_itemService
   ) {}
@@ -42,10 +41,12 @@ export class ProductComponent implements OnInit {
     this.error = null;
 
     this.itemService.getItemById(id).subscribe({
-      next: (item) => {
-        this.item = item;
+      next: (response: any) => {
+        console.log('Response:', response);
+        // Extract the ItemWithCategories from the response object
+        this.item = response.data;
         this.loading = false;
-        console.log('Loaded item:', item);
+        console.log('Loaded item data:', this.item);
       },
       error: (err) => {
         this.error = 'Failed to load item details. Please try again later.';
