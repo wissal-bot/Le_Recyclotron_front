@@ -1,0 +1,81 @@
+<div class="events-container">
+  <div class="events-header">
+    <h1>Calendrier des Événements</h1>
+    <p>Rejoignez-nous pour nos prochains ateliers et événements de recyclage</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">Chargement du calendrier...</div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button class="btn-retry" (click)="loadEvents()">Réessayer</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="events-list">
+    <h3>Événements à venir</h3>
+
+    <div *ngIf="upcomingEvents.length === 0" class="no-events">
+      Aucun événement prévu pour ce mois.
+    </div>
+
+    <div
+      *ngFor="let event of upcomingEvents"
+      class="event-card"
+      [routerLink]="['/event', event.id]"
+    >
+      <div class="event-image">
+        <img
+          [src]="event.image || 'assets/event-placeholder.jpg'"
+          [alt]="event.title"
+        />
+      </div>
+      <div class="event-details">
+        <h4>{{ event.title }}</h4>
+        <p class="event-date">
+          {{ formatDate(event.date) }}
+        </p>
+        <p class="event-description">{{ event.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error" class="calendar-container">
+    <div class="calendar-header">
+      <button class="nav-btn" (click)="previousMonth()">&lt;</button>
+      <h2>{{ months[selectedMonth] }} {{ selectedYear }}</h2>
+      <button class="nav-btn" (click)="nextMonth()">&gt;</button>
+    </div>
+
+    <div class="calendar-grid">
+      <div class="calendar-weekdays">
+        <div *ngFor="let day of weekdays" class="weekday">{{ day }}</div>
+      </div>
+
+      <div class="calendar-days">
+        <ng-container *ngFor="let week of calendar">
+          <div
+            *ngFor="let day of week"
+            class="calendar-day"
+            [class.today]="day?.isToday"
+            [class.has-events]="day?.events?.length > 0"
+            [class.empty-day]="!day"
+          >
+            <div *ngIf="day" class="day-content">
+              <div class="day-number">{{ day.day }}</div>
+
+              <div *ngIf="day.events?.length > 0" class="day-events">
+                <div
+                  *ngFor="let event of day.events"
+                  class="event-marker"
+                  [routerLink]="['/event', event.id]"
+                >
+                  {{ event.title }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

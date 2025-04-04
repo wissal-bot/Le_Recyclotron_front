@@ -28,7 +28,10 @@ export class HeaderComponent implements OnInit {
 
       if (loggedIn) {
         const userInfo = this.authService.getUserFromToken();
-        this.userName = userInfo?.name || 'Utilisateur';
+        // Use first_name and last_name instead of name
+        this.userName = userInfo?.first_name
+          ? `${userInfo.first_name} ${userInfo.last_name || ''}`
+          : 'Utilisateur';
         this.userEmail = userInfo?.email || '';
         this.userProfileImage = userInfo?.profileImage || null;
       } else {

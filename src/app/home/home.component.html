@@ -15,48 +15,85 @@
         un avenir plus durable. Nous collectons, restaurons et donnons une
         nouvelle vie à des objets qui autrement auraient fini à la décharge.
       </p>
-      <button class="member-button">Devenir membre</button>
     </div>
   </section>
 
-  <!-- Three feature cards -->
+  <!-- Feature cards section - redesigned layout with ngFor -->
   <section class="features-section">
-    <div class="feature-cards">
-      <div class="feature-card">
+    <!-- Top row with feature cards using ngFor -->
+    <div class="feature-cards top-cards">
+      <div
+        *ngFor="let card of featureCards"
+        class="feature-card"
+        [routerLink]="card.routerLink"
+      >
         <div class="feature-icon">
-          <img src="assets/icons/recycle.svg" alt="Recycler" />
+          <img [src]="card.iconSrc" [alt]="card.title" />
         </div>
-        <h3>Recycler</h3>
-        <p>
-          Nous redonnons vie à vos objets usagés. Apportez vos objets et nous
-          les préparerons pour une seconde vie.
-        </p>
+        <h3>{{ card.title }}</h3>
+        <p>{{ card.description }}</p>
       </div>
+    </div>
 
-      <div class="feature-card">
+    <!-- Bottom row with News/Events card (full width) -->
+    <div class="feature-cards bottom-card">
+      <!-- Carte Actualité - correction du routerLink -->
+      <div class="feature-card news-card" [routerLink]="['/event']">
         <div class="feature-icon">
-          <img src="assets/icons/community.svg" alt="Communauté" />
+          <img src="assets/icons/event.svg" alt="Actualité" />
         </div>
-        <h3>Communauté</h3>
-        <p>
-          Rejoignez notre communauté engagée pour un mode de vie durable et
-          participez à nos ateliers et événements.
-        </p>
-      </div>
+        <h3>Actualité - Événements à venir</h3>
 
-      <div class="feature-card">
-        <div class="feature-icon">
-          <img src="assets/icons/shop.svg" alt="Boutique" />
+        <!-- Affichage du chargement des événements -->
+        <div *ngIf="eventLoading" class="event-loading">
+          Chargement des événements...
         </div>
-        <h3>Boutique</h3>
-        <p>
-          Découvrez notre sélection d'articles recyclés uniques à prix
-          abordables pour un style éco-responsable.
+
+        <!-- Affichage d'une erreur éventuelle -->
+        <div *ngIf="eventError" class="event-error">
+          <p>{{ eventError }}</p>
+        </div>
+
+        <!-- Affichage des événements à venir si disponibles -->
+        <div
+          *ngIf="
+            !eventLoading &&
+            !eventError &&
+            upcomingEvents &&
+            upcomingEvents.length > 0
+          "
+          class="events-preview"
+        >
+          <div
+            *ngFor="let event of upcomingEvents.slice(0, 3)"
+            class="event-preview-item"
+          >
+            <div class="event-preview-date">
+              {{ formatEventDate(event.date) }}
+            </div>
+            <div class="event-preview-details">
+              <h4>{{ event.title }}</h4>
+              <p>
+                {{ event.description | slice : 0 : 100
+                }}{{ event.description.length > 100 ? "..." : "" }}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message si aucun événement à venir -->
+        <p
+          *ngIf="
+            !eventLoading &&
+            !eventError &&
+            (!upcomingEvents || upcomingEvents.length === 0)
+          "
+          class="no-events-message"
+        >
+          Aucun événement à venir pour le moment. Consultez notre calendrier
+          régulièrement pour ne rien manquer !
         </p>
-        <a routerLink="/product-list" class="shop-button">Voir la vitrine</a>
       </div>
     </div>
   </section>
 </div>
-
-<!-- Remove these error and loading states that shouldn't be visible on home -->

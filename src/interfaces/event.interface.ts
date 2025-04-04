@@ -2,26 +2,26 @@ import { Registration } from './registration.interface';
 
 export interface Event {
   id: string;
-  name: string;
+  title: string;
+  image: string;
   description: string;
   date: Date;
-  location: string;
-  maxParticipants: number;
-  registrations?: Registration[];
 }
 
 export interface InputEvent {
-  name: string;
+  title: string;
+  image: string;
   description: string;
   date: Date;
-  location: string;
-  maxParticipants: number;
 }
 
 export interface PartialEvent {
-  name?: string;
+  title?: string;
+  image?: string;
   description?: string;
   date?: Date;
-  location?: string;
-  maxParticipants?: number;
+}
+
+export interface EventWithRegistration extends Event {
+  categories: Registration[];
 }
