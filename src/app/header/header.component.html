@@ -25,6 +25,15 @@
             >Événements</a
           >
         </li>
+        <!-- Lien vers la page payment uniquement pour les clients -->
+        <li class="nav-item" *ngIf="isLoggedIn && hasClientRole">
+          <a
+            class="nav-link"
+            [routerLink]="['/payment']"
+            routerLinkActive="active"
+            >Soutenir</a
+          >
+        </li>
       </ul>
     </nav>
 

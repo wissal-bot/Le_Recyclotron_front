@@ -1,18 +1,33 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { ProductComponent } from './product/product.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProfileComponent } from './profile/profile.component';
-import { CguComponent } from './pages/cgu/cgu.component';
-import { ContactComponent } from './pages/contact/contact.component';
-import { PolitiqueComponent } from './pages/politique/politique.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'product/:id', component: ProductComponent },
-  { path: 'product-list', component: ProductListComponent },
-  { path: 'profile', component: ProfileComponent },
+  {
+    path: '',
+    loadComponent: () =>
+      import('./home/home.component').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./home/home.component').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'product/:id',
+    loadComponent: () =>
+      import('./product/product.component').then((m) => m.ProductComponent),
+  },
+  {
+    path: 'product-list',
+    loadComponent: () =>
+      import('./product-list/product-list.component').then(
+        (m) => m.ProductListComponent
+      ),
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./profile/profile.component').then((m) => m.ProfileComponent),
+  },
   {
     path: 'event',
     loadComponent: () =>
@@ -25,9 +40,30 @@ export const routes: Routes = [
         (m) => m.EventDetailComponent
       ),
   },
-  { path: 'cgu', component: CguComponent },
-  { path: 'contact', component: ContactComponent },
-  { path: 'politique', component: PolitiqueComponent },
+  {
+    path: 'payment',
+    loadComponent: () =>
+      import('./payment/payment.component').then((m) => m.PaymentComponent),
+  },
+  {
+    path: 'cgu',
+    loadComponent: () =>
+      import('./pages/cgu/cgu.component').then((m) => m.CguComponent),
+  },
+  {
+    path: 'contact',
+    loadComponent: () =>
+      import('./pages/contact/contact.component').then(
+        (m) => m.ContactComponent
+      ),
+  },
+  {
+    path: 'politique',
+    loadComponent: () =>
+      import('./pages/politique/politique.component').then(
+        (m) => m.PolitiqueComponent
+      ),
+  },
   {
     path: 'login',
     loadComponent: () =>
@@ -47,5 +83,8 @@ export const routes: Routes = [
         (m) => m.VerifyOtpComponent
       ),
   },
-  { path: '**', redirectTo: '' },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];

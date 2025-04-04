@@ -1,0 +1,346 @@
+<div class="payment-container">
+  <div class="payment-header">
+    <h1>Soutenez Le Recyclotron</h1>
+    <p>
+      Choisissez comment vous souhaitez contribuer à notre mission
+      éco-responsable
+    </p>
+  </div>
+
+  <!-- Step Indicator -->
+  <div class="step-indicator">
+    <div class="step" [class.active]="paymentStep === 'choose'">
+      <div class="step-number">1</div>
+      <div class="step-label">Choix</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step" [class.active]="paymentStep === 'details'">
+      <div class="step-number">2</div>
+      <div class="step-label">Détails</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step" [class.active]="paymentStep === 'confirmation'">
+      <div class="step-number">3</div>
+      <div class="step-label">Confirmation</div>
+    </div>
+  </div>
+
+  <!-- Step 1: Choose Payment Option -->
+  <div *ngIf="paymentStep === 'choose'" class="payment-options">
+    <div class="options-container">
+      <h2>Adhésions</h2>
+      <div class="option-cards">
+        <div
+          *ngFor="let option of subscriptionOptions"
+          class="option-card"
+          (click)="selectOption(option)"
+          [class.selected]="selectedOption === option"
+        >
+          <h3>{{ option.title }}</h3>
+          <div class="option-price">
+            {{ formatCurrency(option.amount!)
+            }}<span *ngIf="option.period === 'monthly'">/mois</span
+            ><span *ngIf="option.period === 'yearly'">/an</span>
+          </div>
+          <p>{{ option.description }}</p>
+          <ul class="option-features">
+            <li *ngFor="let feature of option.features">{{ feature }}</li>
+          </ul>
+          <button class="select-btn">Sélectionner</button>
+        </div>
+      </div>
+
+      <h2>Faire un don</h2>
+      <div class="option-cards">
+        <div
+          *ngFor="let option of donationOptions"
+          class="option-card donation-card"
+          (click)="selectOption(option)"
+          [class.selected]="selectedOption === option"
+        >
+          <h3>{{ option.title }}</h3>
+          <div class="option-price" *ngIf="option.amount">
+            {{ formatCurrency(option.amount) }}
+          </div>
+          <p>{{ option.description }}</p>
+          <button class="select-btn">Sélectionner</button>
+        </div>
+      </div>
+
+      <!-- Custom Donation Amount -->
+      <div *ngIf="isCustomDonation" class="custom-donation">
+        <h3>Choisissez votre montant</h3>
+        <div class="amount-selector">
+          <button class="amount-btn" (click)="setCustomAmount(10)">10€</button>
+          <button class="amount-btn" (click)="setCustomAmount(25)">25€</button>
+          <button class="amount-btn" (click)="setCustomAmount(50)">50€</button>
+          <button class="amount-btn" (click)="setCustomAmount(100)">
+            100€
+          </button>
+          <div class="custom-input">
+            <input
+              type="number"
+              placeholder="Autre montant"
+              [(ngModel)]="customAmount"
+              min="1"
+            />
+            <button
+              class="submit-amount"
+              (click)="setCustomAmount(customAmount)"
+            >
+              Valider
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Payment Details -->
+  <div *ngIf="paymentStep === 'details'" class="payment-details">
+    <div class="details-container">
+      <div class="selected-option-summary">
+        <h3>Votre sélection</h3>
+        <div class="summary-card">
+          <h4>{{ selectedOption?.title }}</h4>
+          <div class="summary-amount">
+            {{ formatCurrency(getTotal()) }}
+            <span *ngIf="selectedOption?.period === 'monthly'">/mois</span>
+            <span *ngIf="selectedOption?.period === 'yearly'">/an</span>
+          </div>
+          <p>{{ selectedOption?.description }}</p>
+        </div>
+      </div>
+
+      <div class="payment-form">
+        <h3>Informations de paiement</h3>
+        <form [formGroup]="paymentForm" (ngSubmit)="nextStep()">
+          <div class="form-section">
+            <h4>Coordonnées</h4>
+            <div class="form-group">
+              <label for="fullName">Nom complet</label>
+              <input
+                type="text"
+                id="fullName"
+                formControlName="fullName"
+                placeholder="Entrez votre nom complet"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  paymentForm.get('fullName')?.invalid &&
+                  paymentForm.get('fullName')?.touched
+                "
+              >
+                Veuillez entrer votre nom complet
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="votre@email.com"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  paymentForm.get('email')?.invalid &&
+                  paymentForm.get('email')?.touched
+                "
+              >
+                Veuillez entrer une adresse email valide
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h4>Informations de carte</h4>
+            <div class="form-group">
+              <label for="cardNumber">Numéro de carte</label>
+              <input
+                type="text"
+                id="cardNumber"
+                formControlName="cardNumber"
+                placeholder="1234 5678 9012 3456"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  paymentForm.get('cardNumber')?.invalid &&
+                  paymentForm.get('cardNumber')?.touched
+                "
+              >
+                Veuillez entrer un numéro de carte valide (16 chiffres)
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expiryDate">Date d'expiration</label>
+                <input
+                  type="text"
+                  id="expiryDate"
+                  formControlName="expiryDate"
+                  placeholder="MM/AA"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    paymentForm.get('expiryDate')?.invalid &&
+                    paymentForm.get('expiryDate')?.touched
+                  "
+                >
+                  Format requis: MM/AA
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input
+                  type="text"
+                  id="cvv"
+                  formControlName="cvv"
+                  placeholder="123"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    paymentForm.get('cvv')?.invalid &&
+                    paymentForm.get('cvv')?.touched
+                  "
+                >
+                  Veuillez entrer un code CVV valide
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h4>Adresse de facturation</h4>
+            <div class="form-group">
+              <label for="address">Adresse</label>
+              <input
+                type="text"
+                id="address"
+                formControlName="address"
+                placeholder="Votre adresse"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  paymentForm.get('address')?.invalid &&
+                  paymentForm.get('address')?.touched
+                "
+              >
+                Veuillez entrer votre adresse
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">Ville</label>
+                <input
+                  type="text"
+                  id="city"
+                  formControlName="city"
+                  placeholder="Votre ville"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    paymentForm.get('city')?.invalid &&
+                    paymentForm.get('city')?.touched
+                  "
+                >
+                  Veuillez entrer votre ville
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="postalCode">Code postal</label>
+                <input
+                  type="text"
+                  id="postalCode"
+                  formControlName="postalCode"
+                  placeholder="75000"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    paymentForm.get('postalCode')?.invalid &&
+                    paymentForm.get('postalCode')?.touched
+                  "
+                >
+                  Veuillez entrer un code postal valide
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="buttons-container">
+            <button type="button" class="back-btn" (click)="previousStep()">
+              Retour
+            </button>
+            <button
+              type="submit"
+              class="pay-btn"
+              [disabled]="paymentForm.invalid || loading"
+            >
+              <span *ngIf="!loading"
+                >Payer {{ formatCurrency(getTotal()) }}</span
+              >
+              <span *ngIf="loading" class="loading-spinner-btn"></span>
+            </button>
+          </div>
+
+          <div class="error-alert" *ngIf="error">{{ error }}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Confirmation -->
+  <div *ngIf="paymentStep === 'confirmation'" class="payment-confirmation">
+    <div class="confirmation-container">
+      <div class="success-icon">✓</div>
+      <h2>Merci pour votre soutien !</h2>
+      <p>
+        Votre paiement de <strong>{{ formatCurrency(getTotal()) }}</strong> a
+        été traité avec succès.
+      </p>
+
+      <div
+        *ngIf="selectedOption?.type === 'subscription'"
+        class="confirmation-details"
+      >
+        <h3>Détails de votre adhésion</h3>
+        <p>Vous êtes maintenant membre {{ selectedOption?.title }}.</p>
+        <p>
+          Un email de confirmation a été envoyé à l'adresse que vous avez
+          indiquée.
+        </p>
+      </div>
+
+      <div
+        *ngIf="selectedOption?.type === 'donation'"
+        class="confirmation-details"
+      >
+        <h3>Votre don</h3>
+        <p>
+          Merci pour votre générosité ! Votre contribution nous aide à
+          poursuivre notre mission.
+        </p>
+        <p>
+          Un reçu fiscal vous sera envoyé par email dans les plus brefs délais.
+        </p>
+      </div>
+
+      <button class="home-btn" (click)="returnToHome()">
+        Retour à l'accueil
+      </button>
+    </div>
+  </div>
+</div>

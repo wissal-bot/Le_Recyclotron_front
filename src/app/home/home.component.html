@@ -18,10 +18,11 @@
     </div>
   </section>
 
-  <!-- Feature cards section - redesigned layout with ngFor -->
+  <!-- Feature cards section - redesigned layout with all cards on the same line -->
   <section class="features-section">
-    <!-- Top row with feature cards using ngFor -->
-    <div class="feature-cards top-cards">
+    <!-- All cards in a single row with news-card being larger -->
+    <div class="feature-cards">
+      <!-- Feature cards using ngFor -->
       <div
         *ngFor="let card of featureCards"
         class="feature-card"
@@ -33,11 +34,8 @@
         <h3>{{ card.title }}</h3>
         <p>{{ card.description }}</p>
       </div>
-    </div>
 
-    <!-- Bottom row with News/Events card (full width) -->
-    <div class="feature-cards bottom-card">
-      <!-- Carte Actualité - correction du routerLink -->
+      <!-- Carte Actualité - plus grande que les autres -->
       <div
         class="feature-card news-card"
         [routerLink]="['/event']"

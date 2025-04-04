@@ -34,11 +34,11 @@ export class HomeComponent implements OnInit {
   // Données pour les cartes de fonctionnalités
   featureCards: FeatureCard[] = [
     {
-      title: 'Communauté',
+      title: 'Soutenir',
       description:
-        'Rejoignez notre communauté engagée pour un mode de vie durable et participez à nos ateliers et événements.',
+        'Rejoignez notre communauté engagée avec une donation ou un abonnement mensuel. Ensemble, nous faisons la différence !',
       iconSrc: '../../assets/icons/community.svg',
-      routerLink: '/community',
+      routerLink: '/payment', // Modifié de '/community' à '/payment'
     },
     {
       title: 'Vitrine',

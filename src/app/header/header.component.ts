@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Api_authService } from '../services/api/api_auth.service';
@@ -11,13 +11,14 @@ import { ClickOutsideDirective } from '../directives/click-outside.directive';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   menuActive = false;
   profileMenuOpen = false;
   isLoggedIn = false;
   userName: string | null = null;
   userEmail: string | null = null;
   userProfileImage: string | null = null;
+  hasClientRole: boolean = false;
 
   constructor(private authService: Api_authService) {}
 
@@ -40,6 +41,33 @@ export class HeaderComponent implements OnInit {
         this.userProfileImage = null;
       }
     });
+
+    // S'abonner aux changements d'état d'authentification
+    this.authService.isLoggedIn$.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+
+      if (loggedIn) {
+        const user = this.authService.getUserFromToken();
+        
+        // Vérifier si l'utilisateur a le rôle "client"
+        if (user && user.roles) {
+          this.hasClientRole = user.roles.includes('client');
+        } else {
+          this.hasClientRole = false;
+        }
+
+        // Mettre à jour les informations de l'utilisateur
+        this.userName = user.name || user.first_name || 'Utilisateur';
+        this.userEmail = user.email || '';
+        this.userProfileImage = user.profileImage || '';
+      } else {
+        this.hasClientRole = false;
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Cleanup logic if needed
   }
 
   toggleMenu(): void {
