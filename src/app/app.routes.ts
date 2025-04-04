@@ -33,5 +33,12 @@ export const routes: Routes = [
         (m) => m.VerifyOtpComponent
       ),
   },
+  {
+    // path: 'dashboardUser',
+    // loadComponent: () =>
+    //   // import('./user/dashboard-user/user.component').then(
+    //     (m) => m.UserComponent
+    //   ),
+  },
   { path: '**', redirectTo: '' }, // Add a wildcard route
 ];

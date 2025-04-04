@@ -1,0 +1,89 @@
+/* Accordion animations */
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .accordion-content.expanded {
+    max-height: 500px;
+  }
+  
+  /* Button hover effects */
+  button:hover {
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+  }
+  
+  /* Profile section styles */
+  .profile-section {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-section:last-child {
+    border-bottom: none;
+  }
+  
+  /* Social media icons hover effect */
+  .social-media-button:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+  }
+  
+  /* Custom font styles */
+  .libre-baskerville {
+    font-family: 'Libre Baskerville', serif;
+  }
+  
+  .jomolhari {
+    font-family: 'Jomolhari', serif;
+  }
+  
+  /* Avatar container styles */
+  .avatar-container {
+    position: relative;
+    width: 204px;
+    height: 199px;
+    margin-bottom: 2.5rem;
+  }
+  
+  /* Footer link hover effect */
+  .footer-link:hover {
+    text-decoration: underline;
+    color: #4a4a4a;
+  }
+  
+  /* Accordion arrow rotation */
+  .accordion-arrow {
+    transition: transform 0.3s ease;
+  }
+  
+  .accordion-arrow.expanded {
+    transform: rotate(180deg);
+  }
+  
+  /* Card shadow effect */
+  .profile-card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Menu button hover effect */
+  .menu-button:hover .menu-line {
+    background-color: #4a4a4a;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .header-title {
+      font-size: 2.5rem;
+    }
+    
+    .footer-links {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .social-media-container {
+      margin-top: 2rem;
+    }
+  }
