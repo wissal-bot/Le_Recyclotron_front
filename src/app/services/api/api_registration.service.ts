@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import {
   Registration,
   InputRegistration,
-} from '../../interfaces/registration.interface';
-import { environment } from '../../environments/environment';
+} from '../../../interfaces/registration.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
-import { Api_itemService } from '../services/api_item.service';
+import { Api_itemService } from '../services/api/api_item.service';
 import { ItemWithCategories } from '../../interfaces/item.interface';
 
 @Component({

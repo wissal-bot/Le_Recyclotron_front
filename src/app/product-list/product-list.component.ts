@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Api_itemService } from '../services/api_item.service';
+import { Api_itemService } from '../services/api/api_item.service';
 import { ItemWithCategories } from '../../interfaces/item.interface';
 import { ProductCardComponent } from './product-card/product-card.component';
 

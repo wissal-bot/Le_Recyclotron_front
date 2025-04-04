@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Event, InputEvent } from '../../interfaces/event.interface';
-import { Registration } from '../../interfaces/registration.interface';
-import { environment } from '../../environments/environment';
+import { Event, InputEvent } from '../../../interfaces/event.interface';
+import { Registration } from '../../../interfaces/registration.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

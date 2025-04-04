@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Api_itemService } from '../services/api_item.service';
+import { DomSanitizer } from '@angular/platform-browser';
+// Correction du chemin d'importation de Api_itemService
+import { Api_itemService } from '../services/api/api_item.service';
 import { ItemWithCategories } from '../../interfaces/item.interface';
 import { EventService } from '../services/event.service';
 
@@ -36,14 +37,14 @@ export class HomeComponent implements OnInit {
       title: 'Communauté',
       description:
         'Rejoignez notre communauté engagée pour un mode de vie durable et participez à nos ateliers et événements.',
-      iconSrc: 'assets/icons/community.svg',
+      iconSrc: '../../assets/icons/community.svg',
       routerLink: '/community',
     },
     {
-      title: 'Boutique',
+      title: 'Vitrine',
       description:
         "Découvrez notre sélection d'articles recyclés uniques à prix abordables pour un style éco-responsable.",
-      iconSrc: 'assets/icons/shop.svg',
+      iconSrc: '../../assets/icons/shop.svg',
       routerLink: '/product-list',
     },
   ];
@@ -150,55 +151,21 @@ export class HomeComponent implements OnInit {
     return 'assets/placeholder.png';
   }
 
-  // Méthode pour charger les événements à venir, similaire à event.component
+  // Méthode pour charger les événements à venir, avec filtrage pour le mois actuel et non passés
   loadUpcomingEvents(): void {
     this.eventLoading = true;
     this.eventError = null;
+    console.log('Chargement des événements du mois en cours...');
 
-    // Utiliser la même méthode getEvents() que dans event.component
-    this.eventService.getEvents().subscribe({
+    // Utiliser la nouvelle méthode getCurrentMonthEvents() qui tient compte de la date et de l'heure
+    this.eventService.getCurrentMonthEvents().subscribe({
       next: (events) => {
-        let allEvents: any[] = [];
-
-        // Extraction du tableau d'événements (similaire à event.component)
-        if (Array.isArray(events)) {
-          allEvents = events;
-        } else if (events && typeof events === 'object') {
-          // Si la réponse est un objet contenant un tableau d'événements
-          const eventsObj = events as any;
-
-          if (eventsObj.data && Array.isArray(eventsObj.data)) {
-            allEvents = eventsObj.data;
-          } else {
-            // Tentative d'extraction des événements d'autres formats de réponse possibles
-            const possibleArrays = ['events', 'results', 'records'];
-
-            for (const key of possibleArrays) {
-              if (key in eventsObj && Array.isArray(eventsObj[key])) {
-                allEvents = eventsObj[key];
-                break;
-              }
-            }
-          }
-        }
-
-        // Filtrer les événements à venir (date > aujourd'hui), comme dans event.component
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        this.upcomingEvents = allEvents
-          .filter((event) => {
-            const eventDate = new Date(event.date);
-            eventDate.setHours(0, 0, 0, 0);
-            return eventDate >= today;
-          })
-          .sort((a, b) => {
-            // Trier par date croissante
-            return new Date(a.date).getTime() - new Date(b.date).getTime();
-          });
-
+        this.upcomingEvents = events;
         this.eventLoading = false;
-        console.log('Événements chargés:', this.upcomingEvents);
+        console.log(
+          'Événements du mois actuel et à venir:',
+          this.upcomingEvents
+        );
       },
       error: (err) => {
         this.eventError = 'Impossible de charger les événements.';
@@ -208,13 +175,24 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  // Méthode pour formater la date des événements (identique à la méthode formatDate de event.component)
+  // Méthode pour formater la date des événements avec l'heure
   formatEventDate(date: string | Date): string {
     const eventDate = new Date(date);
-    return eventDate.toLocaleDateString('fr-FR', {
+
+    // Format pour la date (jour, mois, année)
+    const dateFormatted = eventDate.toLocaleDateString('fr-FR', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     });
+
+    // Format pour l'heure (heures:minutes)
+    const timeFormatted = eventDate.toLocaleTimeString('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    // Retourner date et heure
+    return `${dateFormatted} à ${timeFormatted}`;
   }
 }

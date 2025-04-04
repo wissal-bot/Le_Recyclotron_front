@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User, CreateUser } from '../../interfaces/user.interface';
-import { Payment } from '../../interfaces/payment.interface';
-import { Registration } from '../../interfaces/registration.interface';
-import { environment } from '../../environments/environment';
+import { User, CreateUser } from '../../../interfaces/user.interface';
+import { Payment } from '../../../interfaces/payment.interface';
+import { Registration } from '../../../interfaces/registration.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

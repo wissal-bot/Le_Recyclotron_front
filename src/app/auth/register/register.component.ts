@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Api_authService } from '../../services/api_auth.service';
+import { Api_authService } from '../../services/api/api_auth.service';
 
 @Component({
   selector: 'app-register',

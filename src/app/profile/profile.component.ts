@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Api_authService } from '../services/api_auth.service';
+import { Api_authService } from '../services/api/api_auth.service';
 import { Router } from '@angular/router';
 
 @Component({

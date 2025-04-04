@@ -17,8 +17,13 @@
         <li>
           <a routerLink="/product-list" routerLinkActive="active">Vitrine</a>
         </li>
-        <li>
-          <a routerLink="/events" routerLinkActive="active">Événements</a>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [routerLink]="['/event']"
+            routerLinkActive="active"
+            >Événements</a
+          >
         </li>
       </ul>
     </nav>

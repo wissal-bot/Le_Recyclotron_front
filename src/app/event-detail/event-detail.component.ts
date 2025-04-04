@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Api_eventService } from '../services/api_event.service';
+import { Api_eventService } from '../services/api/api_event.service';
 import { Event } from '../../interfaces/event.interface';
 
 @Component({

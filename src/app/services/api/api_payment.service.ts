@@ -5,8 +5,8 @@ import {
   SubscriptionBody,
   DonationBody,
   PaymentMethodBody,
-} from '../../interfaces/payment.interface';
-import { environment } from '../../environments/environment';
+} from '../../../interfaces/payment.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

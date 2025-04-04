@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Api_authService } from '../services/api_auth.service';
+import { Api_authService } from '../services/api/api_auth.service';
 import { ClickOutsideDirective } from '../directives/click-outside.directive';
 
 @Component({

@@ -10,13 +10,13 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 
 // Services
-import { Api_authService } from './services/api_auth.service';
-import { Api_categoryService } from './services/api_category.service';
-import { Api_eventService } from './services/api_event.service';
-import { Api_itemService } from './services/api_item.service';
-import { Api_paymentService } from './services/api_payment.service';
-import { Api_registrationService } from './services/api_registration.service';
-import { Api_userService } from './services/api_user.service';
+import { Api_authService } from './services/api/api_auth.service';
+import { Api_categoryService } from './services/api/api_category.service';
+import { Api_eventService } from './services/api/api_event.service';
+import { Api_itemService } from './services/api/api_item.service';
+import { Api_paymentService } from './services/api/api_payment.service';
+import { Api_registrationService } from './services/api/api_registration.service';
+import { Api_userService } from './services/api/api_user.service';
 import { CguComponent } from './pages/cgu/cgu.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PolitiqueComponent } from './pages/politique/politique.component';

@@ -38,9 +38,13 @@
     <!-- Bottom row with News/Events card (full width) -->
     <div class="feature-cards bottom-card">
       <!-- Carte Actualité - correction du routerLink -->
-      <div class="feature-card news-card" [routerLink]="['/event']">
+      <div
+        class="feature-card news-card"
+        [routerLink]="['/event']"
+        (click)="$event.stopPropagation()"
+      >
         <div class="feature-icon">
-          <img src="assets/icons/event.svg" alt="Actualité" />
+          <img src="../../assets/icons/event.svg" alt="Actualité" />
         </div>
         <h3>Actualité - Événements à venir</h3>
 
@@ -52,6 +56,9 @@
         <!-- Affichage d'une erreur éventuelle -->
         <div *ngIf="eventError" class="event-error">
           <p>{{ eventError }}</p>
+          <button class="btn-retry" (click)="loadUpcomingEvents()">
+            Réessayer
+          </button>
         </div>
 
         <!-- Affichage des événements à venir si disponibles -->
@@ -64,9 +71,12 @@
           "
           class="events-preview"
         >
+          <!-- Chaque événement devient un lien vers sa page de détails -->
           <div
             *ngFor="let event of upcomingEvents.slice(0, 3)"
             class="event-preview-item"
+            [routerLink]="['/event', event.id]"
+            (click)="$event.stopPropagation()"
           >
             <div class="event-preview-date">
               {{ formatEventDate(event.date) }}
@@ -74,14 +84,21 @@
             <div class="event-preview-details">
               <h4>{{ event.title }}</h4>
               <p>
-                {{ event.description | slice : 0 : 100
-                }}{{ event.description.length > 100 ? "..." : "" }}
+                {{
+                  (event.description | slice : 0 : 100) ||
+                    "Pas de description disponible"
+                }}
+                {{
+                  event.description && event.description.length > 100
+                    ? "..."
+                    : ""
+                }}
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Message si aucun événement à venir -->
+        <!-- Message si aucun événement à venir pour ce mois -->
         <p
           *ngIf="
             !eventLoading &&
@@ -90,8 +107,8 @@
           "
           class="no-events-message"
         >
-          Aucun événement à venir pour le moment. Consultez notre calendrier
-          régulièrement pour ne rien manquer !
+          Aucun événement prévu pour ce mois. Consultez notre calendrier pour
+          voir les événements à venir des prochains mois !
         </p>
       </div>
     </div>
