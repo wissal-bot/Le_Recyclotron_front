@@ -49,6 +49,5 @@ import { HomeComponent } from './home/home.component';
     Api_registrationService,
     Api_userService,
   ],
-  // Removed bootstrap array as AppComponent is a standalone component
 })
 export class AppModule {}

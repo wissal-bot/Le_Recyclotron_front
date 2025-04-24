@@ -1,14 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
-import { Api_eventService } from '../services/api/api_event.service';
-import { Event } from '../../interfaces/event.interface';
+import { EventService } from '../services/event.service';
+import { Api_authService } from '../services/api/api_auth.service';
+
+// Interface pour l'événement
+interface Event {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  image?: string;
+}
 
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css'],
 })
@@ -17,15 +26,36 @@ export class EventDetailComponent implements OnInit {
   loading = true;
   error: string | null = null;
   eventId: string | null = null;
+  isLoggedIn: boolean = false;
+  hasClientRole: boolean = false;
+  currentUrl: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private eventService: Api_eventService
+    private eventService: EventService,
+    private authService: Api_authService
   ) {}
 
   ngOnInit(): void {
+    // Récupérer l'URL courante pour le paramètre returnUrl
+    this.currentUrl = window.location.pathname;
+
+    // Observer l'état d'authentification
+    this.authService.isLoggedIn$.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+
+      // Si l'utilisateur est connecté, vérifier son rôle
+      if (loggedIn) {
+        const user = this.authService.getUserFromToken();
+        this.hasClientRole =
+          user && user.roles ? user.roles.includes('client') : false;
+      } else {
+        this.hasClientRole = false;
+      }
+    });
+
     this.route.paramMap.subscribe((params) => {
       this.eventId = params.get('id');
       if (this.eventId) {
@@ -41,7 +71,7 @@ export class EventDetailComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.eventService.getEvent(id).subscribe({
+    this.eventService.getEventById(parseInt(id)).subscribe({
       next: (response: any) => {
         if (response && response.data) {
           this.event = response.data;
@@ -58,7 +88,7 @@ export class EventDetailComponent implements OnInit {
     });
   }
 
-  formatDate(date: Date): string {
+  formatDate(date: string | Date): string {
     const options: Intl.DateTimeFormatOptions = {
       weekday: 'long',
       year: 'numeric',
@@ -74,15 +104,12 @@ export class EventDetailComponent implements OnInit {
     if (!imageUrl) return 'assets/event-placeholder.jpg';
 
     try {
-      // If it's a full URL, use it directly
       new URL(imageUrl);
       return imageUrl;
     } catch (e) {
-      // If it's a relative path, make sure it has the correct structure
       if (imageUrl.startsWith('/')) {
         return imageUrl;
       } else {
-        // If it doesn't start with /, add assets/ prefix
         return `assets/${imageUrl}`;
       }
     }

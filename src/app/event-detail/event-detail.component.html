@@ -41,5 +41,34 @@
         </div>
       </div>
     </div>
+
+    <!-- Bouton d'inscription visible uniquement pour les utilisateurs avec rôle "client" -->
+    <div class="event-registration" *ngIf="isLoggedIn && hasClientRole">
+      <button
+        class="register-btn"
+        [routerLink]="['/event-registration', event.id]"
+      >
+        S'inscrire à cet événement
+      </button>
+    </div>
+
+    <!-- Message pour les utilisateurs non connectés ou sans rôle client -->
+    <div class="login-prompt" *ngIf="!isLoggedIn">
+      <p>
+        Pour vous inscrire à cet événement, veuillez vous
+        <a [routerLink]="['/login']" [queryParams]="{ returnUrl: currentUrl }"
+          >connecter</a
+        >
+        à votre compte.
+      </p>
+    </div>
+
+    <div class="login-prompt" *ngIf="isLoggedIn && !hasClientRole">
+      <p>
+        Seuls les membres peuvent s'inscrire aux événements. Consultez notre
+        <a [routerLink]="['/payment']">page d'adhésion</a> pour plus
+        d'informations.
+      </p>
+    </div>
   </div>
 </div>

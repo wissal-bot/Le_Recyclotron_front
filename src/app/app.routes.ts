@@ -41,6 +41,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'event-registration/:id',
+    loadComponent: () =>
+      import('./event-registration/event-registration.component').then(
+        (m) => m.EventRegistrationComponent
+      ),
+  },
+  {
     path: 'payment',
     loadComponent: () =>
       import('./payment/payment.component').then((m) => m.PaymentComponent),
@@ -82,9 +89,5 @@ export const routes: Routes = [
       import('./auth/verify-otp/verify-otp.component').then(
         (m) => m.VerifyOtpComponent
       ),
-  },
-  {
-    path: '**',
-    redirectTo: '',
   },
 ];

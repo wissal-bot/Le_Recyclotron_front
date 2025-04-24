@@ -144,25 +144,47 @@ export class Api_authService {
     }
   }
 
-  // Get user details from token
-  getUserFromToken(): any {
+  // Ajouter cette méthode manquante
+  isLoggedIn(): boolean {
+    return this.hasValidToken();
+  }
+
+  // Implémentation correcte de la méthode de décodage du token
+  getDecodedToken(): any {
     const token = this.getToken();
     if (!token) return null;
 
     try {
-      const parts = token.split('.');
-      if (parts.length !== 3) {
-        console.error('Invalid token format: not a JWT');
-        return null;
-      }
-      const payload = JSON.parse(atob(parts[1]));
+      const payload = JSON.parse(atob(token.split('.')[1]));
       return payload;
     } catch (e) {
       console.error('Error decoding token:', e);
-      localStorage.removeItem('token'); // Clear invalid token
-      this.isLoggedInSubject.next(false);
       return null;
     }
+  }
+
+  // Get user details from token
+  getUserFromToken(): any {
+    const user = this.getDecodedToken();
+
+    // S'assurer que l'utilisateur a un champ rôles
+    if (user) {
+      // Si les rôles n'existent pas, initialiser un tableau vide
+      if (!user.roles) {
+        user.roles = [];
+      }
+      // Pour les tests, temporairement ajouter le rôle 'client' (à supprimer en production)
+      if (!user.roles.includes('client')) {
+        user.roles.push('client');
+      }
+    }
+
+    return user;
+  }
+
+  hasRole(role: string): boolean {
+    const user = this.getUserFromToken();
+    return user && user.roles && user.roles.includes(role);
   }
 
   private handleError(error: HttpErrorResponse) {

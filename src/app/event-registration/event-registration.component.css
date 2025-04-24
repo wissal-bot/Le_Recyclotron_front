@@ -1,0 +1,242 @@
+.registration-container {
+  max-width: 800px;
+  margin: 80px auto 40px;
+  padding: 20px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  color: #388e3c;
+}
+
+.error-message {
+  text-align: center;
+  padding: 40px;
+  background-color: #ffebee;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(244, 67, 54, 0.15);
+  margin-top: 30px;
+}
+
+.error-message p {
+  color: #d32f2f;
+  margin-bottom: 20px;
+}
+
+.registration-form-container {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
+  overflow: hidden;
+  padding: 0;
+}
+
+.form-header {
+  text-align: center;
+  padding: 30px;
+  background-color: #e8f5e9;
+  position: relative;
+}
+
+.form-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="rgba(255, 255, 255, 0.3)"/></svg>');
+  opacity: 0.6;
+}
+
+.form-header h1 {
+  font-size: 1.8rem;
+  color: #2e7d32;
+  margin: 0 0 10px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.form-header h2 {
+  font-size: 1.4rem;
+  color: #388e3c;
+  margin: 0 0 10px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.event-date {
+  font-size: 1.1rem;
+  color: #388e3c;
+  position: relative;
+  z-index: 1;
+}
+
+form {
+  padding: 30px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #4caf50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+.form-group.checkbox {
+  display: flex;
+  align-items: flex-start;
+}
+
+.form-group.checkbox input {
+  width: auto;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.form-group.checkbox label {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.back-button {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.back-button:hover {
+  background-color: #d0d0d0;
+  transform: translateY(-2px);
+}
+
+.submit-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+  min-width: 120px;
+}
+
+.submit-button:hover {
+  background-color: #2e7d32;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.2);
+}
+
+.submit-button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.form-error-message {
+  color: #f44336;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.loading-spinner-btn {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.success-message {
+  text-align: center;
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin: 0 auto 25px;
+  box-shadow: 0 8px 15px rgba(76, 175, 80, 0.3);
+}
+
+.success-message h2 {
+  color: #2e7d32;
+  margin-bottom: 20px;
+}
+
+.success-message p {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.success-message .back-button {
+  margin-top: 25px;
+}
+
+@media (max-width: 768px) {
+  .form-buttons {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .back-button,
+  .submit-button {
+    width: 100%;
+  }
+}
