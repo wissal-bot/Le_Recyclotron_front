@@ -4,7 +4,7 @@ FROM node:22 AS builder
 WORKDIR /app
 
 # Install dependencies and build the Angular app
-COPY tsconfig*.json package*.json
+COPY tsconfig*.json package*.json ./
 COPY Caddyfile Dockerfile angular.json ./
 COPY ./src ./src
 COPY ./public ./public
