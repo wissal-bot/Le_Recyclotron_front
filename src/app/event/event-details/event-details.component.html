@@ -1,0 +1,20 @@
+<!-- ...existing code... -->
+
+<div class="event-actions">
+  <!-- Only show registration button if event is not in the past -->
+  <button
+    *ngIf="!isPastEvent && isLoggedIn && hasClientRole"
+    class="register-button"
+    (click)="registerForEvent()"
+  >
+    S'inscrire à l'événement
+  </button>
+
+  <div *ngIf="isPastEvent" class="past-event-notice">
+    Cet événement est déjà passé. L'inscription n'est plus possible.
+  </div>
+
+  <!-- ...existing code for other buttons... -->
+</div>
+
+<!-- ...existing code... -->

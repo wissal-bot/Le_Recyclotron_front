@@ -29,6 +29,7 @@ export class EventRegistrationComponent implements OnInit {
   success = false;
   error: string | null = null;
   userId: number | null = null;
+  isPastEvent: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -81,15 +82,17 @@ export class EventRegistrationComponent implements OnInit {
         } else {
           this.event = response;
         }
-        
+
         // Vérifier si l'événement est déjà passé
         const eventDate = new Date(this.event.date);
         const currentDate = new Date();
-        
+
         if (eventDate < currentDate) {
-          this.error = "Cet événement est déjà passé. L'inscription n'est plus possible.";
+          this.error =
+            "Cet événement est déjà passé. L'inscription n'est plus possible.";
+          this.isPastEvent = true;
         }
-        
+
         this.loading = false;
       },
       error: (err) => {
@@ -107,10 +110,11 @@ export class EventRegistrationComponent implements OnInit {
 
     // Vérifier si l'événement est passé
     if (this.event && new Date(this.event.date) < new Date()) {
-      this.error = "Cet événement est déjà passé. L'inscription n'est plus possible.";
+      this.error =
+        "Cet événement est déjà passé. L'inscription n'est plus possible.";
       return;
     }
-    
+
     // Vérifier si les données nécessaires sont présentes
     if (!this.userId) {
       this.error =
