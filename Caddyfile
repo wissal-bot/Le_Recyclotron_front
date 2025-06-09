@@ -1,0 +1,13 @@
+:80 {
+    # Reverse proxy for API requests
+    handle_path /api/* {
+        reverse_proxy backend:3000
+    }
+
+    # Serve Angular frontend for all other requests
+    handle {
+        root * /srv
+        try_files {path} /index.html
+        file_server
+    }
+}

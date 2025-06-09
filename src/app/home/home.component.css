@@ -1,3 +1,11 @@
+:root {
+  --primary: #4caf50;
+  --primary-dark: #388e3c;
+  --primary-color: #4caf50;
+  --bg-light: #e8f5e9;
+  --shadow: 0 8px 20px rgba(76,175,80,0.15);
+  --text-color: #333;
+}
 .home-container {
   max-width: 100%;
   margin: 0;
@@ -7,65 +15,121 @@
   flex-direction: column;
   align-items: center;
 }
-
-/* Simplified home styles */
-.hero {
+.hero, .hero-section {
   text-align: center;
-  padding: 60px 20px;
-  background: linear-gradient(135deg, #a5d6a7 0%, #4caf50 100%);
-  color: white;
+  color: #fff;
   border-radius: 8px;
   margin-bottom: 40px;
+  background: linear-gradient(135deg, #a5d6a7 0%, #4caf50 100%);
+  padding: 60px 20px;
 }
-
-.items-grid {
+.hero-section {
+  color: #1b5e20;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(76,175,80,0.2);
+  position: relative;
+  overflow: hidden;
+  padding: 120px 20px;
+  background: linear-gradient(135deg, #c5e1a5 0%, #81c784 100%);
+}
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="rgba(255,255,255,0.3)"/></svg>');
+  opacity: .6;
+}
+.hero-section h1 {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  color: #1b5e20;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+}
+.items-grid, .products-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
   margin-bottom: 50px;
+  grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
 }
-
-.item-card {
+.products-container {
+  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+}
+.item-card, .product-card {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: var(--shadow);
-  transition: transform 0.3s;
+  transition: transform .3s, box-shadow .3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  padding: 25px;
+  text-align: center;
 }
-
-.item-card:hover {
-  transform: translateY(-5px);
+.item-card:hover, .product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
-
-.item-image {
+.item-image, .product-icon {
   height: 200px;
   overflow: hidden;
 }
-
-.item-image img {
+.item-image img, .product-icon {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
-
-.item-details {
+.item-details, .product-title {
   padding: 15px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  color: var(--text-color);
 }
-
-.item-link {
+.item-link, .shop-button, .event-button, .plus-button, .member-button {
   display: inline-block;
-  background-color: var(--primary);
-  color: white;
-  padding: 8px 15px;
-  border-radius: 4px;
-  text-decoration: none;
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
   margin-top: 10px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
 }
-
-.about {
-  background-color: var(--bg-light);
+.shop-button, .event-button {
+  border-radius: 20px;
+  margin-top: 20px;
+  font-size: 1rem;
+  z-index: 1;
+  position: relative;
+}
+.shop-button:hover, .event-button:hover, .plus-button:hover, .member-button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(76,175,80,0.3);
+}
+.about, .about-section-full {
+  background: var(--bg-light);
   padding: 60px 20px;
 }
-
+.about-section-full {
+  background-color: #e8f5e9;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><path fill="none" stroke="rgba(76,175,80,0.1)" stroke-width="1" d="M0,100 C80,70 120,130 200,100 C280,70 320,130 400,100 M0,200 C80,170 120,230 200,200 C280,170 320,230 400,200 M0,300 C80,270 120,330 200,300 C280,270 320,330 400,300"/></svg>');
+  padding: 80px 20px;
+  margin-bottom: 60px;
+  width: 100%;
+  color: #2e7d32;
+  text-align: center;
+  border-top: 4px solid #81c784;
+  border-bottom: 4px solid #81c784;
+}
 .about-content {
   display: flex;
   align-items: center;
@@ -73,142 +137,14 @@
   max-width: 1200px;
   margin: 0 auto;
 }
-
-.about-text {
-  flex: 1;
-}
-
-/* Updated Products Grid */
-.products-grid,
-.products-container,
-.product-card,
-.product-icon,
-.product-title,
-.plus-button {
-  display: none;
-}
-
-.section-title {
-  text-align: center;
-  color: var(--primary-dark);
-  font-size: 2rem;
-  margin-bottom: 40px;
-}
-
-/* Make sure the buttons are styled correctly */
-.shop-button {
-  display: inline-block;
-  background-color: var(--primary-color, #4caf50);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  margin-top: 20px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.shop-button:hover {
-  background-color: var(--primary-dark, #388e3c);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.member-button {
-  background-color: var(--primary-dark, #388e3c);
-  color: white;
-  padding: 14px 28px;
-  font-size: 1.1rem;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.member-button:hover {
-  background-color: var(--primary-color, #4caf50);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.products-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 30px;
-}
-
-.product-card {
-  background-color: white;
-  border-radius: 10px;
-  padding: 25px;
-  box-shadow: var(--shadow);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-}
-
-.product-icon {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.product-title {
-  font-weight: 500;
-  font-size: 1.1rem;
-  margin-bottom: 15px;
-  color: var(--text-color);
-}
-
-.plus-button {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-  margin-top: auto;
-}
-
-.plus-button:hover {
-  background-color: var(--primary-dark);
-}
-
-/* Full-width About Section - Meadow style */
-.about-section-full {
-  background-color: #e8f5e9; /* Light meadow green background */
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><path fill="none" stroke="rgba(76, 175, 80, 0.1)" stroke-width="1" d="M0,100 C80,70 120,130 200,100 C280,70 320,130 400,100 M0,200 C80,170 120,230 200,200 C280,170 320,230 400,200 M0,300 C80,270 120,330 200,300 C280,270 320,330 400,300"/></svg>');
-  padding: 80px 20px;
-  margin-bottom: 60px;
-  width: 100%;
-  color: #2e7d32; /* Forest green text */
-  text-align: center;
-  border-top: 4px solid #81c784; /* Light green border */
-  border-bottom: 4px solid #81c784;
-}
-
 .about-section-full .about-content {
   max-width: 1000px;
-  margin: 0 auto;
 }
-
 .about-section-full h2 {
   font-size: 2.2rem;
   margin-bottom: 30px;
-  color: #2e7d32; /* Forest green */
+  color: #2e7d32;
 }
-
 .about-section-full p {
   font-size: 1.2rem;
   line-height: 1.8;
@@ -217,25 +153,21 @@
   margin-left: auto;
   margin-right: auto;
 }
-
 .about-section-full .member-button {
-  background-color: #4caf50; /* Medium green */
-  color: white;
-  padding: 14px 28px;
+  background: #4caf50;
+  border-radius: 20px;
   font-size: 1.1rem;
-  border-radius: 20px; /* More rounded for a softer look */
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  padding: 14px 28px;
 }
-
 .about-section-full .member-button:hover {
-  background-color: #2e7d32; /* Darker green on hover */
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+  background: #2e7d32;
 }
-
-/* Feature Cards Section with meadow style */
+.section-title {
+  text-align: center;
+  color: var(--primary-dark);
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
 .features-section {
   margin-bottom: 80px;
   width: 100%;
@@ -244,42 +176,35 @@
   flex-direction: column;
   align-items: center;
 }
-
 .feature-cards {
   display: flex;
   justify-content: center;
   gap: 30px;
-  flex-wrap: nowrap; /* Empêche le retour à la ligne */
+  flex-wrap: nowrap;
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
 }
-
-/* Modifier les styles des cartes pour les transformer en boutons cliquables */
-.feature-card {
-  background-color: white;
-  border: none;
+.feature-card, .news-card {
+  background: #fff;
   border-radius: 20px;
   padding: 40px 30px;
   text-align: center;
   flex: 1;
-  min-width: 250px; /* Réduit de 300px à 250px pour mieux s'adapter à une ligne */
-  max-width: none; /* Supprime la largeur maximale pour permettre l'expansion */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 8px 20px rgba(76, 175, 80, 0.15);
+  min-width: 250px;
+  transition: transform .3s, box-shadow .3s;
+  box-shadow: 0 8px 20px rgba(76,175,80,0.15);
   position: relative;
   overflow: hidden;
-  cursor: pointer; /* Ajouter un curseur pointer pour indiquer que c'est cliquable */
-  text-decoration: none; /* Supprime le soulignement pour les liens */
-  color: inherit; /* Maintient la couleur du texte */
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
-
 .feature-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(76, 175, 80, 0.25);
-  background-color: #f1f8e9; /* Very light green on hover */
+  box-shadow: 0 15px 30px rgba(76,175,80,0.25);
+  background: #f1f8e9;
 }
-
 .feature-card::after {
   content: "";
   position: absolute;
@@ -289,15 +214,13 @@
   height: 20px;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="%234CAF50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>');
   background-size: cover;
-  opacity: 0.7;
-  transition: all 0.3s ease;
+  opacity: .7;
+  transition: all .3s;
 }
-
 .feature-card:hover::after {
   transform: translateX(5px);
   opacity: 1;
 }
-
 .feature-icon {
   margin-bottom: 20px;
   height: 80px;
@@ -307,160 +230,60 @@
   position: relative;
   z-index: 1;
 }
-
 .feature-icon img {
   width: 60px;
   height: 60px;
-  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.1)); /* Lighter shadow */
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,0.1));
 }
-
 .feature-card h3 {
   font-size: 1.4rem;
   margin-bottom: 15px;
-  color: #2e7d32; /* Forest green */
-  position: relative;
-  z-index: 1;
+  color: #2e7d32;
   font-weight: 600;
+  z-index: 1;
+  position: relative;
 }
-
 .feature-card p {
-  color: #388e3c; /* Medium green */
+  color: #388e3c;
   font-size: 1rem;
   line-height: 1.6;
-  position: relative;
   z-index: 1;
+  position: relative;
 }
-
-/* Adapter la carte d'actualités */
 .news-card {
-  flex: 2; /* Prend deux fois plus de place que les autres cartes */
-  max-width: none;
-  width: auto; /* Laisse la largeur s'ajuster automatiquement */
+  flex: 2;
   padding: 40px;
 }
-
-/* Désactiver les styles de bouton qui ne sont plus nécessaires */
-.shop-button,
-.event-button,
-.member-button {
-  display: none; /* Masquer les boutons qui ne sont plus nécessaires */
-}
-
-/* Adding button to the Boutique feature card with meadow style */
-.shop-button {
-  display: inline-block;
-  background-color: #4caf50; /* Medium green */
-  color: white;
-  padding: 12px 24px;
-  border-radius: 20px; /* More rounded */
-  font-weight: 500;
-  margin-top: 20px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
-  border: none;
-}
-
-.shop-button:hover {
-  background-color: #2e7d32; /* Dark green */
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
-}
-
-/* Styling for the event button - similar to shop button */
-.event-button {
-  display: inline-block;
-  background-color: #4caf50; /* Medium green */
-  color: white;
-  padding: 12px 24px;
-  border-radius: 20px; /* More rounded */
-  font-weight: 500;
-  margin-top: 20px;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
-  border: none;
-}
-
-.event-button:hover {
-  background-color: #2e7d32; /* Dark green */
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
-}
-
-/* Hero section with meadow theme */
-.hero-section {
-  text-align: center;
-  padding: 120px 20px;
-  background: linear-gradient(135deg, #c5e1a5 0%, #81c784 100%);
-  color: #1b5e20;
-  border-radius: 20px;
-  margin-bottom: 40px;
-  box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Add a subtle pattern of small circles to simulate grass or meadow */
-.hero-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="1" fill="rgba(255, 255, 255, 0.3)"/></svg>');
-  opacity: 0.6;
-}
-
-.hero-section h1 {
-  font-size: 3.5rem;
-  margin-bottom: 16px;
-  position: relative; /* To appear above the pattern */
-  color: #1b5e20; /* Dark green */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Nouvelles classes pour la disposition des cartes */
-.top-cards,
-.bottom-card {
+.top-cards, .bottom-card {
   width: 100%;
   display: flex;
   margin-bottom: 0;
 }
-
-/* Styles pour la prévisualisation des événements */
 .events-preview {
   margin: 20px 0;
   text-align: left;
 }
-
 .event-preview-item {
   display: flex;
   margin-bottom: 20px;
   padding: 15px;
-  background-color: rgba(76, 175, 80, 0.05);
+  background: rgba(76,175,80,0.05);
   border-radius: 10px;
-  transition: all 0.3s ease;
-  cursor: pointer; /* Indique que l'élément est cliquable */
+  transition: all .3s;
+  cursor: pointer;
   text-decoration: none;
   color: inherit;
 }
-
 .event-preview-item:hover {
-  background-color: rgba(76, 175, 80, 0.1);
+  background: rgba(76,175,80,0.1);
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.15);
+  box-shadow: 0 5px 15px rgba(76,175,80,0.15);
 }
-
-/* Modifier le style de la date pour inclure l'heure */
 .event-preview-date {
-  min-width: 140px; /* Augmenté pour accommoder l'heure */
+  min-width: 140px;
   padding: 10px;
-  background-color: #4caf50;
-  color: white;
+  background: #4caf50;
+  color: #fff;
   border-radius: 8px;
   text-align: center;
   font-weight: bold;
@@ -468,116 +291,66 @@
   flex-direction: column;
   justify-content: center;
   margin-right: 20px;
-  font-size: 0.9rem; /* Légèrement plus petit pour accommoder plus de texte */
+  font-size: .9rem;
 }
-
 .event-preview-details {
   flex: 1;
 }
-
 .event-preview-details h4 {
   margin: 0 0 10px 0;
   color: #2e7d32;
   font-size: 1.2rem;
 }
-
 .event-preview-details p {
   margin: 0;
   color: #333;
 }
-
 .no-events-message {
   margin: 30px 0;
   font-style: italic;
   color: #555;
 }
-
-/* Styles pour l'état de chargement des événements */
 .event-loading {
   padding: 20px;
   text-align: center;
   color: #4caf50;
   font-style: italic;
 }
-
-/* Styles pour les erreurs de chargement des événements */
 .event-error {
   padding: 15px;
   margin: 20px 0;
-  background-color: rgba(255, 0, 0, 0.05);
+  background: rgba(255,0,0,0.05);
   border-left: 4px solid #f44336;
   color: #d32f2f;
   border-radius: 4px;
 }
-
-/* Bouton de réessai pour les erreurs de chargement */
 .btn-retry {
-  background-color: #f44336;
-  color: white;
+  background: #f44336;
+  color: #fff;
   border: none;
   padding: 8px 15px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: .9rem;
   margin-top: 10px;
-  transition: background-color 0.3s;
+  transition: background .3s;
 }
-
 .btn-retry:hover {
-  background-color: #d32f2f;
+  background: #d32f2f;
 }
-
-/* Responsive styles */
-@media (max-width: 992px) {
-  .feature-cards {
-    gap: 20px;
-  }
-
-  .feature-card {
-    min-width: 200px;
-  }
+@media (max-width:992px) {
+  .feature-cards {gap:20px;}
+  .feature-card {min-width:200px;}
 }
-
-@media (max-width: 768px) {
-  .about-content {
-    flex-direction: column;
-  }
-
-  .hero-section {
-    padding: 40px 20px;
-  }
-
-  .hero-section h1 {
-    font-size: 2rem;
-  }
-
-  .items-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  }
-
-  .about-section-full {
-    padding: 60px 20px;
-  }
-
-  .about-section-full h2 {
-    font-size: 1.8rem;
-  }
-
-  .about-section-full p {
-    font-size: 1.1rem;
-  }
-
-  .feature-cards {
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
-
-  .feature-card {
-    min-width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .news-card {
-    flex: 1;
-  }
+@media (max-width:768px) {
+  .about-content {flex-direction:column;}
+  .hero-section {padding:40px 20px;}
+  .hero-section h1 {font-size:2rem;}
+  .items-grid {grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
+  .about-section-full {padding:60px 20px;}
+  .about-section-full h2 {font-size:1.8rem;}
+  .about-section-full p {font-size:1.1rem;}
+  .feature-cards {flex-direction:column;flex-wrap:wrap;}
+  .feature-card {min-width:100%;margin-bottom:20px;}
+  .news-card {flex:1;}
 }
