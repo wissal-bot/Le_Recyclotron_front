@@ -2,15 +2,30 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
+import { Api_itemService } from '../services/api/api_item.service';
+import { EventService } from '../services/event.service';
+import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [HomeComponent],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HomeComponent],
+      providers: [
+        {
+          provide: Api_itemService,
+          useValue: {
+            getLatestItems: () => of([]),
+            getItemByStatus: () => of([]),
+          },
+        },
+        {
+          provide: EventService,
+          useValue: { getUpcomingEvents: () => of([]) },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);

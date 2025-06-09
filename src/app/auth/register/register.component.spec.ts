@@ -12,12 +12,11 @@ describe('RegisterComponent', () => {
   let fixture: ComponentFixture<RegisterComponent>;
   let authServiceMock: jasmine.SpyObj<Api_authService>;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     authServiceMock = jasmine.createSpyObj('Api_authService', ['register']);
 
-    await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule],
-      declarations: [RegisterComponent],
+    TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, RouterTestingModule, RegisterComponent],
       providers: [{ provide: Api_authService, useValue: authServiceMock }],
     }).compileComponents();
 

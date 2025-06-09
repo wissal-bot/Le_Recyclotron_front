@@ -1,12 +1,32 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Component } from '@angular/core';
 import { AppComponent } from './app.component';
 
+// Mock components
+@Component({
+  selector: 'app-header',
+  standalone: true,
+  template: '<div>Mock Header</div>',
+})
+class MockHeaderComponent {}
+
+@Component({
+  selector: 'app-footer',
+  standalone: true,
+  template: '<div>Mock Footer</div>',
+})
+class MockFooterComponent {}
+
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        AppComponent,
+        MockHeaderComponent,
+        MockFooterComponent,
+      ],
     }).compileComponents();
   });
 

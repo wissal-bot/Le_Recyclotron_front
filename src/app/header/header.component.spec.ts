@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 
 import { HeaderComponent } from './header.component';
 import { Api_authService } from '../services/api/api_auth.service';
@@ -8,17 +9,15 @@ describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let authServiceMock: jasmine.SpyObj<Api_authService>;
+  beforeEach(() => {
+    authServiceMock = jasmine.createSpyObj(
+      'Api_authService',
+      ['isLoggedIn', 'getUserFromToken', 'hasRole'],
+      { isLoggedIn$: of(false) }
+    );
 
-  beforeEach(async () => {
-    authServiceMock = jasmine.createSpyObj('Api_authService', [
-      'isLoggedIn',
-      'getUserFromToken',
-      'hasRole',
-    ]);
-
-    await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [HeaderComponent],
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HeaderComponent],
       providers: [{ provide: Api_authService, useValue: authServiceMock }],
     }).compileComponents();
 

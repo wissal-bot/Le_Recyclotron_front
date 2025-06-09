@@ -1,12 +1,14 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, waitForAsync, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Api_authService } from './api_auth.service';
 
 describe('Service: Api_auth', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [Api_authService]
+      imports: [HttpClientTestingModule],
+      providers: [Api_authService],
     });
   });
 
