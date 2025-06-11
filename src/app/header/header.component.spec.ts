@@ -1,19 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 
 import { HeaderComponent } from './header.component';
 import { Api_authService } from '../services/api/api_auth.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
-  let authServiceMock: jasmine.SpyObj<Api_authService>;
+  let fixture: ComponentFixture<HeaderComponent>;  let authServiceMock: jasmine.SpyObj<Api_authService>;
+  let isLoggedInSubject: BehaviorSubject<boolean>;
+  
   beforeEach(() => {
+    isLoggedInSubject = new BehaviorSubject<boolean>(false);
+    
     authServiceMock = jasmine.createSpyObj(
       'Api_authService',
       ['isLoggedIn', 'getUserFromToken', 'hasRole'],
-      { isLoggedIn$: of(false) }
+      { isLoggedIn$: isLoggedInSubject.asObservable() }
     );
 
     TestBed.configureTestingModule({
@@ -35,16 +38,26 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('[routerLink="/login"]')).toBeTruthy();
-  });
-
-  it('should show logout option when logged in', () => {
+  });  it('should show logout option when logged in', () => {
+    // Mock auth service responses
     authServiceMock.isLoggedIn.and.returnValue(true);
     authServiceMock.getUserFromToken.and.returnValue({
-      name: 'Test User',
+      first_name: 'Test',
+      last_name: 'User',
+      email: 'test@example.com',
       id: 1,
     });
+    
+    // Simulate the auth service emitting a logged in state
+    isLoggedInSubject.next(true);
+    
+    // Force the profile menu to be open
+    component.profileMenuOpen = true;
+    
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.logout-button')).toBeTruthy();
+    
+    // Now we can find the logout element
+    expect(compiled.querySelector('.dropdown-item .logout-icon')).toBeTruthy();
   });
 });

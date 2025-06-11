@@ -34,10 +34,10 @@ describe('RegisterComponent', () => {
   });
 
   it('should validate matching passwords', () => {
-    component.registerForm.controls['name'].setValue('Test User');
     component.registerForm.controls['email'].setValue('test@example.com');
     component.registerForm.controls['password'].setValue('Password123');
     component.registerForm.controls['confirmPassword'].setValue('Password456');
+    component.registerForm.controls['termsAccepted'].setValue(true);
 
     expect(component.registerForm.valid).toBeFalsy();
 
@@ -48,10 +48,10 @@ describe('RegisterComponent', () => {
   it('should call auth service on form submission', () => {
     authServiceMock.register.and.returnValue(of({ id: 'user-id' }));
 
-    component.registerForm.controls['name'].setValue('Test User');
     component.registerForm.controls['email'].setValue('test@example.com');
     component.registerForm.controls['password'].setValue('Password123');
     component.registerForm.controls['confirmPassword'].setValue('Password123');
+    component.registerForm.controls['termsAccepted'].setValue(true);
 
     component.onSubmit();
 
@@ -66,10 +66,10 @@ describe('RegisterComponent', () => {
       throwError(() => new Error('Registration failed'))
     );
 
-    component.registerForm.controls['name'].setValue('Test User');
     component.registerForm.controls['email'].setValue('test@example.com');
     component.registerForm.controls['password'].setValue('Password123');
     component.registerForm.controls['confirmPassword'].setValue('Password123');
+    component.registerForm.controls['termsAccepted'].setValue(true);
 
     component.onSubmit();
 

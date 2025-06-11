@@ -23,7 +23,10 @@ describe('HomeComponent', () => {
         },
         {
           provide: EventService,
-          useValue: { getUpcomingEvents: () => of([]) },
+          useValue: {
+            getUpcomingEvents: () => of([]),
+            getCurrentMonthEvents: () => of([]),
+          },
         },
       ],
     }).compileComponents();

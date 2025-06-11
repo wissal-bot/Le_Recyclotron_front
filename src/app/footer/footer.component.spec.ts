@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { FooterComponent } from './footer.component';
 
@@ -7,7 +8,7 @@ describe('FooterComponent', () => {
   let fixture: ComponentFixture<FooterComponent>;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FooterComponent],
+      imports: [RouterTestingModule, FooterComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FooterComponent);
