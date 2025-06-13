@@ -21,7 +21,7 @@ import { InputRegistration } from '../../interfaces/registration.interface'; // 
   styleUrls: ['./event-registration.component.css'],
 })
 export class EventRegistrationComponent implements OnInit {
-  eventId: string | null = null;
+  eventId: number | null = null;
   event: any = null;
   registrationForm: FormGroup;
   loading = false;
@@ -55,9 +55,14 @@ export class EventRegistrationComponent implements OnInit {
 
     // Récupérer l'ID de l'événement depuis l'URL
     this.route.paramMap.subscribe((params) => {
-      this.eventId = params.get('id');
+      let id: string | null = params.get('id');
+      if (!id) {
+        this.error = "ID de l'événement non trouvé dans l'URL";
+        return;
+      }
+      this.eventId = parseInt(id);
       if (this.eventId) {
-        this.loadEventDetails(this.eventId);
+        this.loadEventDetails(this.eventId.toString());
       } else {
         this.error = "ID de l'événement non trouvé";
       }
@@ -81,15 +86,16 @@ export class EventRegistrationComponent implements OnInit {
         } else {
           this.event = response;
         }
-        
+
         // Vérifier si l'événement est déjà passé
         const eventDate = new Date(this.event.date);
         const currentDate = new Date();
-        
+
         if (eventDate < currentDate) {
-          this.error = "Cet événement est déjà passé. L'inscription n'est plus possible.";
+          this.error =
+            "Cet événement est déjà passé. L'inscription n'est plus possible.";
         }
-        
+
         this.loading = false;
       },
       error: (err) => {
@@ -107,10 +113,11 @@ export class EventRegistrationComponent implements OnInit {
 
     // Vérifier si l'événement est passé
     if (this.event && new Date(this.event.date) < new Date()) {
-      this.error = "Cet événement est déjà passé. L'inscription n'est plus possible.";
+      this.error =
+        "Cet événement est déjà passé. L'inscription n'est plus possible.";
       return;
     }
-    
+
     // Vérifier si les données nécessaires sont présentes
     if (!this.userId) {
       this.error =
@@ -134,8 +141,8 @@ export class EventRegistrationComponent implements OnInit {
 
     // Préparer les données pour l'inscription
     const registrationData: InputRegistration = {
-      userId: this.userId.toString(),
-      eventId: this.eventId.toString(),
+      userId: this.userId,
+      eventId: this.eventId,
       seats: numberOfPlaces,
     };
 

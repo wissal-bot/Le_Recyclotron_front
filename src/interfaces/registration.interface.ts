@@ -7,8 +7,8 @@ export interface Registration {
 
 export interface InputRegistration {
   seats: number;
-  userId: string;
-  eventId: string;
+  userId: number;
+  eventId: number;
 }
 
 export interface UpdateRegistration {

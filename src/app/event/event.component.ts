@@ -51,18 +51,18 @@ export class EventComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.eventService.getAllEvents().subscribe(
-      (events: any) => {
+    this.eventService.getAllEvents().subscribe({
+      next: (events: any) => {
         this.events = events.data;
         this.loading = false;
         this.generateCalendar();
         this.filterUpcomingEvents();
       },
-      (error) => {
+      error: () => {
         this.error = 'Erreur lors du chargement des événements.';
         this.loading = false;
       }
-    );
+    });
   }
 
   // Filter events for "Événements à venir" section
