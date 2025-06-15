@@ -38,7 +38,7 @@
       <!-- Carte Actualité - plus grande que les autres -->
       <div
         class="feature-card news-card"
-        [routerLink]="['/event']"
+        [routerLink]="['/events']"
         (click)="$event.stopPropagation()"
       >
         <div class="feature-icon">
@@ -73,7 +73,7 @@
           <div
             *ngFor="let event of upcomingEvents.slice(0, 3)"
             class="event-preview-item"
-            [routerLink]="['/event', event.id]"
+            [routerLink]="['/events/detail', event.id]"
             (click)="$event.stopPropagation()"
           >
             <div class="event-preview-date">

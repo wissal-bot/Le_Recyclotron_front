@@ -29,23 +29,53 @@ export const routes: Routes = [
       import('./profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
-    path: 'event',
+    path: 'events',
     loadComponent: () =>
       import('./event/event.component').then((m) => m.EventComponent),
-  },
-  {
-    path: 'event/:id',
-    loadComponent: () =>
-      import('./event-detail/event-detail.component').then(
-        (m) => m.EventDetailComponent
-      ),
-  },
-  {
-    path: 'event-registration/:id',
-    loadComponent: () =>
-      import('./event-registration/event-registration.component').then(
-        (m) => m.EventRegistrationComponent
-      ),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            './event/components/event-calendar/event-calendar.component'
+          ).then((m) => m.EventCalendarComponent),
+      },
+      {
+        path: 'detail/:id',
+        loadComponent: () =>
+          import('./event/components/event-detail/event-detail.component').then(
+            (m) => m.EventDetailComponent
+          ),
+      },
+      {
+        path: 'register/:id',
+        loadComponent: () =>
+          import(
+            './event/components/event-registration/event-registration.component'
+          ).then((m) => m.EventRegistrationComponent),
+      },
+      {
+        path: 'create',
+        loadComponent: () =>
+          import('./event/components/event-create/event-create.component').then(
+            (m) => m.EventCreateComponent
+          ),
+      },
+      {
+        path: 'update/:id',
+        loadComponent: () =>
+          import('./event/components/event-update/event-update.component').then(
+            (m) => m.EventUpdateComponent
+          ),
+      },
+      {
+        path: 'delete/:id',
+        loadComponent: () =>
+          import('./event/components/event-delete/event-delete.component').then(
+            (m) => m.EventDeleteComponent
+          ),
+      },
+    ],
   },
   {
     path: 'payment',

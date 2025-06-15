@@ -1,0 +1,87 @@
+<div class="event-detail-container">
+  <div class="back-button">
+    <button (click)="goBack()" class="btn-back">
+      <i class="fa fa-arrow-left"></i> Retour au calendrier
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    Chargement des détails de l'événement...
+  </div>
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button
+      class="btn-retry"
+      (click)="loadEventDetails(eventId ? +eventId : 0)"
+    >
+      Réessayer
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !error && event" class="event-content">
+    <div class="event-header">
+      <h1>{{ event.title }}</h1>
+      <div class="event-meta">
+        <div class="event-date">
+          <i class="fa fa-calendar"></i> {{ formatDate(event.date) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="event-image-container">
+      <img
+        [src]="event.image || 'assets/event-placeholder.jpg'"
+        [alt]="event.image"
+        class="event-image"
+      />
+    </div>
+
+    <div class="event-description">
+      <h2>Description</h2>
+      <p>{{ event.description }}</p>
+    </div>
+
+    <div class="event-actions">
+      <!-- Registration button for logged-in users with conditions -->
+      <ng-container *ngIf="isLoggedIn">
+        <button
+          *ngIf="!userIsRegistered && registrationAvailable"
+          class="btn-register"
+          (click)="onRegister()"
+        >
+          S'inscrire à cet événement
+        </button>
+
+        <div *ngIf="userIsRegistered" class="registration-status success">
+          <i class="fa fa-check-circle"></i> Vous êtes inscrit à cet événement
+        </div>
+
+        <div
+          *ngIf="!registrationAvailable && !userIsRegistered"
+          class="registration-status warning"
+        >
+          <i class="fa fa-exclamation-circle"></i>
+          Les inscriptions ne sont plus disponibles pour cet événement
+        </div>
+      </ng-container>
+
+      <!-- Login prompt for non-logged-in users -->
+      <div *ngIf="!isLoggedIn" class="login-prompt">
+        <p>Connectez-vous pour vous inscrire à cet événement</p>
+        <button [routerLink]="['/login']" class="btn-login">
+          Se connecter
+        </button>
+      </div>
+
+      <!-- Admin/CM actions -->
+      <div *ngIf="isAdmin || isCommunityManager" class="admin-actions">
+        <button class="btn-edit" (click)="onEdit()">
+          <i class="fa fa-pencil"></i> Modifier
+        </button>
+        <button class="btn-delete" (click)="onDelete()">
+          <i class="fa fa-trash"></i> Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

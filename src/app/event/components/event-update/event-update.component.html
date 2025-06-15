@@ -1,0 +1,143 @@
+<div class="event-update-container">
+  <h2 class="section-title">Modifier un événement</h2>
+
+  <div class="auth-error" *ngIf="error">{{ error }}</div>
+
+  <div *ngIf="loading" class="loading-container">
+    <p>Chargement des données de l'événement...</p>
+  </div>
+
+  <div *ngIf="!loading && isAuthorized" class="form-container">
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Titre de l'événement*</label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          placeholder="Titre de l'événement (min 5 caractères)"
+          [class.is-invalid]="
+            eventForm.get('title')?.invalid && eventForm.get('title')?.touched
+          "
+        />
+        <div
+          class="validation-error"
+          *ngIf="
+            eventForm.get('title')?.invalid && eventForm.get('title')?.touched
+          "
+        >
+          <span *ngIf="eventForm.get('title')?.errors?.['required']"
+            >Le titre est requis.</span
+          >
+          <span *ngIf="eventForm.get('title')?.errors?.['minlength']"
+            >Le titre doit contenir au moins 5 caractères.</span
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description*</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="5"
+          placeholder="Description détaillée de l'événement (min 20 caractères)"
+          [class.is-invalid]="
+            eventForm.get('description')?.invalid &&
+            eventForm.get('description')?.touched
+          "
+        ></textarea>
+        <div
+          class="validation-error"
+          *ngIf="
+            eventForm.get('description')?.invalid &&
+            eventForm.get('description')?.touched
+          "
+        >
+          <span *ngIf="eventForm.get('description')?.errors?.['required']"
+            >La description est requise.</span
+          >
+          <span *ngIf="eventForm.get('description')?.errors?.['minlength']"
+            >La description doit contenir au moins 20 caractères.</span
+          >
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="date">Date*</label>
+          <input
+            type="date"
+            id="date"
+            formControlName="date"
+            [class.is-invalid]="
+              eventForm.get('date')?.invalid && eventForm.get('date')?.touched
+            "
+          />
+          <div
+            class="validation-error"
+            *ngIf="
+              eventForm.get('date')?.invalid && eventForm.get('date')?.touched
+            "
+          >
+            <span *ngIf="eventForm.get('date')?.errors?.['required']"
+              >La date est requise.</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="time">Heure*</label>
+          <input
+            type="time"
+            id="time"
+            formControlName="time"
+            [class.is-invalid]="
+              eventForm.get('time')?.invalid && eventForm.get('time')?.touched
+            "
+          />
+          <div
+            class="validation-error"
+            *ngIf="
+              eventForm.get('time')?.invalid && eventForm.get('time')?.touched
+            "
+          >
+            <span *ngIf="eventForm.get('time')?.errors?.['required']"
+              >L'heure est requise.</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="image">URL de l'image</label>
+        <input
+          type="text"
+          id="image"
+          formControlName="image"
+          placeholder="Lien vers une image de l'événement"
+        />
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="cancel()">
+          Annuler
+        </button>
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="submitting || eventForm.invalid"
+        >
+          <span *ngIf="!submitting">Mettre à jour l'événement</span>
+          <span *ngIf="submitting">Mise à jour en cours...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="!loading && !isAuthorized && !error" class="unauthorized-message">
+    <p>
+      Vous devez être connecté et avoir les droits d'administrateur ou de
+      Community Manager pour modifier un événement.
+    </p>
+    <button class="btn-primary" routerLink="/login">Se connecter</button>
+  </div>
+</div>

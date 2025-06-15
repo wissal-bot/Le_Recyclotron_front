@@ -78,13 +78,11 @@ export class EventService {
     return this.getEvents().pipe(
       map((response) => {
         // Extraire le tableau d'événements
-        // ...existing code similaire à getUpcomingEvents()...
         let events: any[] = [];
 
         if (Array.isArray(response)) {
           events = response;
         } else if (response && typeof response === 'object') {
-          // ... même code que dans getUpcomingEvents() ...
           const responseObj = response as any;
 
           if (responseObj.data && Array.isArray(responseObj.data)) {
@@ -133,5 +131,40 @@ export class EventService {
         });
       })
     );
+  }
+
+  // Create a new event
+  createEvent(eventData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/event`, eventData);
+  }
+
+  // Update an existing event
+  updateEvent(id: number, eventData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/event/${id}`, eventData);
+  }
+
+  // Delete an event
+  deleteEvent(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/event/${id}`);
+  }
+
+  // Register a user for an event
+  registerForEvent(eventId: number, userData: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/event/${eventId}/register`,
+      userData
+    );
+  }
+
+  // Cancel registration for an event
+  cancelRegistration(eventId: number, userId: number): Observable<any> {
+    return this.http.delete<any>(
+      `${this.apiUrl}/event/${eventId}/register/${userId}`
+    );
+  }
+
+  // Get all registrations for an event
+  getEventRegistrations(eventId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/event/${eventId}/registrations`);
   }
 }

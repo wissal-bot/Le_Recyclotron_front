@@ -1,0 +1,44 @@
+<div class="event-delete-container">
+  <h2 class="section-title">Supprimer l'événement</h2>
+
+  <div class="auth-error" *ngIf="error">{{ error }}</div>
+
+  <div *ngIf="loading" class="loading-container">
+    <p>Chargement des données de l'événement...</p>
+  </div>
+
+  <div *ngIf="!loading && isAuthorized && event" class="delete-confirmation">
+    <div class="event-summary">
+      <h3>{{ event.title }}</h3>
+      <p class="event-date"><strong>Date:</strong> {{ formatDate(event.date) }}</p>
+    </div>
+
+    <div class="warning-message">
+      <p>Êtes-vous sûr de vouloir supprimer cet événement ?</p>
+      <p>
+        Cette action est irréversible et supprimera également toutes les
+        inscriptions associées.
+      </p>
+    </div>
+
+    <div class="action-buttons">
+      <button class="btn-secondary" (click)="cancel()">Annuler</button>
+      <button
+        class="btn-danger"
+        (click)="confirmDelete()"
+        [disabled]="deleting"
+      >
+        <span *ngIf="!deleting">Confirmer la suppression</span>
+        <span *ngIf="deleting">Suppression en cours...</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !isAuthorized && !error" class="unauthorized-message">
+    <p>
+      Vous devez être connecté et avoir les droits d'administrateur ou de
+      Community Manager pour supprimer un événement.
+    </p>
+    <button class="btn-primary" routerLink="/login">Se connecter</button>
+  </div>
+</div>
