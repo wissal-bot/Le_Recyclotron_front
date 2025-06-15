@@ -19,6 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userEmail: string | null = null;
   userProfileImage: string | null = null;
   hasClientRole: boolean = false;
+  hasAdminRole: boolean = false;
+  hasRHRole: boolean = false;
 
   constructor(private authService: Api_authService) {}
 
@@ -48,12 +50,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
       if (loggedIn) {
         const user = this.authService.getUserFromToken();
-        
-        // Vérifier si l'utilisateur a le rôle "client"
+        // Vérifier les rôles de l'utilisateur
         if (user && user.roles) {
           this.hasClientRole = user.roles.includes('client');
+          this.hasAdminRole = user.roles.includes('admin');
+          this.hasRHRole = user.roles.includes('rh');
         } else {
           this.hasClientRole = false;
+          this.hasAdminRole = false;
+          this.hasRHRole = false;
         }
 
         // Mettre à jour les informations de l'utilisateur
@@ -62,6 +67,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.userProfileImage = user.profileImage || '';
       } else {
         this.hasClientRole = false;
+        this.hasAdminRole = false;
+        this.hasRHRole = false;
       }
     });
   }

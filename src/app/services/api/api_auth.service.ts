@@ -184,7 +184,10 @@ export class Api_authService {
 
   hasRole(role: string): boolean {
     const user = this.getUserFromToken();
-    return user && user.roles && user.roles.includes(role);
+    console.log('Checking role:', role, 'for user:', user);
+    const hasRole = user && user.roles && user.roles.includes(role);
+    console.log('Has role', role, ':', hasRole);
+    return hasRole;
   }
 
   private handleError(error: HttpErrorResponse) {

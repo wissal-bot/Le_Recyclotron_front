@@ -1,0 +1,188 @@
+.user-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.user-list-header {
+  margin-bottom: 2rem;
+}
+
+.user-list-header h1 {
+  font-size: 1.8rem;
+  color: var(--primary-color, #3a7b89);
+  margin-bottom: 0.5rem;
+}
+
+.user-list-header p {
+  color: var(--text-secondary, #666);
+  margin-bottom: 1.5rem;
+}
+
+.admin-actions {
+  margin-top: 1rem;
+}
+
+.btn-create {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--primary-color, #3a7b89);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-create:hover {
+  background-color: var(--primary-dark, #2c5c65);
+}
+
+.loading-spinner,
+.error-message,
+.no-users,
+.unauthorized-message {
+  text-align: center;
+  padding: 2rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  background-color: var(--bg-light, #f8f9fa);
+}
+
+.error-message {
+  color: var(--danger-color, #dc3545);
+}
+
+.btn-retry {
+  background-color: var(--primary-color, #3a7b89);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.user-table th,
+.user-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color, #e0e0e0);
+}
+
+.user-table thead {
+  background-color: var(--primary-color, #3a7b89);
+  color: white;
+}
+
+.user-table tbody tr:hover {
+  background-color: var(--bg-light, #f8f9fa);
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-details,
+.btn-edit,
+.btn-delete {
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-details {
+  background-color: var(--info-color, #17a2b8);
+  color: white;
+}
+
+.btn-edit {
+  background-color: var(--warning-color, #ffc107);
+  color: #212529;
+}
+
+.btn-delete {
+  background-color: var(--danger-color, #dc3545);
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.pagination button {
+  background-color: var(--primary-color, #3a7b89);
+  color: white;
+  border: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: var(--border-color, #e0e0e0);
+  cursor: not-allowed;
+}
+
+.reload-action {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
+}
+
+.btn-reload {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #e9ecef;
+  color: #495057;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-reload:hover {
+  background-color: #ced4da;
+}
+
+.btn-reload i {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .user-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+}

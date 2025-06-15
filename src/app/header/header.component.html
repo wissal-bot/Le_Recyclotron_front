@@ -34,6 +34,15 @@
             >Soutenir</a
           >
         </li>
+        <!-- Lien vers la gestion des utilisateurs uniquement pour les admin et RH -->
+        <li class="nav-item" *ngIf="isLoggedIn && (hasAdminRole || hasRHRole)">
+          <a
+            class="nav-link"
+            [routerLink]="['/users']"
+            routerLinkActive="active"
+            >Gestion Utilisateurs</a
+          >
+        </li>
       </ul>
     </nav>
 
@@ -67,6 +76,14 @@
           <a routerLink="/profile" class="dropdown-item">
             <i class="profile-icon"></i>
             <span>Mon profil</span>
+          </a>
+          <a
+            *ngIf="hasAdminRole || hasRHRole"
+            routerLink="/users"
+            class="dropdown-item"
+          >
+            <i class="users-icon"></i>
+            <span>Gestion Utilisateurs</span>
           </a>
           <a (click)="logout()" class="dropdown-item">
             <i class="logout-icon"></i>

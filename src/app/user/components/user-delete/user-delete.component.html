@@ -1,0 +1,45 @@
+<div class="user-delete-container">
+  <h2 class="section-title">Supprimer l'utilisateur</h2>
+
+  <div class="auth-error" *ngIf="error">{{ error }}</div>
+  <div class="auth-success" *ngIf="success">
+    L'utilisateur a été supprimé avec succès. Redirection en cours...
+  </div>
+  <div *ngIf="isAuthorized && user && !success" class="confirmation-container">
+    <div class="user-info">
+      <h3>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</h3>
+      <p><strong>Nom:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Rôles:</strong> {{ getRoleNames() }}</p>
+    </div>
+    <div class="warning-message">
+      <p>
+        Cette action est irréversible. Toutes les données associées à cet
+        utilisateur seront définitivement supprimées.
+      </p>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" (click)="cancel()">
+        Annuler
+      </button>
+      <button
+        type="button"
+        class="btn-danger"
+        (click)="confirmDelete()"
+        [disabled]="deleting"
+      >
+        <span *ngIf="!deleting">Confirmer la suppression</span>
+        <span *ngIf="deleting">Suppression en cours...</span>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!isAuthorized && !error" class="unauthorized-message">
+    <p>
+      Vous n'avez pas les droits nécessaires pour supprimer un utilisateur.
+      Seuls les administrateurs et les ressources humaines peuvent effectuer
+      cette action.
+    </p>
+    <button class="btn-primary" routerLink="/login">Se connecter</button>
+  </div>
+</div>

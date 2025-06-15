@@ -1,0 +1,99 @@
+<div class="user-list-container">
+  <div class="user-list-header">
+    <h1>Gestion des Utilisateurs</h1>
+    <p>Visualisez, créez, modifiez ou supprimez des utilisateurs</p>
+
+    <!-- Admin/RH only button to create new user -->
+    <div class="admin-actions" *ngIf="isAdmin || isHR">
+      <button class="btn-create" [routerLink]="['/users/create']">
+        <i class="fa fa-plus"></i> Créer un nouvel utilisateur
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    Chargement des utilisateurs...
+  </div>
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button class="btn-retry" (click)="loadUsers()">Réessayer</button>
+  </div>
+
+  <!-- Bouton de rechargement pour rafraîchir la liste -->
+  <div *ngIf="!loading && !error && users.length > 0" class="reload-action">
+    <button class="btn-reload" (click)="loadUsers()">
+      <i class="fa fa-refresh"></i> Actualiser la liste
+    </button>
+  </div>
+  <div *ngIf="!loading && !error && isAuthorized" class="user-list">
+    <div *ngIf="users.length === 0" class="no-users">
+      Aucun utilisateur trouvé.
+    </div>
+
+    <table *ngIf="users.length > 0" class="user-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Rôles</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers">
+          <td>{{ user.id }}</td>
+          <td>{{ user.last_name }}</td>
+          <td>{{ user.first_name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <span *ngFor="let role of user.roles; let last = last">
+              {{ role.name }}{{ !last ? ", " : "" }}
+            </span>
+          </td>
+          <td class="actions">
+            <!-- No detail view implemented yet -->
+            <!-- <button
+              class="btn-details"
+              [routerLink]="['/users/detail', user.id]"
+            >
+              Détails
+            </button> -->
+            <div class="admin-actions" *ngIf="isAdmin || isHR">
+              <button
+                class="btn-edit"
+                [routerLink]="['/users/update', user.id]"
+              >
+                Modifier
+              </button>
+              <button
+                class="btn-delete"
+                [routerLink]="['/users/delete', user.id]"
+              >
+                Supprimer
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button [disabled]="currentPage === 1" (click)="prevPage()">&lt;</button>
+      <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+      <button [disabled]="currentPage === totalPages" (click)="nextPage()">
+        &gt;
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && !isAuthorized" class="unauthorized-message">
+    <p>
+      Vous n'avez pas les droits nécessaires pour accéder à cette page. Seuls
+      les administrateurs et les ressources humaines peuvent gérer les
+      utilisateurs.
+    </p>
+  </div>
+</div>

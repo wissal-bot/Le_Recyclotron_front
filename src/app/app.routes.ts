@@ -120,4 +120,39 @@ export const routes: Routes = [
         (m) => m.VerifyOtpComponent
       ),
   },
+  {
+    path: 'users',
+    loadComponent: () =>
+      import('./user/user.component').then((m) => m.UserComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./user/components/user-list/user-list.component').then(
+            (m) => m.UserListComponent
+          ),
+      },
+      {
+        path: 'create',
+        loadComponent: () =>
+          import('./user/components/user-create/user-create.component').then(
+            (m) => m.UserCreateComponent
+          ),
+      },
+      {
+        path: 'update/:id',
+        loadComponent: () =>
+          import('./user/components/user-update/user-update.component').then(
+            (m) => m.UserUpdateComponent
+          ),
+      },
+      {
+        path: 'delete/:id',
+        loadComponent: () =>
+          import('./user/components/user-delete/user-delete.component').then(
+            (m) => m.UserDeleteComponent
+          ),
+      },
+    ],
+  },
 ];
