@@ -27,12 +27,11 @@ export class UserCreateComponent implements OnInit {
   isAdmin = false;
   isHR = false;
   rolesList = [
-    { id: 1, name: 'Client' },
-    { id: 2, name: 'Employé' },
-    { id: 3, name: 'CM' },
-    { id: 4, name: 'Réparateur' },
-    { id: 5, name: 'RH' },
-    { id: 6, name: 'Admin' },
+    { id: 5, name: 'Employé' },
+    { id: 4, name: 'CM' },
+    { id: 3, name: 'Réparateur' },
+    { id: 2, name: 'RH' },
+    { id: 1, name: 'Admin' },
   ];
 
   constructor(
@@ -84,10 +83,14 @@ export class UserCreateComponent implements OnInit {
   isRoleSelected(roleId: number): boolean {
     return this.rolesArray.controls.some((control) => control.value === roleId);
   }
-
   // Toggle selection of a role
   onRoleToggle(roleId: number, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
+
+    // Ne jamais permettre l'ajout du rôle client (id=6)
+    if (roleId === 6) {
+      return;
+    }
 
     if (isChecked) {
       this.addRole(roleId);
@@ -132,10 +135,10 @@ export class UserCreateComponent implements OnInit {
       email: this.userForm.value.email,
       password: this.userForm.value.password,
       phone: this.userForm.value.phone || null,
-    };
-
-    // Get array of role IDs from the FormArray
-    const roles = this.rolesArray.value;
+    }; // Get array of role IDs from the FormArray and filter out client role (id=6) if present
+    const roles = this.rolesArray.value.filter(
+      (roleId: number) => roleId !== 6
+    );
 
     // Call service to create user
     this.userService.createUser(userData, roles).subscribe({

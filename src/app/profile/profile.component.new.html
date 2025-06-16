@@ -129,7 +129,7 @@
           {{ editError }}
         </div>
 
-        <form (ngSubmit)="saveProfile()" #profileForm="ngForm">
+        <form (ngSubmit)="saveProfile()">
           <div class="form-group">
             <label for="firstName">Prénom *</label>
             <input
@@ -140,16 +140,7 @@
               required
               placeholder="Votre prénom"
               class="form-control"
-              #firstName="ngModel"
             />
-            <div
-              *ngIf="
-                firstName.invalid && (firstName.dirty || firstName.touched)
-              "
-              class="form-error"
-            >
-              Le prénom est obligatoire
-            </div>
           </div>
 
           <div class="form-group">
@@ -162,14 +153,7 @@
               required
               placeholder="Votre nom"
               class="form-control"
-              #lastName="ngModel"
             />
-            <div
-              *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
-              class="form-error"
-            >
-              Le nom est obligatoire
-            </div>
           </div>
 
           <div class="form-group">
@@ -180,22 +164,9 @@
               name="email"
               [(ngModel)]="editableUser.email"
               required
-              pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
               placeholder="Votre email"
               class="form-control"
-              #email="ngModel"
             />
-            <div
-              *ngIf="email.invalid && (email.dirty || email.touched)"
-              class="form-error"
-            >
-              <span *ngIf="email.errors?.['required']"
-                >L'email est obligatoire</span
-              >
-              <span *ngIf="email.errors?.['pattern']"
-                >Format d'email invalide</span
-              >
-            </div>
           </div>
 
           <div class="form-group">
@@ -219,34 +190,18 @@
               [(ngModel)]="editableUser.password"
               placeholder="Laissez vide pour ne pas changer"
               class="form-control"
-              minlength="6"
-              #password="ngModel"
             />
             <small class="form-hint"
               >Laissez ce champ vide si vous ne souhaitez pas modifier votre mot
               de passe</small
             >
-            <div
-              *ngIf="
-                password.invalid &&
-                password.value &&
-                (password.dirty || password.touched)
-              "
-              class="form-error"
-            >
-              Le mot de passe doit contenir au moins 6 caractères
-            </div>
           </div>
 
           <div class="form-actions">
             <button type="button" class="btn-cancel" (click)="cancelEdit()">
               Annuler
             </button>
-            <button
-              type="submit"
-              class="btn-save"
-              [disabled]="savingProfile || profileForm.invalid"
-            >
+            <button type="submit" class="btn-save" [disabled]="savingProfile">
               <span *ngIf="!savingProfile">Enregistrer</span>
               <span *ngIf="savingProfile">Enregistrement...</span>
             </button>
@@ -298,19 +253,14 @@
               <tr *ngFor="let registration of registrations">
                 <td>{{ registration.event?.name || "Événement inconnu" }}</td>
                 <td>{{ registration.createdAt | date : "dd/MM/yyyy" }}</td>
-                <td>{{ registration.seats || "N/A" }}</td>
+                <td>{{ registration.seats || 'N/A' }}</td>
                 <td>
                   <span
                     class="status-badge"
                     [class.status-active]="registration.active"
                   >
-                    {{
-                      registration.active !== undefined
-                        ? registration.active
-                          ? "Active"
-                          : "Annulée"
-                        : "Statut inconnu"
-                    }}
+                    {{ registration.active !== undefined ? (registration.active
+                    ? "Active" : "Annulée") : "Statut inconnu" }}
                   </span>
                 </td>
               </tr>

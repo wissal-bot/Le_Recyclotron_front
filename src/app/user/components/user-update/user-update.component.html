@@ -127,11 +127,7 @@
       <div class="form-group">
         <label>Rôles*</label>
         <div class="roles-checkboxes">
-          <div
-            class="role-checkbox"
-            *ngFor="let role of rolesList"
-            [hidden]="role.id === 6 && !isAdmin"
-          >
+          <div class="role-checkbox" *ngFor="let role of rolesList">
             <input
               type="checkbox"
               [id]="'role-' + role.id"

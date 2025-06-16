@@ -1,0 +1,54 @@
+<div class="item-list-container">
+  <div class="item-list-header">
+    <h1>Items Management</h1>
+    <button class="btn-create" (click)="navigateToCreate()">
+      Create New Item
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p>Loading items...</p>
+  </div>
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button class="btn-reload" (click)="reloadItems()">Try Again</button>
+  </div>
+
+  <div *ngIf="!loading" class="items-grid">
+    <div *ngFor="let item of items" class="item-card-wrapper">
+      <div class="item-card">
+        <div class="item-image">
+          <img
+            [src]="item.image || '/assets/placeholder.png'"
+            [alt]="item.name"
+          />
+        </div>
+        <div class="item-content">
+          <h3>{{ item.name }}</h3>
+          <p><strong>Material:</strong> {{ item.material }}</p>
+          <p><strong>Status:</strong> {{ getStatusLabel(item.status) }}</p>
+          <div
+            class="item-categories"
+            *ngIf="item.categories && item.categories.length"
+          >
+            <p><strong>Categories:</strong></p>
+            <ul>
+              <li *ngFor="let category of item.categories">
+                {{ category.name }}
+              </li>
+            </ul>
+          </div>
+          <div class="item-actions">
+            <button class="btn-view" (click)="navigateToDetail(item.id)">
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="items.length === 0" class="no-items">
+      <p>No items found.</p>
+    </div>
+  </div>
+</div>

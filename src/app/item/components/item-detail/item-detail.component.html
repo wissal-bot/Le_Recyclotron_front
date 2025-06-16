@@ -1,0 +1,59 @@
+<div class="item-detail-container">
+  <div class="item-detail-header">
+    <button class="btn-back" (click)="goBack()">Back to Items</button>
+    <h1 *ngIf="item">Item Details: {{ item.name }}</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p>Loading item details...</p>
+  </div>
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button class="btn-reload" (click)="reloadItem()">Try Again</button>
+  </div>
+
+  <!-- Debug info -->
+  <div class="debug-info" *ngIf="item">
+    <p>Item ID: {{ item.id }}</p>
+    <p>
+      Has categories:
+      {{ item.categories && item.categories.length ? "Yes" : "No" }}
+    </p>
+  </div>
+
+  <div *ngIf="!loading && !error && item" class="item-detail-content">
+    <div class="item-image">
+      <img [src]="item.image || '/assets/placeholder.png'" [alt]="item.name" />
+    </div>
+
+    <div class="item-info">
+      <div class="info-row">
+        <label>Name:</label>
+        <span>{{ item.name }}</span>
+      </div>
+
+      <div class="info-row">
+        <label>Material:</label>
+        <span>{{ item.material }}</span>
+      </div>
+      <div class="info-row">
+        <label>Status:</label>
+        <span>{{ getStatusLabel(item.status) }} ({{ item.status }})</span>
+      </div>
+
+      <div class="info-row" *ngIf="item.categories && item.categories.length">
+        <label>Categories:</label>
+        <div class="categories-list">
+          <span *ngFor="let category of item.categories" class="category-tag">
+            {{ category.name }}
+          </span>
+        </div>
+      </div>
+
+      <div class="item-actions">
+        <button class="btn-edit" (click)="navigateToUpdate()">Edit</button>
+        <button class="btn-delete" (click)="navigateToDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

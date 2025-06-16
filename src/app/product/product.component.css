@@ -185,13 +185,19 @@
   font-size: 0.9rem;
 }
 
+.status-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .status-tag {
-  display: inline-block;
   background-color: #4caf50;
   color: white;
-  padding: 5px 10px;
+  padding: 8px 15px;
   border-radius: 20px;
+  display: inline-block;
   font-weight: 500;
+  margin-top: 5px;
 }
 
 .actions {

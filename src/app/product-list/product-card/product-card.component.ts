@@ -12,21 +12,20 @@ import { ItemWithCategories } from '../../../interfaces/item.interface';
 })
 export class ProductCardComponent {
   @Input() item!: ItemWithCategories;
-
   getImageUrl(item: any): string {
-    if (!item || !item.imageUrl) return 'assets/placeholder.png';
+    if (!item || !item.image) return 'assets/placeholder.png';
 
     try {
       // If it's a full URL, use it directly
-      new URL(item.imageUrl);
-      return item.imageUrl;
+      new URL(item.image);
+      return item.image;
     } catch (e) {
       // If it's a relative path, make sure it has the correct structure
-      if (item.imageUrl.startsWith('/')) {
-        return item.imageUrl;
+      if (item.image.startsWith('/')) {
+        return item.image;
       } else {
         // If it doesn't start with /, add assets/ prefix
-        return `assets/${item.imageUrl}`;
+        return `assets/${item.image}`;
       }
     }
   }

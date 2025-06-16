@@ -1,0 +1,161 @@
+.item-list-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.item-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.item-list-header h1 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.btn-create {
+  padding: 10px 20px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn-create:hover {
+  background-color: #2ecc71;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.item-card-wrapper {
+  height: 100%;
+}
+
+.loading,
+.error-message,
+.no-items {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+}
+
+.error-message {
+  color: #e74c3c;
+  border-left: 4px solid #e74c3c;
+  background-color: rgba(231, 76, 60, 0.1);
+  padding: 1rem 2rem;
+}
+
+@media (max-width: 768px) {
+  .item-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .items-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Item card styles */
+.item-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: white;
+  height: 100%;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.item-image {
+  height: 180px;
+  overflow: hidden;
+}
+
+.item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-content {
+  padding: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.item-content h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #2c3e50;
+}
+
+.item-content p {
+  margin: 6px 0;
+  color: #34495e;
+}
+
+.item-categories {
+  margin-top: 10px;
+}
+
+.item-categories ul {
+  margin: 5px 0;
+  padding-left: 20px;
+}
+
+.item-categories li {
+  margin-bottom: 3px;
+}
+
+.item-actions {
+  margin-top: auto;
+  padding-top: 15px;
+}
+
+.btn-view {
+  padding: 8px 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-view:hover {
+  background-color: #2980b9;
+}
+
+/* Debug info styles */
+.debug-info {
+  background-color: #f1f1f1;
+  padding: 8px 16px;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.debug-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}

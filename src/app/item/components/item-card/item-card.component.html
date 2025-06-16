@@ -1,0 +1,22 @@
+<div class="item-card">
+  <div class="item-image">
+    <img [src]="item.image || '/assets/placeholder.png'" [alt]="item.name" />
+  </div>
+  <div class="item-content">
+    <h3>{{ item.name }}</h3>
+    <p><strong>Material:</strong> {{ item.material }}</p>
+    <p><strong>Status:</strong> {{ item.status }}</p>
+    <div
+      class="item-categories"
+      *ngIf="item.categories && item.categories.length"
+    >
+      <p><strong>Categories:</strong></p>
+      <ul>
+        <li *ngFor="let category of item.categories">{{ category.name }}</li>
+      </ul>
+    </div>
+    <div class="item-actions">
+      <button class="btn-view" (click)="onViewDetails()">View Details</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="item-delete-container">
+  <div class="item-delete-header">
+    <h1>Delete Item</h1>
+    <button class="btn-cancel" (click)="cancel()">Cancel</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p>Loading item details...</p>
+  </div>
+
+  <div *ngIf="deleteSuccess" class="success-message">
+    <p>Item deleted successfully! Redirecting...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!loading && !error && item" class="delete-confirmation">
+    <div class="warning-icon">⚠️</div>
+    <h2>Are you sure you want to delete this item?</h2>
+
+    <div class="item-info">
+      <div class="item-preview">
+        <img
+          [src]="item.image || '/assets/placeholder.png'"
+          [alt]="item.name"
+        />
+      </div>
+
+      <div class="item-details">
+        <p><strong>Name:</strong> {{ item.name }}</p>
+        <p><strong>Material:</strong> {{ item.material }}</p>
+        <p><strong>Status:</strong> {{ item.status }}</p>
+      </div>
+    </div>
+
+    <div class="warning-text">
+      <p>
+        This action cannot be undone. The item will be permanently removed from
+        the system.
+      </p>
+    </div>
+
+    <div class="delete-actions">
+      <button class="btn-cancel secondary" (click)="cancel()">
+        No, Cancel
+      </button>
+      <button
+        class="btn-delete"
+        (click)="confirmDelete()"
+        [disabled]="deleting"
+      >
+        {{ deleting ? "Deleting..." : "Yes, Delete Item" }}
+      </button>
+    </div>
+  </div>
+</div>

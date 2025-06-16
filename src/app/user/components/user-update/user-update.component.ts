@@ -29,12 +29,11 @@ export class UserUpdateComponent implements OnInit {
   isAdmin = false;
   isHR = false;
   rolesList = [
-    { id: 1, name: 'admin' },
-    { id: 2, name: 'rh' },
-    { id: 3, name: 'repairer' },
-    { id: 4, name: 'cm' },
-    { id: 5, name: 'employee' },
-    { id: 6, name: 'client' },
+    { id: 5, name: 'Employé' },
+    { id: 4, name: 'CM' },
+    { id: 3, name: 'Réparateur' },
+    { id: 2, name: 'RH' },
+    { id: 1, name: 'Admin' },
   ];
 
   constructor(
@@ -135,10 +134,14 @@ export class UserUpdateComponent implements OnInit {
   isRoleSelected(roleId: number): boolean {
     return this.rolesArray.controls.some((control) => control.value === roleId);
   }
-
   // Toggle selection of a role
   onRoleToggle(roleId: number, event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
+
+    // Ne jamais permettre l'ajout du rôle client (id=6)
+    if (roleId === 6) {
+      return;
+    }
 
     if (isChecked) {
       this.addRole(roleId);
@@ -216,8 +219,10 @@ export class UserUpdateComponent implements OnInit {
       },
     });
   }
-
   updateUserRoles(newRoleIds: number[]): void {
+    // Filtrer le rôle client (id=6) s'il est présent
+    newRoleIds = newRoleIds.filter((roleId) => roleId !== 6);
+
     console.log('Mise à jour des rôles:', newRoleIds);
 
     const currentRoles = this.user?.roles || [];

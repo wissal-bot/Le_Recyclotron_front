@@ -4,6 +4,10 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 import { Api_itemService } from '../services/api/api_item.service';
 import { ItemWithCategories } from '../../interfaces/item.interface';
+import {
+  ItemStatus,
+  getItemStatusLabel,
+} from '../../interfaces/item-status.enum';
 
 @Component({
   selector: 'app-product',
@@ -41,12 +45,20 @@ export class ProductComponent implements OnInit {
     this.error = null;
 
     this.itemService.getItemById(id).subscribe({
-      next: (response: any) => {
-        console.log('Response:', response);
-        // Extract the ItemWithCategories from the response object
-        this.item = response.data;
+      next: (response: ItemWithCategories) => {
+        console.log('Item details response:', response);
+
+        // Check if the item has a SALABLE status
+        if (Number(response.status) === ItemStatus.SALABLE) {
+          this.item = response;
+          console.log('Loaded SALABLE item:', this.item);
+        } else {
+          // If not SALABLE, don't display it
+          this.error = 'This item is currently not available for sale.';
+          console.log('Item not SALABLE, status:', response.status);
+        }
+
         this.loading = false;
-        console.log('Loaded item data:', this.item);
       },
       error: (err) => {
         this.error = 'Failed to load item details. Please try again later.';
@@ -57,20 +69,20 @@ export class ProductComponent implements OnInit {
   }
 
   // Helper method to get image URL
-  getImageUrl(imageUrl: string | undefined): string {
-    if (!imageUrl) return 'assets/placeholder.png';
+  getImageUrl(image: string | undefined): string {
+    if (!image) return 'assets/placeholder.png';
 
     try {
       // If it's a full URL, use it directly
-      new URL(imageUrl);
-      return imageUrl;
+      new URL(image);
+      return image;
     } catch (e) {
       // If it's a relative path, make sure it has the correct structure
-      if (imageUrl.startsWith('/')) {
-        return imageUrl;
+      if (image.startsWith('/')) {
+        return image;
       } else {
         // If it doesn't start with /, add assets/ prefix
-        return `assets/${imageUrl}`;
+        return `assets/${image}`;
       }
     }
   }

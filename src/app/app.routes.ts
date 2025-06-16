@@ -155,4 +155,51 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'items',
+    loadComponent: () =>
+      import('./item/item.component').then((m) => m.ItemComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./item/components/item-list/item-list.component').then(
+            (m) => m.ItemListComponent
+          ),
+      },
+      {
+        path: 'detail/:id',
+        loadComponent: () =>
+          import('./item/components/item-detail/item-detail.component').then(
+            (m) => m.ItemDetailComponent
+          ),
+      },
+      {
+        path: 'create',
+        loadComponent: () =>
+          import('./item/components/item-create/item-create.component').then(
+            (m) => m.ItemCreateComponent
+          ),
+      },
+      {
+        path: 'update/:id',
+        loadComponent: () =>
+          import('./item/components/item-update/item-update.component').then(
+            (m) => m.ItemUpdateComponent
+          ),
+      },
+      {
+        path: 'delete/:id',
+        loadComponent: () =>
+          import('./item/components/item-delete/item-delete.component').then(
+            (m) => m.ItemDeleteComponent
+          ),
+      },
+    ],
+  },
+  {
+    path: 'repairer',
+    loadComponent: () =>
+      import('./repairer/repairer.component').then((m) => m.RepairerComponent),
+  },
 ];

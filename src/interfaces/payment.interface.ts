@@ -22,4 +22,7 @@ export interface Payment {
   amount: number;
   type: number;
   status: string;
+  createdAt?: string;
+  updatedAt?: string;
+  description?: string;
 }

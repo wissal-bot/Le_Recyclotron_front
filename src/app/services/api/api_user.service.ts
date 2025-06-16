@@ -210,12 +210,143 @@ export class Api_userService {
   }
 
   getUserPayments(id: string): Observable<Payment[]> {
-    return this.http.get<Payment[]>(`${this.API_URL}/users/${id}/payments`);
+    console.log(`Appel API pour les paiements de l'utilisateur ${id}`);
+    return this.http.get<any>(`${this.API_URL}/users/${id}/payments`).pipe(
+      map((response: any) => {
+        console.log('Réponse API brute des paiements:', response);
+
+        // Gestion des différentes structures de réponse possibles
+        let payments: any[] = [];
+
+        if (Array.isArray(response)) {
+          payments = response;
+        } else if (response && response.data && Array.isArray(response.data)) {
+          payments = response.data;
+        } else if (
+          response &&
+          response.payments &&
+          Array.isArray(response.payments)
+        ) {
+          payments = response.payments;
+        } else if (response && typeof response === 'object') {
+          // Essayer de récupérer n'importe quelle propriété qui contient un tableau
+          const possibleArrays = Object.values(response).filter((val) =>
+            Array.isArray(val)
+          );
+          if (possibleArrays.length > 0) {
+            // Prendre le premier tableau trouvé
+            payments = possibleArrays[0] as any[];
+            console.log(
+              "Utilisation d'un tableau trouvé dans la réponse:",
+              payments
+            );
+          } else {
+            console.warn(
+              'Aucun tableau trouvé dans la réponse pour les paiements'
+            );
+          }
+        } else {
+          console.warn(
+            'Format de réponse API inattendu pour les paiements:',
+            response
+          );
+        }
+
+        // Si les paiements sont vides, tenter une approche différente
+        if (payments.length === 0 && response && !Array.isArray(response)) {
+          // Si la réponse est un objet unique, l'envelopper dans un tableau
+          if (response.id || response.amount || response.status) {
+            payments = [response];
+            console.log("Traitement d'un paiement unique:", payments);
+          }
+        }
+
+        console.log(`Paiements traités (${payments.length}):`, payments);
+        return payments;
+      }),
+      catchError((error) => {
+        console.error(
+          `Erreur lors de la récupération des paiements pour l'utilisateur ${id}:`,
+          error
+        );
+        return throwError(
+          () => new Error(`Erreur lors de la récupération des paiements`)
+        );
+      })
+    );
   }
 
   getUserRegistrations(id: string): Observable<Registration[]> {
-    return this.http.get<Registration[]>(
-      `${this.API_URL}/users/${id}/registrations`
+    console.log(`Appel API pour les inscriptions de l'utilisateur ${id}`);
+    return this.http.get<any>(`${this.API_URL}/users/${id}/registrations`).pipe(
+      map((response: any) => {
+        console.log('Réponse API brute des inscriptions:', response);
+
+        // Gestion des différentes structures de réponse possibles
+        let registrations: any[] = [];
+
+        if (Array.isArray(response)) {
+          registrations = response;
+        } else if (response && response.data && Array.isArray(response.data)) {
+          registrations = response.data;
+        } else if (
+          response &&
+          response.registrations &&
+          Array.isArray(response.registrations)
+        ) {
+          registrations = response.registrations;
+        } else if (response && typeof response === 'object') {
+          // Essayer de récupérer n'importe quelle propriété qui contient un tableau
+          const possibleArrays = Object.values(response).filter((val) =>
+            Array.isArray(val)
+          );
+          if (possibleArrays.length > 0) {
+            // Prendre le premier tableau trouvé
+            registrations = possibleArrays[0] as any[];
+            console.log(
+              "Utilisation d'un tableau trouvé dans la réponse:",
+              registrations
+            );
+          } else {
+            console.warn(
+              'Aucun tableau trouvé dans la réponse pour les inscriptions'
+            );
+          }
+        } else {
+          console.warn(
+            'Format de réponse API inattendu pour les inscriptions:',
+            response
+          );
+        }
+
+        // Si les inscriptions sont vides, tenter une approche différente
+        if (
+          registrations.length === 0 &&
+          response &&
+          !Array.isArray(response)
+        ) {
+          // Si la réponse est un objet unique, l'envelopper dans un tableau
+          if (response.id || response.seats || response.eventId) {
+            registrations = [response];
+            console.log("Traitement d'une inscription unique:", registrations);
+          }
+        }
+
+        console.log(
+          `Inscriptions traitées (${registrations.length}):`,
+          registrations
+        );
+        return registrations;
+      }),
+      catchError((error) => {
+        console.error(
+          `Erreur lors de la récupération des inscriptions pour l'utilisateur ${id}:`,
+          error
+        );
+        return throwError(
+          () => new Error(`Erreur lors de la récupération des inscriptions`)
+        );
+      })
     );
   }
 

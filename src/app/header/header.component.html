@@ -14,7 +14,7 @@
             >Accueil</a
           >
         </li>
-        <li>
+        <li *ngIf="!isLoggedIn || hasClientRole">
           <a routerLink="/product-list" routerLinkActive="active">Vitrine</a>
         </li>
         <li class="nav-item">
@@ -23,6 +23,37 @@
             [routerLink]="['/events']"
             routerLinkActive="active"
             >Événements</a
+          >
+        </li>
+        <!-- Lien vers la page items pour les employés, cm, repairer, rh, admin -->
+        <li
+          class="nav-item"
+          *ngIf="
+            isLoggedIn &&
+            (hasEmployeeRole ||
+              hasCMRole ||
+              hasRepairerRole ||
+              hasRHRole ||
+              hasAdminRole)
+          "
+        >
+          <a
+            class="nav-link"
+            [routerLink]="['/items']"
+            routerLinkActive="active"
+            >Items</a
+          >
+        </li>
+        <!-- Lien vers la page repairer pour les repairer et admin -->
+        <li
+          class="nav-item"
+          *ngIf="isLoggedIn && (hasRepairerRole || hasAdminRole)"
+        >
+          <a
+            class="nav-link"
+            [routerLink]="['/repairer']"
+            routerLinkActive="active"
+            >Réparations</a
           >
         </li>
         <!-- Lien vers la page payment uniquement pour les clients -->
@@ -76,14 +107,6 @@
           <a routerLink="/profile" class="dropdown-item">
             <i class="profile-icon"></i>
             <span>Mon profil</span>
-          </a>
-          <a
-            *ngIf="hasAdminRole || hasRHRole"
-            routerLink="/users"
-            class="dropdown-item"
-          >
-            <i class="users-icon"></i>
-            <span>Gestion Utilisateurs</span>
           </a>
           <a (click)="logout()" class="dropdown-item">
             <i class="logout-icon"></i>

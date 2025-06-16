@@ -1,0 +1,161 @@
+<div class="repairer-container">
+  <h1>Repairer Dashboard</h1>
+
+  <!-- Tabs Navigation -->
+  <div class="tabs">
+    <button
+      [class.active]="activeTab === 'sort'"
+      (click)="setActiveTab('sort')"
+      class="tab-button"
+    >
+      Items to Sort
+    </button>
+    <button
+      [class.active]="activeTab === 'repair'"
+      (click)="setActiveTab('repair')"
+      class="tab-button"
+    >
+      Items to Repair
+    </button>
+  </div>
+  <!-- Sort Tab Content: Displays UNSALABLE items -->
+  <div *ngIf="activeTab === 'sort'" class="tab-content">
+    <h2>Items to Sort</h2>
+    <p>
+      Review and categorize unsalable items for repair or materials recovery.
+    </p>
+
+    <div *ngIf="loadingSortItems" class="loading">Loading items...</div>
+    <div *ngIf="sortItemsError" class="error">{{ sortItemsError }}</div>
+
+    <div
+      *ngIf="!loadingSortItems && unsalableItems.length === 0"
+      class="no-items"
+    >
+      No items to sort at this time.
+    </div>
+
+    <div class="items-grid" *ngIf="unsalableItems && unsalableItems.length > 0">
+      <div *ngFor="let item of unsalableItems; let i = index" class="item-card">
+        <div class="item-header">
+          <span class="item-index">#{{ i + 1 }}</span>
+          <span class="item-id">ID: {{ item.id }}</span>
+        </div>
+        <div class="item-image">
+          <img
+            [src]="item.image || '/assets/placeholder.png'"
+            [alt]="item.name"
+            (error)="onImageError($event)"
+          />
+        </div>
+        <div class="item-info">
+          <h3>{{ item.name || "Unnamed Item" }}</h3>
+          <p><strong>Material:</strong> {{ item.material || "Unknown" }}</p>
+          <p><strong>Status:</strong> {{ getItemStatusLabel(item.status) }}</p>
+
+          <div class="item-actions">
+            <button class="btn-view" (click)="viewItemDetails(item)">
+              View Details
+            </button>
+            <div class="sorting-actions">
+              <button class="btn-repair" (click)="markAsReparable(item)">
+                Mark as Reparable
+              </button>
+              <button class="btn-material" (click)="markAsMaterial(item)">
+                Mark as Material
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Repair Tab Content: Displays REPARABLE items -->
+  <div *ngIf="activeTab === 'repair'" class="tab-content">
+    <h2>Items to Repair</h2>
+    <p>Items that have been marked for repair.</p>
+
+    <div *ngIf="loadingRepairItems" class="loading">Loading items...</div>
+    <div *ngIf="repairItemsError" class="error">{{ repairItemsError }}</div>
+
+    <div
+      *ngIf="!loadingRepairItems && reparableItems.length === 0"
+      class="no-items"
+    >
+      No items marked for repair at this time.
+    </div>
+
+    <div class="items-grid" *ngIf="reparableItems && reparableItems.length > 0">
+      <div *ngFor="let item of reparableItems; let i = index" class="item-card">
+        <div class="item-header">
+          <span class="item-index">#{{ i + 1 }}</span>
+          <span class="item-id">ID: {{ item.id }}</span>
+        </div>
+        <div class="item-image">
+          <img
+            [src]="item.image || '/assets/placeholder.png'"
+            [alt]="item.name"
+            (error)="onImageError($event)"
+          />
+        </div>
+        <div class="item-info">
+          <h3>{{ item.name || "Unnamed Item" }}</h3>
+          <p><strong>Material:</strong> {{ item.material || "Unknown" }}</p>
+          <p><strong>Status:</strong> {{ getItemStatusLabel(item.status) }}</p>
+
+          <div class="item-actions">
+            <button class="btn-view" (click)="viewItemDetails(item)">
+              View Details
+            </button>
+            <div class="repair-actions">
+              <button class="btn-repaired" (click)="markAsRepaired(item)">
+                Mark as Repaired
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Item Details Modal -->
+  <div *ngIf="selectedItem" class="modal-overlay" (click)="closeItemDetails()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Item Details: {{ selectedItem.name }}</h2>
+        <button class="close-btn" (click)="closeItemDetails()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="item-image">
+          <img
+            [src]="selectedItem.image || '/assets/placeholder.png'"
+            [alt]="selectedItem.name"
+          />
+        </div>
+        <div class="item-details">
+          <p><strong>ID:</strong> {{ selectedItem.id }}</p>
+          <p><strong>Name:</strong> {{ selectedItem.name }}</p>
+          <p><strong>Material:</strong> {{ selectedItem.material }}</p>
+          <p>
+            <strong>Status:</strong>
+            {{ getItemStatusLabel(selectedItem.status) }}
+          </p>
+
+          <div
+            *ngIf="
+              selectedItem.categories && selectedItem.categories.length > 0
+            "
+            class="categories-section"
+          >
+            <h3>Categories</h3>
+            <ul>
+              <li *ngFor="let category of selectedItem.categories">
+                {{ category.name }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

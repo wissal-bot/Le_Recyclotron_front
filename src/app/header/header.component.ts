@@ -21,6 +21,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   hasClientRole: boolean = false;
   hasAdminRole: boolean = false;
   hasRHRole: boolean = false;
+  hasRepairerRole: boolean = false;
+  hasEmployeeRole: boolean = false;
+  hasCMRole: boolean = false;
 
   constructor(private authService: Api_authService) {}
 
@@ -55,10 +58,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.hasClientRole = user.roles.includes('client');
           this.hasAdminRole = user.roles.includes('admin');
           this.hasRHRole = user.roles.includes('rh');
+          this.hasRepairerRole = user.roles.includes('repairer');
+          this.hasEmployeeRole = user.roles.includes('employee');
+          this.hasCMRole = user.roles.includes('cm');
         } else {
           this.hasClientRole = false;
           this.hasAdminRole = false;
           this.hasRHRole = false;
+          this.hasRepairerRole = false;
+          this.hasEmployeeRole = false;
+          this.hasCMRole = false;
         }
 
         // Mettre à jour les informations de l'utilisateur
@@ -69,6 +78,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.hasClientRole = false;
         this.hasAdminRole = false;
         this.hasRHRole = false;
+        this.hasRepairerRole = false;
+        this.hasEmployeeRole = false;
+        this.hasCMRole = false;
       }
     });
   }

@@ -1,0 +1,108 @@
+<div class="item-update-container">
+  <div class="item-update-header">
+    <h1>Update Item</h1>
+    <button class="btn-cancel" (click)="cancel()">Cancel</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <p>Loading item details...</p>
+  </div>
+
+  <div *ngIf="submitSuccess" class="success-message">
+    <p>Item updated successfully! Redirecting...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <form
+    *ngIf="!loading && !error"
+    [formGroup]="itemForm"
+    (ngSubmit)="onSubmit()"
+    class="item-form"
+  >
+    <div class="form-group">
+      <label for="name">Item Name</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Enter item name"
+      />
+      <div
+        class="error-text"
+        *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched"
+      >
+        <span *ngIf="itemForm.get('name')?.errors?.['required']"
+          >Name is required</span
+        >
+        <span *ngIf="itemForm.get('name')?.errors?.['minlength']"
+          >Name must be at least 3 characters</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="material">Material</label>
+      <input
+        id="material"
+        type="text"
+        formControlName="material"
+        placeholder="Enter item material"
+      />
+      <div
+        class="error-text"
+        *ngIf="
+          itemForm.get('material')?.invalid && itemForm.get('material')?.touched
+        "
+      >
+        <span *ngIf="itemForm.get('material')?.errors?.['required']"
+          >Material is required</span
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        <option *ngFor="let option of statusOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+      <div
+        class="error-text"
+        *ngIf="
+          itemForm.get('status')?.invalid && itemForm.get('status')?.touched
+        "
+      >
+        <span *ngIf="itemForm.get('status')?.errors?.['required']"
+          >Status is required</span
+        >
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input
+        id="image"
+        type="text"
+        formControlName="image"
+        placeholder="Enter image URL"
+      />
+      <div
+        class="error-text"
+        *ngIf="itemForm.get('image')?.invalid && itemForm.get('image')?.touched"
+      >
+        <span *ngIf="itemForm.get('image')?.errors?.['required']"
+          >Image is required</span
+        >
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit" [disabled]="updating">
+        {{ updating ? "Updating..." : "Update Item" }}
+      </button>
+    </div>
+  </form>
+</div>
