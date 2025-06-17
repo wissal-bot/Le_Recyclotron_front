@@ -291,27 +291,30 @@
                 <th>Événement</th>
                 <th>Date d'inscription</th>
                 <th>Places</th>
-                <th>Statut</th>
+                <th>Détails</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let registration of registrations">
-                <td>{{ registration.event?.name || "Événement inconnu" }}</td>
+                <td>
+                  {{
+                    registration.event?.name ||
+                      registration.event?.title ||
+                      "Événement inconnu"
+                  }}
+                </td>
                 <td>{{ registration.createdAt | date : "dd/MM/yyyy" }}</td>
                 <td>{{ registration.seats || "N/A" }}</td>
                 <td>
-                  <span
-                    class="status-badge"
-                    [class.status-active]="registration.active"
+                  <a
+                    class="btn-detail"
+                    [routerLink]="[
+                      '/events/registration/detail',
+                      registration.id
+                    ]"
                   >
-                    {{
-                      registration.active !== undefined
-                        ? registration.active
-                          ? "Active"
-                          : "Annulée"
-                        : "Statut inconnu"
-                    }}
-                  </span>
+                    Détail
+                  </a>
                 </td>
               </tr>
             </tbody>

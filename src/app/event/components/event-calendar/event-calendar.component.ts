@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { EventService } from '../../../services/event.service';
+import { Api_eventService } from '../../../services/api/api_event.service';
 import { Api_authService } from '../../../services/api/api_auth.service';
 import { Event } from '../../../../interfaces/event.interface';
 
@@ -46,7 +46,7 @@ export class EventCalendarComponent implements OnInit {
   isCommunityManager = false;
 
   constructor(
-    private eventService: EventService,
+    private eventService: Api_eventService,
     private authService: Api_authService
   ) {
     this.selectedYear = this.currentDate.getFullYear();
@@ -69,14 +69,14 @@ export class EventCalendarComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.eventService.getEvents().subscribe({
-      next: (events: any) => {
-        this.events = events.data;
+    this.eventService.getAllEvents().subscribe({
+      next: (events: Event[]) => {
+        this.events = Array.isArray(events) ? events : [];
         this.loading = false;
         this.generateCalendar();
         this.filterUpcomingEvents();
       },
-      error: (err: any) => {
+      error: (err: unknown) => {
         this.error = 'Erreur lors du chargement des événements.';
         this.loading = false;
         console.error('Erreur:', err);

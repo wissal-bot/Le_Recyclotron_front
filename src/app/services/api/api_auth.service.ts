@@ -28,9 +28,40 @@ export class Api_authService {
   );
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
+  // From AuthService
+  private userSubject = new BehaviorSubject<User | null>(null);
+  public user$: Observable<User | null> = this.userSubject.asObservable();
+
   constructor(private http: HttpClient, private router: Router) {
     // Check token validity on service initialization
     this.isLoggedInSubject.next(this.hasValidToken());
+
+    // From AuthService - load user data
+    this.loadUserFromStorage();
+  }
+
+  // From AuthService - load user from storage
+  private loadUserFromStorage(): void {
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      try {
+        const user = JSON.parse(userJson);
+        this.userSubject.next(user);
+      } catch (e) {
+        console.error('Error parsing stored user data', e);
+      }
+    }
+  }
+
+  // From AuthService - store auth data
+  private storeAuthData(token: string, user: User): void {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  // From AuthService - get user observable
+  getUser(): Observable<User | null> {
+    return this.user$;
   }
 
   login(credentials: LoginRequest): Observable<{

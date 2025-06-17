@@ -15,90 +15,30 @@
   </div>
 
   <ng-container *ngIf="!eventLoading && !error && event">
-    <!-- Success message after registration -->
-    <div *ngIf="success" class="success-message">
-      <div class="success-icon">
-        <i class="fa fa-check-circle"></i>
-      </div>
-      <h2>Inscription réussie!</h2>
-      <p>
-        Votre inscription à l'événement <strong>{{ event.title }}</strong> a été
-        enregistrée avec succès.
-      </p>
-      <p>Vous recevrez un email de confirmation prochainement.</p>
-      <div class="action-buttons">
-        <button (click)="goBack()" class="btn-back">
-          Retour à l'événement
-        </button>
-        <button [routerLink]="['/events']" class="btn-calendar">
-          Voir le calendrier
-        </button>
-      </div>
+    <h1>Inscriptions à l'événement : {{ event.title }}</h1>
+    <div *ngIf="loading">Chargement des inscriptions...</div>
+    <div *ngIf="!loading && registrations.length === 0">
+      Aucune inscription pour cet événement.
     </div>
-
-    <!-- Registration form -->
-    <div *ngIf="!success" class="registration-form-container">
-      <h1>Inscription à l'événement</h1>
-
-      <div class="event-summary">
-        <h2>{{ event.title }}</h2>
-        <p class="event-date">
-          <i class="fa fa-calendar"></i> {{ formatDate(event.date) }}
-        </p>
-        <p *ngIf="event.location" class="event-location">
-          <i class="fa fa-map-marker"></i> {{ event.location }}
-        </p>
-      </div>
-
-      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="numberOfPersons">Nombre de personnes</label>
-          <input
-            type="number"
-            id="numberOfPersons"
-            formControlName="numberOfPersons"
-            min="1"
-            [max]="event.capacity ? event.capacity - event.registeredCount : 10"
-          />
-          <div
-            *ngIf="
-              registrationForm.get('numberOfPersons')?.invalid &&
-              registrationForm.get('numberOfPersons')?.touched
-            "
-            class="form-error"
-          >
-            Veuillez indiquer un nombre valide de personnes (minimum 1).
-          </div>
-        </div>
-        <!-- Simplified form with just number of participants field -->
-        <p class="form-note">
-          En vous inscrivant, vous acceptez les
-          <a href="/cgu" target="_blank">conditions générales</a> de
-          participation.
-        </p>
-
-        <div *ngIf="registrationError" class="error-message">
-          {{ registrationError }}
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn-cancel" (click)="goBack()">
-            Annuler
-          </button>
-          <button
-            type="submit"
-            class="btn-confirm"
-            [disabled]="
-              submitting ||
-              registrationForm.invalid ||
-              registrationForm.get('numberOfPersons')?.value < 1
-            "
-          >
-            <span *ngIf="!submitting">Confirmer l'inscription</span>
-            <span *ngIf="submitting">Inscription en cours...</span>
-          </button>
-        </div>
-      </form>
-    </div>
+    <table
+      *ngIf="!loading && registrations.length > 0"
+      class="registration-table"
+    >
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Nombre de places</th>
+          <th>Date d'inscription</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reg of registrations">
+          <td>{{ reg.userId }}</td>
+          <td>{{ reg.seats }}</td>
+          <td>{{ reg.createdAt ? formatDate(reg.createdAt) : "-" }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="goBack()" class="btn-back">Retour à l'événement</button>
   </ng-container>
 </div>

@@ -1,0 +1,90 @@
+<div class="registration-detail-container">
+  <div class="back-button">
+    <button (click)="goBack()" class="btn-back">
+      <i class="fa fa-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    Chargement des détails de l'inscription...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="goBack()" class="btn-back">Retour</button>
+  </div>
+
+  <!-- Registration Details -->
+  <div *ngIf="!loading && !error && registration" class="registration-card">
+    <div class="card-header">
+      <h1>
+        Détails de l'inscription
+        <span
+          class="registration-status"
+          [ngClass]="registration.active ? 'status-active' : 'status-inactive'"
+        >
+          {{ registration.active ? "Active" : "Inactive" }}
+        </span>
+      </h1>
+    </div>
+
+    <div class="card-body">
+      <div class="event-details" *ngIf="registration.event">
+        <h2 class="event-title">{{ registration.event.name }}</h2>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">Date</div>
+            <div class="info-value">
+              {{ formatDate(registration.event.date) }}
+            </div>
+          </div>
+
+          <div class="info-item" *ngIf="registration.event.location">
+            <div class="info-label">Lieu</div>
+            <div class="info-value">{{ registration.event.location }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-label">Nombre de places</div>
+          <div class="info-value">{{ registration.seats }}</div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-label">Identifiant</div>
+          <div class="info-value">{{ registration.id }}</div>
+        </div>
+      </div>
+
+      <div class="meta-info">
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">Créée le</div>
+            <div class="info-value">
+              {{ formatDate(registration.createdAt) }}
+            </div>
+          </div>
+
+          <div class="info-item" *ngIf="registration.updatedAt">
+            <div class="info-label">Mise à jour le</div>
+            <div class="info-value">
+              {{ formatDate(registration.updatedAt) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons" *ngIf="isOwner || isAdmin">
+        <button class="btn-update" (click)="onUpdate()">
+          <i class="fa fa-pencil"></i> Modifier
+        </button>
+        <button class="btn-delete" (click)="onDelete()">
+          <i class="fa fa-trash"></i> Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

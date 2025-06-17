@@ -51,8 +51,29 @@ export const routes: Routes = [
         path: 'register/:id',
         loadComponent: () =>
           import(
-            './event/components/event-registration/event-registration.component'
-          ).then((m) => m.EventRegistrationComponent),
+            './event/components/event-registration-create/event-registration-create.component'
+          ).then((m) => m.EventRegistrationCreateComponent),
+      },
+      {
+        path: 'registration/detail/:id',
+        loadComponent: () =>
+          import(
+            './event/components/event-registration-detail/event-registration-detail.component'
+          ).then((m) => m.EventRegistrationDetailComponent),
+      },
+      {
+        path: 'registration/update/:id',
+        loadComponent: () =>
+          import(
+            './event/components/event-registration-update/event-registration-update.component'
+          ).then((m) => m.EventRegistrationUpdateComponent),
+      },
+      {
+        path: 'registration/delete/:id',
+        loadComponent: () =>
+          import(
+            './event/components/event-registration-delete/event-registration-delete.component'
+          ).then((m) => m.EventRegistrationDeleteComponent),
       },
       {
         path: 'create',
@@ -201,5 +222,47 @@ export const routes: Routes = [
     path: 'repairer',
     loadComponent: () =>
       import('./repairer/repairer.component').then((m) => m.RepairerComponent),
+  },
+  {
+    path: 'categories',
+    loadComponent: () =>
+      import('./category/category.component').then((m) => m.CategoryComponent),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import(
+            './category/components/category-list/category-list.component'
+          ).then((m) => m.CategoryListComponent),
+      },
+      {
+        path: 'detail/:id',
+        loadComponent: () =>
+          import(
+            './category/components/category-detail/category-detail.component'
+          ).then((m) => m.CategoryDetailComponent),
+      },
+      {
+        path: 'create',
+        loadComponent: () =>
+          import(
+            './category/components/category-create/category-create.component'
+          ).then((m) => m.CategoryCreateComponent),
+      },
+      {
+        path: 'update/:id',
+        loadComponent: () =>
+          import(
+            './category/components/category-update/category-update.component'
+          ).then((m) => m.CategoryUpdateComponent),
+      },
+      {
+        path: 'delete/:id',
+        loadComponent: () =>
+          import(
+            './category/components/category-delete/category-delete.component'
+          ).then((m) => m.CategoryDeleteComponent),
+      },
+    ],
   },
 ];

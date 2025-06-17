@@ -1,0 +1,10 @@
+<div class="category-delete-container">
+  <h1>Supprimer une catégorie</h1>
+  <div *ngIf="!success">
+    <p>Voulez-vous vraiment supprimer cette catégorie ?</p>
+    <button (click)="confirmDelete()" [disabled]="loading">Supprimer</button>
+    <button (click)="goBack()">Annuler</button>
+    <div *ngIf="error">{{ error }}</div>
+  </div>
+  <div *ngIf="success">Catégorie supprimée !</div>
+</div>

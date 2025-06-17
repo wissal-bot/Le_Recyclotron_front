@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 // Correction du chemin d'importation de Api_itemService
 import { Api_itemService } from '../services/api/api_item.service';
 import { ItemWithCategories } from '../../interfaces/item.interface';
-import { EventService } from '../services/event.service';
+import { Api_eventService } from '../services/api/api_event.service';
 
 interface FeatureCard {
   title: string;
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private itemService: Api_itemService,
     private sanitizer: DomSanitizer,
-    private eventService: EventService
+    private eventService: Api_eventService
   ) {}
 
   ngOnInit(): void {
@@ -155,22 +155,15 @@ export class HomeComponent implements OnInit {
   loadUpcomingEvents(): void {
     this.eventLoading = true;
     this.eventError = null;
-    console.log('Chargement des événements du mois en cours...');
-
-    // Utiliser la nouvelle méthode getCurrentMonthEvents() qui tient compte de la date et de l'heure
-    this.eventService.getCurrentMonthEvents().subscribe({
-      next: (events) => {
+    this.eventService.getUpcomingEvents().subscribe({
+      next: (events: any[]) => {
         this.upcomingEvents = events;
         this.eventLoading = false;
-        console.log(
-          'Événements du mois actuel et à venir:',
-          this.upcomingEvents
-        );
       },
-      error: (err) => {
-        this.eventError = 'Impossible de charger les événements.';
+      error: (err: unknown) => {
+        this.eventError = 'Erreur lors du chargement des événements à venir.';
         this.eventLoading = false;
-        console.error('Erreur lors du chargement des événements:', err);
+        console.error('Erreur:', err);
       },
     });
   }

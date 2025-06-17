@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { EventService } from '../../../services/event.service';
+import { Api_eventService } from '../../../services/api/api_event.service';
 import { Api_authService } from '../../../services/api/api_auth.service';
+import { Api_registrationService } from '../../../services/api/api_registration.service';
 import { Event } from '../../../../interfaces/event.interface';
+import { Registration } from '../../../../interfaces/registration.interface';
 
 @Component({
   selector: 'app-event-detail',
@@ -23,12 +25,13 @@ export class EventDetailComponent implements OnInit {
   isCommunityManager = false;
   registrationAvailable = true;
   userIsRegistered = false;
-
+  userRegistrationId: number | null = null;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private eventService: EventService,
-    private authService: Api_authService
+    private eventService: Api_eventService,
+    public authService: Api_authService,
+    private registrationService: Api_registrationService
   ) {}
 
   ngOnInit(): void {
@@ -36,52 +39,89 @@ export class EventDetailComponent implements OnInit {
       this.eventId = params.get('id');
       if (this.eventId) {
         this.loadEventDetails(+this.eventId);
+        this.checkUserRoles();
       } else {
         this.error = "Identifiant d'événement manquant";
         this.loading = false;
       }
     });
-
-    this.checkUserRoles();
   }
 
   checkUserRoles(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
-
-    if (this.isLoggedIn) {
-      this.isAdmin = this.authService.hasRole('admin');
-      this.isCommunityManager = this.authService.hasRole('cm');
-
-      // If user is logged in, check if already registered for this event
-      if (this.eventId) {
-        this.checkUserRegistration(+this.eventId);
-      }
+    this.isAdmin = this.authService.hasRole('admin');
+    this.isCommunityManager = this.authService.hasRole('cm');
+    const isClient = this.authService.hasRole('client');
+    if (!isClient) {
+      this.registrationAvailable = false;
     }
   }
 
   loadEventDetails(eventId: number): void {
     this.loading = true;
-
-    this.eventService.getEventById(eventId).subscribe({
+    this.eventService.getEvent(eventId.toString()).subscribe({
       next: (data: any) => {
-        this.event = data.data;
+        this.event = data && data.data ? data.data : data;
         this.loading = false;
-
-        // Check if event registration is still available (not full, not past)
         this.checkRegistrationAvailability();
+        // Vérification d'inscription déplacée ici, après chargement de l'event et des rôles
+        if (this.isLoggedIn && this.authService.hasRole('client')) {
+          this.checkUserRegistration(eventId);
+        }
       },
-      error: (err) => {
+      error: (err: unknown) => {
         this.error = "Erreur lors du chargement de l'événement";
         this.loading = false;
         console.error('Erreur:', err);
       },
     });
   }
-
   checkUserRegistration(eventId: number): void {
-    // Check if user is already registered for this event
-    // Implementing stub only - adjust based on API
-    this.userIsRegistered = false; // Default is not registered
+    if (!this.isLoggedIn) {
+      this.userIsRegistered = false;
+      return;
+    }
+
+    const user = this.authService.getUserFromToken();
+    if (!user || !user.id) {
+      console.error('User ID not available');
+      this.userIsRegistered = false;
+      return;
+    }
+
+    this.eventService
+      .getEventRegistrationByUserId(eventId.toString(), user.id.toString())
+      .subscribe({
+        next: (registration: Registration | null) => {
+          console.log(
+            'Registration data:',
+            registration,
+            'userId:',
+            user.id,
+            'eventId:',
+            eventId
+          );
+          if (registration && registration.id) {
+            this.userIsRegistered = true;
+            this.userRegistrationId = registration.id;
+          } else {
+            this.userIsRegistered = false;
+            this.userRegistrationId = null;
+          }
+        },
+        error: (error: any) => {
+          console.error(
+            'Error checking registration status:',
+            error,
+            'userId:',
+            user.id,
+            'eventId:',
+            eventId
+          );
+          this.userIsRegistered = false;
+          this.userRegistrationId = null;
+        },
+      });
   }
 
   checkRegistrationAvailability(): void {
@@ -98,6 +138,7 @@ export class EventDetailComponent implements OnInit {
   }
   onRegister(): void {
     if (this.eventId) {
+      // Using the new create registration component
       this.router.navigate(['/events/register', this.eventId]);
     }
   }
@@ -129,5 +170,37 @@ export class EventDetailComponent implements OnInit {
       minute: '2-digit',
     };
     return new Date(date).toLocaleDateString('fr-FR', options);
+  }
+
+  // New methods for managing user registrations
+  viewRegistration(): void {
+    if (this.userRegistrationId) {
+      this.router.navigate([
+        '/events/registration/detail',
+        this.userRegistrationId,
+      ]);
+    }
+  }
+
+  updateRegistration(): void {
+    if (this.userRegistrationId) {
+      this.router.navigate([
+        '/events/registration/update',
+        this.userRegistrationId,
+      ]);
+    }
+  }
+
+  cancelRegistration(): void {
+    if (this.userRegistrationId) {
+      this.router.navigate([
+        '/events/registration/delete',
+        this.userRegistrationId,
+      ]);
+    } else {
+      console.error('Aucune inscription trouvée pour annulation.');
+      // Optionnel : Afficher un message utilisateur
+      // this.error = "Impossible d'annuler : aucune inscription trouvée.";
+    }
   }
 }

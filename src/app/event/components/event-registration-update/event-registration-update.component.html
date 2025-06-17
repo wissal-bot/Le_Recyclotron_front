@@ -1,0 +1,124 @@
+<div class="registration-container">
+  <div class="back-button">
+    <button (click)="goBack()" class="btn-back">
+      <i class="fa fa-arrow-left"></i> Retour aux détails de l'événement
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    Chargement des détails de l'inscription...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="goBack()" class="btn-back">Retour</button>
+  </div>
+
+  <ng-container *ngIf="!loading && !error && registration && event">
+    <!-- Success message after update -->
+    <div *ngIf="success" class="success-message">
+      <div class="success-icon">
+        <i class="fa fa-check-circle"></i>
+      </div>
+      <h2>Mise à jour réussie!</h2>
+      <p>
+        Votre inscription à l'événement <strong>{{ event.title }}</strong> a été
+        mise à jour avec succès.
+      </p>
+      <div class="action-buttons">
+        <button (click)="goBack()" class="btn-back">
+          Retour à l'événement
+        </button>
+        <button [routerLink]="['/events']" class="btn-calendar">
+          Voir le calendrier
+        </button>
+      </div>
+    </div>
+
+    <!-- Update form -->
+    <div *ngIf="!success" class="registration-form-container">
+      <h1>Modification de l'inscription</h1>
+
+      <div class="event-summary">
+        <h2>{{ event.title }}</h2>
+        <p class="event-date">
+          <i class="fa fa-calendar"></i> {{ formatDate(event.date) }}
+        </p>
+        <p *ngIf="event.location" class="event-location">
+          <i class="fa fa-map-marker"></i> {{ event.location }}
+        </p>
+      </div>
+
+      <div class="registration-form">
+        <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="seats">Nombre de participants</label>
+            <input
+              type="number"
+              id="seats"
+              formControlName="seats"
+              min="1"
+              class="form-control"
+            />
+
+            <div
+              *ngIf="
+                updateForm.get('seats')?.invalid &&
+                (updateForm.get('seats')?.dirty ||
+                  updateForm.get('seats')?.touched)
+              "
+              class="validation-error"
+            >
+              <div *ngIf="updateForm.get('seats')?.errors?.['required']">
+                Le nombre de participants est requis.
+              </div>
+              <div *ngIf="updateForm.get('seats')?.errors?.['min']">
+                Le nombre de participants doit être d'au moins 1.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                id="active"
+                formControlName="active"
+                class="form-checkbox"
+              />
+              <label for="active">Inscription active</label>
+            </div>
+            <p class="help-text">
+              Décochez pour annuler votre participation à cet événement
+            </p>
+          </div>
+
+          <div *ngIf="updateError" class="registration-error">
+            {{ updateError }}
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn-cancel"
+              (click)="goBack()"
+              [disabled]="submitting"
+            >
+              Annuler
+            </button>
+            <button
+              type="submit"
+              class="btn-submit"
+              [disabled]="updateForm.invalid || submitting"
+            >
+              <ng-container *ngIf="!submitting">Mettre à jour</ng-container>
+              <ng-container *ngIf="submitting">
+                <span class="spinner"></span> En cours...
+              </ng-container>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</div>

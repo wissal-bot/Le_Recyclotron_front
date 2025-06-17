@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { EventService } from '../../../services/event.service';
+import { Api_eventService } from '../../../services/api/api_event.service';
 import { Api_authService } from '../../../services/api/api_auth.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class EventDeleteComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private eventService: EventService,
+    private eventService: Api_eventService,
     private authService: Api_authService
   ) {}
 
@@ -69,18 +69,18 @@ export class EventDeleteComponent implements OnInit {
       this.loading = false;
       return;
     }
-    this.eventService.getEventById(id).subscribe({
-      next: (response) => {
-        const event = response.data || response;
-        if (event) {
-          this.event = event;
+    this.eventService.getEvent(id.toString()).subscribe({
+      next: (event: any) => {
+        const evt = event.data || event;
+        if (evt) {
+          this.event = evt;
           this.loading = false;
         } else {
           this.error = 'Événement non trouvé';
           this.loading = false;
         }
       },
-      error: (err: any) => {
+      error: (err: unknown) => {
         console.error('Error loading event:', err);
         this.error = "Erreur lors du chargement de l'événement";
         this.loading = false;
@@ -98,22 +98,15 @@ export class EventDeleteComponent implements OnInit {
     this.error = null;
 
     const id = parseInt(this.eventId, 10);
-
-    if (isNaN(id)) {
-      this.error = "Identifiant d'événement invalide";
-      this.deleting = false;
-      return;
-    }
-
-    this.eventService.deleteEvent(id).subscribe({
-      next: () => {
-        // Navigate to events list after successful deletion
+    this.eventService.deleteEvent(id.toString()).subscribe({
+      next: (_response: unknown) => {
+        this.deleting = false;
         this.router.navigate(['/events']);
       },
-      error: (err: any) => {
-        console.error('Error deleting event:', err);
-        this.error = "Erreur lors de la suppression de l'événement";
+      error: (err: unknown) => {
         this.deleting = false;
+        this.error = "Erreur lors de la suppression de l'événement.";
+        console.error('Erreur:', err);
       },
     });
   }

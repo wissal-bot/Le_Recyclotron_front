@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Api_authService } from '../services/api/api_auth.service';
 import { Api_userService } from '../services/api/api_user.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subscription, timer } from 'rxjs';
 import { timeout, catchError } from 'rxjs/operators';
 import { User, UpdateUser } from '../../interfaces/user.interface';
@@ -11,7 +11,7 @@ import { User, UpdateUser } from '../../interfaces/user.interface';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
@@ -243,15 +243,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
           // Vérifier si les données ont une structure attendue
           this.registrations = data.map((registration) => {
-            // Vérifier et fournir des valeurs par défaut si nécessaire
             return {
               ...registration,
-              // S'assurer que les champs clés existent
               id:
                 registration.id ||
                 registration._id ||
                 registration.registrationId ||
                 0,
+              userId:
+                registration.userId ||
+                registration.user_id ||
+                this.user?.id ||
+                null,
               active:
                 registration.active !== undefined ? registration.active : true,
               seats: registration.seats || 1,

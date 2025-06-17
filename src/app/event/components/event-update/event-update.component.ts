@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { EventService } from '../../../services/event.service';
+import { Api_eventService } from '../../../services/api/api_event.service';
 import { Api_authService } from '../../../services/api/api_auth.service';
 import { PartialEvent } from '../../../../interfaces/event.interface';
 
@@ -30,7 +30,7 @@ export class EventUpdateComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private eventService: EventService,
+    private eventService: Api_eventService,
     private authService: Api_authService
   ) {
     // Initialize form
@@ -84,34 +84,33 @@ export class EventUpdateComponent implements OnInit {
       this.loading = false;
       return;
     }
-    this.eventService.getEventById(id).subscribe({
-      next: (response) => {
-        const event = response.data || response;
-        if (event) {
+    this.eventService.getEvent(id.toString()).subscribe({
+      next: (event: any) => {
+        const evt = event.data || event;
+        if (evt) {
           // Create date and time from event date
-          const eventDate = new Date(event.date);
+          const eventDate = new Date(evt.date);
           const dateString = eventDate.toISOString().split('T')[0];
 
           // Create time string in format HH:MM
           const hours = eventDate.getHours().toString().padStart(2, '0');
           const minutes = eventDate.getMinutes().toString().padStart(2, '0');
-          const timeString = `${hours}:${minutes}`; // Fill form with event data
+          const timeString = `${hours}:${minutes}`;
+          // Fill form with event data
           this.eventForm.patchValue({
-            title: event.title,
-            description: event.description,
+            title: evt.title,
+            description: evt.description,
             date: dateString,
             time: timeString,
-            image: event.image || '',
+            image: evt.image,
           });
-
           this.loading = false;
         } else {
           this.error = 'Événement non trouvé';
           this.loading = false;
         }
       },
-      error: (err) => {
-        console.error('Error loading event:', err);
+      error: (err: unknown) => {
         this.error = "Erreur lors du chargement de l'événement";
         this.loading = false;
       },
@@ -119,7 +118,7 @@ export class EventUpdateComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.eventForm.invalid) {
+    if (this.eventForm.invalid || !this.eventId) {
       // Mark all fields as touched to trigger validation errors
       Object.keys(this.eventForm.controls).forEach((key) => {
         const control = this.eventForm.get(key);
@@ -128,45 +127,26 @@ export class EventUpdateComponent implements OnInit {
       return;
     }
 
-    if (!this.eventId) {
-      this.error =
-        "Identifiant d'événement manquant, impossible de mettre à jour";
-      return;
-    }
-
     this.submitting = true;
     this.error = null;
-
-    // Combine date and time
     const dateValue = this.eventForm.value.date;
     const timeValue = this.eventForm.value.time;
-    const dateTimeValue = new Date(`${dateValue}T${timeValue}`); // Create event object based on PartialEvent interface
-    const eventData: {
-      title: string;
-      description: string;
-      date: string; // ISO string format
-      image: string;
-    } = {
+    const dateTimeValue = new Date(`${dateValue}T${timeValue}`);
+
+    const eventData: PartialEvent = {
       title: this.eventForm.value.title,
       description: this.eventForm.value.description,
-      date: dateTimeValue.toISOString(),
-      image: this.eventForm.value.image || '',
+      date: dateTimeValue,
+      image: this.eventForm.value.image,
     };
 
-    const id = parseInt(this.eventId, 10);
-    if (isNaN(id)) {
-      this.error = "Identifiant d'événement invalide";
-      this.submitting = false;
-      return;
-    }
-    this.eventService.updateEvent(id, eventData).subscribe({
-      next: () => {
-        // Navigate to event detail view after successful update
-        this.router.navigate(['/events/detail', this.eventId]);
+    this.eventService.updateEvent(this.eventId, eventData).subscribe({
+      next: (_response: unknown) => {
+        this.submitting = false;
+        this.router.navigate(['/events']);
       },
-      error: (err) => {
-        console.error('Error updating event:', err);
-        this.error = "Erreur lors de la mise à jour de l'événement";
+      error: (err: unknown) => {
+        this.error = "Erreur lors de la mise à jour de l'événement.";
         this.submitting = false;
       },
     });

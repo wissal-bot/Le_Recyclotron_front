@@ -40,22 +40,23 @@
       <h2>Description</h2>
       <p>{{ event.description }}</p>
     </div>
-
     <div class="event-actions">
-      <!-- Registration button for logged-in users with conditions -->
-      <ng-container *ngIf="isLoggedIn">
+      <!-- Registration button for logged-in CLIENT users with conditions -->
+      <ng-container *ngIf="isLoggedIn && authService.hasRole('client')">
         <button
           *ngIf="!userIsRegistered && registrationAvailable"
           class="btn-register"
-          (click)="onRegister()"
+          [routerLink]="['/events/register', eventId]"
         >
           S'inscrire à cet événement
         </button>
-
-        <div *ngIf="userIsRegistered" class="registration-status success">
-          <i class="fa fa-check-circle"></i> Vous êtes inscrit à cet événement
-        </div>
-
+        <button
+          *ngIf="userIsRegistered && userRegistrationId"
+          class="btn-view"
+          [routerLink]="['/events/registration/detail', userRegistrationId]"
+        >
+          <i class="fa fa-eye"></i> Voir mon inscription
+        </button>
         <div
           *ngIf="!registrationAvailable && !userIsRegistered"
           class="registration-status warning"
@@ -64,6 +65,15 @@
           Les inscriptions ne sont plus disponibles pour cet événement
         </div>
       </ng-container>
+
+      <!-- Message for logged-in non-client users -->
+      <div
+        *ngIf="isLoggedIn && !authService.hasRole('client')"
+        class="registration-status info"
+      >
+        <i class="fa fa-info-circle"></i>
+        Seuls les clients peuvent s'inscrire aux événements
+      </div>
 
       <!-- Login prompt for non-logged-in users -->
       <div *ngIf="!isLoggedIn" class="login-prompt">
@@ -80,6 +90,12 @@
         </button>
         <button class="btn-delete" (click)="onDelete()">
           <i class="fa fa-trash"></i> Supprimer
+        </button>
+        <button
+          class="btn-registrations"
+          [routerLink]="['/events/registration', eventId]"
+        >
+          <i class="fa fa-users"></i> Voir les inscriptions
         </button>
       </div>
     </div>

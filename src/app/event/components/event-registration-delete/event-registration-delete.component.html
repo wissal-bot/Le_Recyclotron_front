@@ -1,0 +1,73 @@
+<div class="registration-delete-container">
+  <div class="back-button">
+    <button (click)="goBack()" class="btn-back">
+      <i class="fa fa-arrow-left"></i> Retour
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    Chargement des détails de l'inscription...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="goBack()" class="btn-back">Retour</button>
+  </div>
+
+  <!-- Success message after deletion -->
+  <div *ngIf="success" class="success-message">
+    <div class="success-icon">
+      <i class="fa fa-check-circle"></i>
+    </div>
+    <h2>Inscription annulée avec succès</h2>
+    <p>Votre inscription a été annulée.</p>
+    <div class="action-buttons">
+      <button (click)="goBack()" class="btn-back">Retour à l'événement</button>
+      <button [routerLink]="['/events']" class="btn-calendar">
+        Voir le calendrier
+      </button>
+    </div>
+  </div>
+
+  <!-- Confirmation dialog -->
+  <div
+    *ngIf="!loading && !error && !success && registration"
+    class="confirmation-container"
+  >
+    <div class="warning-icon">
+      <i class="fa fa-exclamation-triangle"></i>
+    </div>
+    <h2>Confirmer l'annulation de votre inscription</h2>
+    <p>Êtes-vous sûr de vouloir annuler votre inscription à cet événement ?</p>
+
+    <div class="event-details" *ngIf="registration.event">
+      <h3>{{ registration.event.name }}</h3>
+      <p *ngIf="registration.event.date">
+        <i class="fa fa-calendar"></i> {{ formatDate(registration.event.date) }}
+      </p>
+      <p *ngIf="registration.event.location">
+        <i class="fa fa-map-marker"></i> {{ registration.event.location }}
+      </p>
+      <p>
+        <i class="fa fa-users"></i> Nombre de places réservées :
+        {{ registration.seats }}
+      </p>
+    </div>
+
+    <div class="confirmation-buttons">
+      <button class="btn-cancel" (click)="goBack()" [disabled]="deleting">
+        Annuler
+      </button>
+      <button
+        class="btn-delete"
+        (click)="confirmDelete()"
+        [disabled]="deleting"
+      >
+        <ng-container *ngIf="!deleting">Confirmer l'annulation</ng-container>
+        <ng-container *ngIf="deleting">
+          <span class="spinner"></span> En cours...
+        </ng-container>
+      </button>
+    </div>
+  </div>
+</div>

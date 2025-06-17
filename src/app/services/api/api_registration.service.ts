@@ -36,18 +36,4 @@ export class Api_registrationService {
   deleteRegistration(id: string): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/registration/${id}`);
   }
-
-  // Get all registrations for an event
-  getRegistrationsByEventId(eventId: number): Observable<Registration[]> {
-    return this.http.get<Registration[]>(
-      `${this.API_URL}/registration/event/${eventId}`
-    );
-  }
-
-  // Check if a user is registered for an event
-  checkUserRegistration(eventId: number, userId: number): Observable<boolean> {
-    return this.http.get<boolean>(
-      `${this.API_URL}/registration/check/${eventId}/${userId}`
-    );
-  }
 }

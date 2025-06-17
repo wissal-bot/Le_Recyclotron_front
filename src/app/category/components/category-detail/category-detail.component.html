@@ -1,0 +1,17 @@
+<div class="category-detail-container">
+  <h1>Détail de la catégorie</h1>
+  <div *ngIf="loading">Chargement...</div>
+  <div *ngIf="error">{{ error }}</div>
+  <div *ngIf="category">
+    <p><strong>Nom :</strong> {{ category.name }}</p>
+    <p *ngIf="category.parentId">
+      <strong>Parent :</strong> {{ category.parentId }}
+    </p>
+    <div *ngIf="category.children && category.children.length">
+      <strong>Sous-catégories :</strong>
+      <ul>
+        <li *ngFor="let child of category.children">{{ child.name }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

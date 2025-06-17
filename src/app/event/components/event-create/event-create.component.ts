@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { EventService } from '../../../services/event.service';
+import { Api_eventService } from '../../../services/api/api_event.service';
 import { Api_authService } from '../../../services/api/api_auth.service';
 import { InputEvent } from '../../../../interfaces/event.interface';
 
@@ -27,7 +27,7 @@ export class EventCreateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private eventService: EventService,
+    private eventService: Api_eventService,
     private authService: Api_authService
   ) {
     // Initialize form
@@ -91,30 +91,20 @@ export class EventCreateComponent implements OnInit {
     const dateTimeValue = new Date(`${dateValue}T${timeValue}`);
 
     // Create event object based on InputEvent interface
-    const eventData: {
-      title: string;
-      description: string;
-      date: string; // ISO string format
-      image: string;
-    } = {
+    const eventData: InputEvent = {
       title: this.eventForm.value.title,
       description: this.eventForm.value.description,
-      date: dateTimeValue.toISOString(),
-      image: this.eventForm.value.image || '',
+      date: dateTimeValue,
+      image: this.eventForm.value.image,
     };
 
-    // Call service to create event
     this.eventService.createEvent(eventData).subscribe({
-      next: (response: any) => {
+      next: () => {
         this.submitting = false;
-        // Navigate to event detail page
-        const eventId =
-          response.id || (response.data ? response.data.id : null);
-        this.router.navigate(['/events/detail', eventId]);
+        this.router.navigate(['/events']);
       },
-      error: (err) => {
-        this.error =
-          "Erreur lors de la création de l'événement. Veuillez réessayer.";
+      error: (err: unknown) => {
+        this.error = "Erreur lors de la création de l'événement.";
         this.submitting = false;
         console.error('Erreur:', err);
       },

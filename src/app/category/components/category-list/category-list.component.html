@@ -1,0 +1,10 @@
+<div class="category-list-container">
+  <h1>Liste des catégories</h1>
+  <div *ngIf="loading">Chargement...</div>
+  <div *ngIf="error">{{ error }}</div>
+  <ul *ngIf="!loading && !error">
+    <li *ngFor="let category of categories">
+      {{ category.name }}
+    </li>
+  </ul>
+</div>

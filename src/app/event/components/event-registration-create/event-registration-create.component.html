@@ -1,0 +1,114 @@
+<div class="registration-container">
+  <div class="back-button">
+    <button (click)="goBack()" class="btn-back">
+      <i class="fa fa-arrow-left"></i> Retour aux détails de l'événement
+    </button>
+  </div>
+
+  <div *ngIf="eventLoading" class="loading-spinner">
+    Chargement des détails de l'événement...
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="goBack()" class="btn-back">Retour</button>
+  </div>
+
+  <ng-container *ngIf="!eventLoading && !error && event">
+    <!-- Success message after registration -->
+    <div *ngIf="success" class="success-message">
+      <div class="success-icon">
+        <i class="fa fa-check-circle"></i>
+      </div>
+      <h2>Inscription réussie!</h2>
+      <p>
+        Votre inscription à l'événement <strong>{{ event.title }}</strong> a été
+        enregistrée avec succès.
+      </p>
+      <p>Vous recevrez un email de confirmation prochainement.</p>
+      <div class="action-buttons">
+        <button (click)="goBack()" class="btn-back">
+          Retour à l'événement
+        </button>
+        <button [routerLink]="['/events']" class="btn-calendar">
+          Voir le calendrier
+        </button>
+      </div>
+    </div>
+
+    <!-- Registration form -->
+    <div *ngIf="!success" class="registration-form-container">
+      <h1>Inscription à l'événement</h1>
+
+      <div class="event-summary">
+        <h2>{{ event.title }}</h2>
+        <p class="event-date">
+          <i class="fa fa-calendar"></i> {{ formatDate(event.date) }}
+        </p>
+        <p *ngIf="event.location" class="event-location">
+          <i class="fa fa-map-marker"></i> {{ event.location }}
+        </p>
+      </div>
+
+      <div class="registration-form">
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="numberOfPersons">Nombre de participants</label>
+            <input
+              type="number"
+              id="numberOfPersons"
+              formControlName="numberOfPersons"
+              min="1"
+              class="form-control"
+            />
+
+            <div
+              *ngIf="
+                registrationForm.get('numberOfPersons')?.invalid &&
+                (registrationForm.get('numberOfPersons')?.dirty ||
+                  registrationForm.get('numberOfPersons')?.touched)
+              "
+              class="validation-error"
+            >
+              <div
+                *ngIf="registrationForm.get('numberOfPersons')?.errors?.['required']"
+              >
+                Le nombre de participants est requis.
+              </div>
+              <div
+                *ngIf="registrationForm.get('numberOfPersons')?.errors?.['min']"
+              >
+                Le nombre de participants doit être d'au moins 1.
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="registrationError" class="registration-error">
+            {{ registrationError }}
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn-cancel"
+              (click)="goBack()"
+              [disabled]="submitting"
+            >
+              Annuler
+            </button>
+            <button
+              type="submit"
+              class="btn-submit"
+              [disabled]="registrationForm.invalid || submitting"
+            >
+              <ng-container *ngIf="!submitting">S'inscrire</ng-container>
+              <ng-container *ngIf="submitting">
+                <span class="spinner"></span> En cours...
+              </ng-container>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-container>
+</div>
