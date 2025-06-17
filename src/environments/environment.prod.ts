@@ -3,5 +3,5 @@
  */
 export const environment = Object.freeze({
   production: true,
-  API_URL: 'frontend/api',
+  API_URL: '/api',
 });
