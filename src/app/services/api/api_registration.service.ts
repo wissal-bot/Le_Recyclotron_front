@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import {
   Registration,
   InputRegistration,
@@ -20,7 +20,9 @@ export class Api_registrationService {
   }
 
   getRegistration(id: string): Observable<Registration> {
-    return this.http.get<Registration>(`${this.API_URL}/registration/${id}`);
+    return this.http.get<{ data: Registration }>(`${this.API_URL}/registration/${id}`).pipe(
+      map((response) => response.data)
+    );
   }
 
   updateRegistration(
