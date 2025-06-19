@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 import { UserDeleteComponent } from './user-delete.component';
 
@@ -8,9 +11,17 @@ describe('UserDeleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserDeleteComponent]
-    })
-    .compileComponents();
+      imports: [UserDeleteComponent, HttpClientTestingModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '1' }),
+            snapshot: { paramMap: { get: () => '1' } },
+          },
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserDeleteComponent);
     component = fixture.componentInstance;

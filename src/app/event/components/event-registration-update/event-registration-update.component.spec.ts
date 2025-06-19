@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { UserUpdateComponent } from './user-update.component';
+import { EventRegistrationUpdateComponent } from './event-registration-update.component';
 
-describe('UserUpdateComponent', () => {
-  let component: UserUpdateComponent;
-  let fixture: ComponentFixture<UserUpdateComponent>;
+describe('EventRegistrationUpdateComponent', () => {
+  let component: EventRegistrationUpdateComponent;
+  let fixture: ComponentFixture<EventRegistrationUpdateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserUpdateComponent, HttpClientTestingModule],
+      imports: [HttpClientTestingModule, EventRegistrationUpdateComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -22,8 +22,7 @@ describe('UserUpdateComponent', () => {
         },
       ],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(UserUpdateComponent);
+    fixture = TestBed.createComponent(EventRegistrationUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

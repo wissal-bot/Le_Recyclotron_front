@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
 import { Api_itemService } from '../services/api/api_item.service';
-import { EventService } from '../services/event.service';
+import { Api_eventService } from '../services/api/api_event.service';
 import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
@@ -22,7 +22,7 @@ describe('HomeComponent', () => {
           },
         },
         {
-          provide: EventService,
+          provide: Api_eventService,
           useValue: {
             getUpcomingEvents: () => of([]),
             getCurrentMonthEvents: () => of([]),
