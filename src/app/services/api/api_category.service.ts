@@ -31,7 +31,40 @@ export class Api_categoryService {
   }
 
   getAllCategories(): Observable<CategoryWithChildren[]> {
-    return this.http.get<CategoryWithChildren[]>(`${this.API_URL}/categories`);
+    return new Observable<CategoryWithChildren[]>((observer) => {
+      this.http.get<any>(`${this.API_URL}/categories`).subscribe({
+        next: (data) => {
+          let cats: any[] = [];
+          if (Array.isArray(data)) {
+            cats = data;
+          } else if (data && Array.isArray(data.data)) {
+            cats = data.data;
+          } else if (data && Array.isArray(data.categories)) {
+            cats = data.categories;
+          }
+          observer.next(this.validateCategories(cats));
+          observer.complete();
+        },
+        error: (err) => {
+          observer.error(err);
+        },
+      });
+    });
+  }
+
+  validateCategories(categories: any[]): CategoryWithChildren[] {
+    if (!Array.isArray(categories)) {
+      console.error('Les données reçues ne sont pas un tableau:', categories);
+      return [];
+    }
+    return categories.map((cat) => {
+      return {
+        id: cat.id?.toString() || '',
+        name: cat.name || '',
+        parentId: cat.parentId || undefined,
+        children: Array.isArray(cat.children) ? cat.children : [],
+      };
+    });
   }
 
   getCategoryById(id: string): Observable<Category> {

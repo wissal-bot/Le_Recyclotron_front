@@ -1,10 +1,68 @@
 <div class="category-list-container">
-  <h1>Liste des catégories</h1>
-  <div *ngIf="loading">Chargement...</div>
-  <div *ngIf="error">{{ error }}</div>
-  <ul *ngIf="!loading && !error">
-    <li *ngFor="let category of categories">
-      {{ category.name }}
-    </li>
-  </ul>
+  <h1>Gestion des Catégories</h1>
+  <div class="admin-actions">
+    <button class="btn-create" [routerLink]="['/categories/create']">
+      <i class="fa fa-plus"></i> Créer une nouvelle catégorie
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    Chargement des catégories...
+  </div>
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+    <button class="btn-retry" (click)="loadCategories()">Réessayer</button>
+  </div>
+
+  <div
+    *ngIf="!loading && !error && categories.length > 0"
+    class="reload-action"
+  >
+    <button class="btn-reload" (click)="loadCategories()">
+      <i class="fa fa-refresh"></i> Actualiser la liste
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="category-list">
+    <div *ngIf="categories.length === 0" class="no-categories">
+      Aucune catégorie trouvée.
+    </div>
+
+    <div *ngIf="categories.length > 0" class="category-cards">
+      <ng-container *ngFor="let category of getAllCategoriesFlat()">
+        <div
+          class="category-card"
+          [ngStyle]="{ 'margin-left': category.level * 1.2 + 'rem' }"
+        >
+          <div class="category-card-title">{{ category.name }}</div>
+          <div class="category-card-desc" *ngIf="category.parentId">
+            Parent: {{ getParentName(category.parentId) }}
+          </div>
+          <div class="category-card-actions admin-actions">
+            <button
+              class="btn-edit"
+              [routerLink]="['/categories/update', category.id]"
+            >
+              Modifier
+            </button>
+            <button
+              class="btn-delete"
+              [routerLink]="['/categories/delete', category.id]"
+            >
+              Supprimer
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button [disabled]="currentPage === 1" (click)="prevPage()">&lt;</button>
+      <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+      <button [disabled]="currentPage === totalPages" (click)="nextPage()">
+        &gt;
+      </button>
+    </div>
+  </div>
 </div>

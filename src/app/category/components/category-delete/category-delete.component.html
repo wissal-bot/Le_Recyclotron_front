@@ -1,10 +1,24 @@
 <div class="category-delete-container">
   <h1>Supprimer une catégorie</h1>
+
   <div *ngIf="!success">
     <p>Voulez-vous vraiment supprimer cette catégorie ?</p>
-    <button (click)="confirmDelete()" [disabled]="loading">Supprimer</button>
-    <button (click)="goBack()">Annuler</button>
-    <div *ngIf="error">{{ error }}</div>
+    <p class="confirm-message" *ngIf="categoryId">
+      ID de catégorie : <strong>{{ categoryId }}</strong>
+    </p>
+
+    <div class="button-group">
+      <button class="btn-delete" (click)="confirmDelete()" [disabled]="loading">
+        <span *ngIf="!loading">Confirmer la suppression</span>
+        <span *ngIf="loading">Suppression en cours...</span>
+      </button>
+      <button class="btn-cancel" (click)="goBack()">Annuler</button>
+    </div>
+
+    <div *ngIf="error" class="error-message">{{ error }}</div>
   </div>
-  <div *ngIf="success">Catégorie supprimée !</div>
+
+  <div *ngIf="success" class="success-message">
+    Catégorie supprimée avec succès !
+  </div>
 </div>

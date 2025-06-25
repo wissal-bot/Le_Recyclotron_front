@@ -1,12 +1,39 @@
 <div class="category-create-container">
   <h1>Créer une catégorie</h1>
   <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-    <label>Nom</label>
-    <input formControlName="name" />
-    <label>Parent ID (optionnel)</label>
-    <input formControlName="parentId" />
-    <button type="submit" [disabled]="loading">Créer</button>
+    <div class="form-group">
+      <label for="name">Nom</label>
+      <input
+        id="name"
+        formControlName="name"
+        placeholder="Nom de la catégorie"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="parentId">Catégorie parente (optionnel)</label>
+      <select id="parentId" formControlName="parentId">
+        <option value="">Aucune (catégorie racine)</option>
+        <option *ngFor="let category of flatCategories" [value]="category.id">
+          {{ "─".repeat(category.level) }}{{ category.level > 0 ? " " : ""
+          }}{{ category.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button type="submit" [disabled]="loading || categoryForm.invalid">
+        <span *ngIf="!loading">Créer</span>
+        <span *ngIf="loading">Création en cours...</span>
+      </button>
+      <button type="button" class="btn-back" [routerLink]="['/categories']">
+        Retour
+      </button>
+    </div>
   </form>
-  <div *ngIf="success">Catégorie créée !</div>
-  <div *ngIf="error">{{ error }}</div>
+
+  <div *ngIf="success" class="success-message">
+    Catégorie créée avec succès !
+  </div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
 </div>

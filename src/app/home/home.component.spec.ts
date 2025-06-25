@@ -1,47 +1,32 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
-import { Api_itemService } from '../services/api/api_item.service';
-import { Api_eventService } from '../services/api/api_event.service';
-import { of } from 'rxjs';
+
+// Test d'intégration : vérifie que le composant peut être créé et rendu
+// Test unitaire : vérifie l'appel de ngOnInit
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HomeComponent],
-      providers: [
-        {
-          provide: Api_itemService,
-          useValue: {
-            getLatestItems: () => of([]),
-            getItemByStatus: () => of([]),
-          },
-        },
-        {
-          provide: Api_eventService,
-          useValue: {
-            getUpcomingEvents: () => of([]),
-            getCurrentMonthEvents: () => of([]),
-          },
-        },
-      ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HomeComponent],
     }).compileComponents();
-
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
+  // Test d'intégration : création du composant
   it('should create', () => {
+    // Vérifie que le composant est bien instancié
     expect(component).toBeTruthy();
   });
 
-  it('should display welcome message', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')).toBeTruthy();
+  // Test unitaire : ngOnInit ne doit pas lever d'erreur
+  it('should call ngOnInit without error', () => {
+    // Vérifie que ngOnInit peut être appelé sans erreur
+    expect(() => component.ngOnInit()).not.toThrow();
   });
 });

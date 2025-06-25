@@ -7,6 +7,7 @@ export interface Item {
   material: string;
   status: ItemStatus | number;
   image: string;
+  description?: string; // Optional description field
 }
 
 export interface InputItem {
@@ -14,6 +15,8 @@ export interface InputItem {
   material: string;
   status: ItemStatus | number;
   image: string;
+  description?: string; // Optional description field
+  categories?: string[] | Category[]; // Optional categories for creation
 }
 
 export interface PartialItem {
@@ -21,6 +24,8 @@ export interface PartialItem {
   material?: string;
   status?: ItemStatus | number;
   image?: string;
+  description?: string; // Optional description field
+  categories?: string[] | Category[]; // Pour permettre la mise à jour des catégories
 }
 
 export interface ItemWithCategories extends Item {

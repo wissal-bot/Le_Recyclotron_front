@@ -1,5 +1,10 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  RouterLink,
+  RouterLinkActive,
+  Router,
+  NavigationEnd,
+} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Api_authService } from '../services/api/api_auth.service';
 import { ClickOutsideDirective } from '../directives/click-outside.directive';
@@ -25,7 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   hasEmployeeRole: boolean = false;
   hasCMRole: boolean = false;
 
-  constructor(private authService: Api_authService) {}
+  constructor(private authService: Api_authService, private router: Router) {}
 
   ngOnInit(): void {
     // Subscribe to auth status changes
@@ -81,6 +86,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.hasRepairerRole = false;
         this.hasEmployeeRole = false;
         this.hasCMRole = false;
+      }
+    });
+
+    // Fermer le menu mobile à chaque navigation
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.menuActive = false;
       }
     });
   }

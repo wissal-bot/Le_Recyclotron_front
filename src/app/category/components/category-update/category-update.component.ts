@@ -30,7 +30,7 @@ export class CategoryUpdateComponent implements OnInit {
   ) {
     this.categoryForm = this.fb.group({
       name: ['', Validators.required],
-      parentId: [''],
+      // Champ parentId supprimé car non modifiable
     });
   }
 
@@ -40,7 +40,8 @@ export class CategoryUpdateComponent implements OnInit {
       if (this.categoryId) {
         this.categoryService.getCategoryById(this.categoryId).subscribe({
           next: (cat) => {
-            this.categoryForm.patchValue(cat);
+            // On ne récupère que le nom de la catégorie
+            this.categoryForm.patchValue({ name: cat.name });
           },
           error: () => {
             this.error = 'Erreur lors du chargement de la catégorie';
@@ -54,14 +55,16 @@ export class CategoryUpdateComponent implements OnInit {
     if (!this.categoryId || this.categoryForm.invalid) return;
     this.loading = true;
     this.categoryService
-      .updateCategory(this.categoryId, this.categoryForm.value)
+      .updateCategory(this.categoryId, {
+        name: this.categoryForm.get('name')?.value,
+      })
       .subscribe({
         next: () => {
           this.success = true;
           this.loading = false;
         },
         error: () => {
-          this.error = 'Erreur lors de la mise à jour';
+          this.error = 'Erreur lors de la mise à jour de la catégorie';
           this.loading = false;
         },
       });

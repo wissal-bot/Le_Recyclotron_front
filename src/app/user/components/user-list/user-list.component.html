@@ -30,7 +30,40 @@
       Aucun utilisateur trouvé.
     </div>
 
-    <table *ngIf="users.length > 0" class="user-table">
+    <!-- Mobile card view -->
+    <div class="user-cards" *ngIf="users.length > 0">
+      <div class="user-card" *ngFor="let user of paginatedUsers">
+        <div class="user-card-row">
+          <span class="user-card-label">ID:</span> {{ user.id }}
+        </div>
+        <div class="user-card-row">
+          <span class="user-card-label">Nom:</span> {{ user.last_name }}
+        </div>
+        <div class="user-card-row">
+          <span class="user-card-label">Prénom:</span> {{ user.first_name }}
+        </div>
+        <div class="user-card-row">
+          <span class="user-card-label">Email:</span> {{ user.email }}
+        </div>
+        <div class="user-card-row">
+          <span class="user-card-label">Rôles:</span>
+          <span *ngFor="let role of user.roles; let last = last"
+            >{{ role.name }}{{ !last ? ", " : "" }}</span
+          >
+        </div>
+        <div class="user-card-actions admin-actions" *ngIf="isAdmin || isHR">
+          <button class="btn-edit" [routerLink]="['/users/update', user.id]">
+            Modifier
+          </button>
+          <button class="btn-delete" [routerLink]="['/users/delete', user.id]">
+            Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table view for desktop (hidden on mobile) -->
+    <table *ngIf="users.length > 0" class="user-table desktop-only">
       <thead>
         <tr>
           <th>ID</th>
@@ -53,13 +86,6 @@
             </span>
           </td>
           <td class="actions">
-            <!-- No detail view implemented yet -->
-            <!-- <button
-              class="btn-details"
-              [routerLink]="['/users/detail', user.id]"
-            >
-              Détails
-            </button> -->
             <div class="admin-actions" *ngIf="isAdmin || isHR">
               <button
                 class="btn-edit"

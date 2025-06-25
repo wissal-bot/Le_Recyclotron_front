@@ -1,19 +1,35 @@
 <div class="item-update-container">
   <div class="item-update-header">
     <h1>Update Item</h1>
-    <button class="btn-cancel" (click)="cancel()">Cancel</button>
+    <button class="btn-cancel" (click)="cancel()">
+      <i class="fa fa-times"></i> Cancel
+    </button>
   </div>
 
   <div *ngIf="loading" class="loading">
-    <p>Loading item details...</p>
+    <p><i class="fa fa-spinner fa-spin"></i> Loading item details...</p>
   </div>
 
   <div *ngIf="submitSuccess" class="success-message">
-    <p>Item updated successfully! Redirecting...</p>
+    <p>
+      <i class="fa fa-check-circle"></i> Item updated successfully!
+      Redirecting...
+    </p>
+    <p *ngIf="categoryWarning" class="category-warning">
+      <i class="fa fa-exclamation-triangle"></i> Note: There might have been
+      issues updating categories. Please verify them after redirection.
+    </p>
   </div>
 
   <div *ngIf="error" class="error-message">
-    <p>{{ error }}</p>
+    <p><i class="fa fa-exclamation-circle"></i> {{ error }}</p>
+    <button
+      *ngIf="error && error.includes('categories')"
+      class="btn-retry"
+      (click)="loadItemAndCategories()"
+    >
+      <i class="fa fa-refresh"></i> Retry Loading
+    </button>
   </div>
 
   <form
@@ -35,10 +51,11 @@
         *ngIf="itemForm.get('name')?.invalid && itemForm.get('name')?.touched"
       >
         <span *ngIf="itemForm.get('name')?.errors?.['required']"
-          >Name is required</span
+          ><i class="fa fa-exclamation-triangle"></i> Name is required</span
         >
         <span *ngIf="itemForm.get('name')?.errors?.['minlength']"
-          >Name must be at least 3 characters</span
+          ><i class="fa fa-exclamation-triangle"></i> Name must be at least 3
+          characters</span
         >
       </div>
     </div>
@@ -58,7 +75,7 @@
         "
       >
         <span *ngIf="itemForm.get('material')?.errors?.['required']"
-          >Material is required</span
+          ><i class="fa fa-exclamation-triangle"></i> Material is required</span
         >
       </div>
     </div>
@@ -77,12 +94,44 @@
         "
       >
         <span *ngIf="itemForm.get('status')?.errors?.['required']"
-          >Status is required</span
+          ><i class="fa fa-exclamation-triangle"></i> Status is required</span
         >
       </div>
     </div>
+
     <div class="form-group">
-      <label for="image">Image</label>
+      <label
+        >Categories
+        <span *ngIf="selectedCategoryIds.length > 0" class="selected-count"
+          >({{ selectedCategoryIds.length }} selected)</span
+        ></label
+      >
+      <div class="categories-container">
+        <div *ngIf="flatCategories.length === 0" class="no-categories">
+          <i class="fa fa-spinner fa-spin"></i> Loading categories...
+        </div>
+        <div *ngIf="flatCategories.length > 0" class="category-options">
+          <div
+            *ngFor="let category of flatCategories"
+            class="category-option"
+            [ngStyle]="{ 'margin-left': category.level * 1.2 + 'rem' }"
+            [class.selected]="isCategorySelected(category.id)"
+          >
+            <label class="checkbox-container">
+              <input
+                type="checkbox"
+                [checked]="isCategorySelected(category.id)"
+                (change)="toggleCategory(category.id)"
+              />
+              <span class="category-name">{{ category.name }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Image URL</label>
       <input
         id="image"
         type="text"
@@ -94,13 +143,21 @@
         *ngIf="itemForm.get('image')?.invalid && itemForm.get('image')?.touched"
       >
         <span *ngIf="itemForm.get('image')?.errors?.['required']"
-          >Image is required</span
+          ><i class="fa fa-exclamation-triangle"></i> Image URL is
+          required</span
         >
       </div>
     </div>
 
     <div class="form-actions">
+      <button type="button" class="btn-cancel-form" (click)="cancel()">
+        <i class="fa fa-times"></i> Cancel
+      </button>
       <button type="submit" class="btn-submit" [disabled]="updating">
+        <i
+          class="fa"
+          [ngClass]="updating ? 'fa-spinner fa-spin' : 'fa-check'"
+        ></i>
         {{ updating ? "Updating..." : "Update Item" }}
       </button>
     </div>

@@ -329,3 +329,36 @@
     font-size: 0.6rem;
   }
 }
+
+@media (max-width: 600px) {
+  .events-header h1 {
+    font-size: 1.2rem;
+  }
+  .events-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+  .event-card {
+    min-width: 0;
+    padding: 0.5rem;
+  }
+  .event-details {
+    padding: 0.5rem;
+  }
+  .event-image {
+    height: 100px;
+  }
+  .btn-details,
+  .btn-edit,
+  .btn-delete {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.7rem;
+  }
+  .calendar-day {
+    min-height: 40px;
+    font-size: 0.8rem;
+  }
+  .day-events {
+    font-size: 0.5rem;
+  }
+}

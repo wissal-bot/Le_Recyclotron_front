@@ -1,39 +1,32 @@
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { of } from 'rxjs';
-
 import { ProductComponent } from './product.component';
-import { Api_itemService } from '../services/api/api_item.service';
+
+// Test d'intégration : vérifie que le composant peut être créé et rendu
+// Test unitaire : vérifie l'appel de ngOnInit
 
 describe('ProductComponent', () => {
   let component: ProductComponent;
   let fixture: ComponentFixture<ProductComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [ProductComponent],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: { paramMap: { subscribe: () => {} } },
-        },
-        { provide: Api_itemService, useValue: { getItemById: () => of({}) } },
-        { provide: Location, useValue: { back: () => {} } },
-      ],
     }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(ProductComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
+  // Test d'intégration : création du composant
   it('should create', () => {
+    // Vérifie que le composant est bien instancié
     expect(component).toBeTruthy();
+  });
+
+  // Test unitaire : ngOnInit ne doit pas lever d'erreur
+  it('should call ngOnInit without error', () => {
+    // Vérifie que ngOnInit peut être appelé sans erreur
+    expect(() => component.ngOnInit()).not.toThrow();
   });
 });

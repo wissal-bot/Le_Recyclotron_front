@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Api_categoryService } from '../../../services/api/api_category.service';
+import { CategoryWithChildren } from '../../../../interfaces/category.interface';
 
 @Component({
   selector: 'app-category-create',
@@ -16,11 +17,14 @@ import { Api_categoryService } from '../../../services/api/api_category.service'
   templateUrl: './category-create.component.html',
   styleUrls: ['./category-create.component.css'],
 })
-export class CategoryCreateComponent {
+export class CategoryCreateComponent implements OnInit {
   categoryForm: FormGroup;
   loading = false;
   success = false;
   error: string | null = null;
+  categories: CategoryWithChildren[] = [];
+  parentOptions: CategoryWithChildren[] = [];
+  flatCategories: Array<CategoryWithChildren & { level: number }> = [];
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +34,40 @@ export class CategoryCreateComponent {
       name: ['', Validators.required],
       parentId: [''],
     });
+  }
+
+  ngOnInit(): void {
+    this.categoryService.getAllCategories().subscribe({
+      next: (cats) => {
+        this.categories = cats;
+        // Mise à jour pour utiliser toutes les catégories comme options de parent
+        this.flatCategories = this.getAllCategoriesFlat();
+        this.parentOptions = this.categories;
+      },
+      error: () => {
+        this.error = 'Erreur lors du chargement des catégories';
+      },
+    });
+  }
+
+  /**
+   * Retourne toutes les catégories (racines et enfants) à plat, avec un champ 'level' pour l'indentation visuelle.
+   */
+  getAllCategoriesFlat(): Array<CategoryWithChildren & { level: number }> {
+    const flat: Array<CategoryWithChildren & { level: number }> = [];
+    const visit = (cat: CategoryWithChildren, level: number) => {
+      flat.push({ ...cat, level });
+      if (cat.children && cat.children.length > 0) {
+        cat.children.forEach((child) =>
+          visit(child as CategoryWithChildren, level + 1)
+        );
+      }
+    };
+    this.categories.forEach((cat) => {
+      // On ne prend que les racines (pas de parentId)
+      if (!cat.parentId) visit(cat, 0);
+    });
+    return flat;
   }
 
   onSubmit(): void {

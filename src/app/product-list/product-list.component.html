@@ -7,19 +7,96 @@
     </p>
   </div>
 
-  <div *ngIf="loading" class="loading-spinner">Chargement des articles...</div>
+  <!-- Barre de recherche -->
+  <div class="search-bar-container">
+    <div class="search-input-group">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Rechercher par nom, matériau ou description..."
+        (input)="applyFilters()"
+        (keydown.escape)="resetFilters()"
+        class="search-input"
+      />
+      <button *ngIf="searchQuery" class="clear-search" (click)="resetFilters()">
+        ✕
+      </button>
+    </div>
+
+    <!-- Filtre de catégories affichées comme des cartes -->
+    <div class="category-filter-wrapper">
+      <div class="filter-label">
+        Filtrer par catégorie
+        <span *ngIf="selectedCategoryIds.length > 0" class="selected-count">
+          ({{ selectedCategoryIds.length }} sélectionnées)
+        </span>
+      </div>
+
+      <div class="categories-container">
+        <div *ngIf="loadingCategories" class="loading-categories">
+          <i class="fa fa-spinner fa-spin"></i> Chargement des catégories...
+        </div>
+        <div *ngIf="!loadingCategories" class="category-options">
+          <div
+            *ngFor="let category of getAllCategoriesFlat()"
+            class="category-option"
+            [class.parent-category]="category.level === 0"
+            [class.child-category]="category.level > 0"
+            [class.child-category-level-2]="category.level > 1"
+            [class.selected]="isCategorySelected(category.id)"
+            [ngStyle]="{ 'margin-left': category.level * 0.8 + 'rem' }"
+            (click)="toggleCategory(category.id)"
+          >
+            <span class="checkbox">
+              <i
+                *ngIf="isCategorySelected(category.id)"
+                class="fa fa-check"
+              ></i>
+            </span>
+            <span class="category-name">{{ category.name }}</span>
+          </div>
+        </div>
+      </div>
+
+      <button
+        *ngIf="selectedCategoryIds.length > 0"
+        class="btn-reset"
+        (click)="resetCategoryFilters()"
+      >
+        Réinitialiser les filtres de catégories
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    <span class="spinner"></span>
+    <p>Chargement des articles...</p>
+  </div>
 
   <div *ngIf="error" class="error-message">
-    {{ error }}
+    <p>{{ error }}</p>
+    <button class="btn-retry" (click)="loadSalableItems()">Réessayer</button>
   </div>
 
-  <div *ngIf="!loading && !error && items.length === 0" class="empty-message">
-    Aucun article disponible actuellement.
+  <div
+    *ngIf="!loading && !error && filteredItems.length === 0"
+    class="empty-message"
+  >
+    <p *ngIf="items.length === 0">Aucun article disponible actuellement.</p>
+    <p *ngIf="items.length > 0">Aucun résultat pour votre recherche.</p>
+    <button *ngIf="items.length > 0" class="btn-reset" (click)="resetFilters()">
+      Réinitialiser les filtres
+    </button>
   </div>
 
-  <div *ngIf="!loading && items.length > 0" class="product-grid">
+  <!-- Message si les catégories sont en chargement -->
+  <div *ngIf="loadingCategories && !loading" class="loading-categories">
+    Chargement des catégories...
+  </div>
+
+  <div *ngIf="!loading && filteredItems.length > 0" class="product-grid">
     <app-product-card
-      *ngFor="let item of items"
+      *ngFor="let item of filteredItems"
       [item]="item"
     ></app-product-card>
   </div>
