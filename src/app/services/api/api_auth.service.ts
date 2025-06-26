@@ -67,7 +67,6 @@ export class Api_authService {
   login(credentials: LoginRequest): Observable<{
     id?: string;
   }> {
-    console.log('Login attempt with:', credentials);
     return this.http.post<any>(`${this.API_URL}/auth/login`, credentials).pipe(
       tap((response) => {
         console.log('Login API response:', response);

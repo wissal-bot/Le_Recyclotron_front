@@ -75,7 +75,7 @@
           >
         </li>
         <!-- Lien vers la page Category, visible pour tous les utilisateurs connectés -->
-        <li class="nav-item" *ngIf="isLoggedIn">
+        <li class="nav-item" *ngIf="isLoggedIn && (hasAdminRole || hasEmployeeRole)">
           <a
             class="nav-link"
             [routerLink]="['/categories']"

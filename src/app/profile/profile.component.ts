@@ -668,6 +668,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
       next: () => {
         console.log('Profil supprimé avec succès');
         this.authService.logout(); // Déconnexion après suppression
+        this.user = null; // <-- Ajout : réinitialise l'utilisateur local
+        this.isClient = false;
+        this.canEditProfile = false;
+        this.canDeleteProfile = false;
+        this.canViewRegistrations = false;
+        this.canViewPayments = false;
         this.router.navigate(['/']); // Redirection vers la page d'accueil
       },
       error: (error) => {

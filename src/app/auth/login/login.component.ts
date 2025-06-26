@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
   successMessage: string | null = null;
   loading = false;
 
+  showPassword = false;
+
   constructor(
     private fb: FormBuilder,
     private authService: Api_authService,
@@ -44,6 +46,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  sanitizeInput(value: string): string {
+    return value.replace(/<[^>]*>?/gm, '').trim();
+  }
+
   onSubmit(): void {
     if (this.loginForm.invalid) {
       return;
@@ -52,9 +58,11 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    const email = this.loginForm.get('email')?.value;
+    // Sanitize inputs
+    const email = this.sanitizeInput(this.loginForm.value.email);
+    const password = this.sanitizeInput(this.loginForm.value.password);
 
-    this.authService.login(this.loginForm.value).subscribe({
+    this.authService.login({ email, password }).subscribe({
       next: (response) => {
         this.loading = false;
 
@@ -80,5 +88,9 @@ export class LoginComponent implements OnInit {
         this.error = err.message || 'Login failed. Please try again.';
       },
     });
+  }
+
+  toggleShowPassword(): void {
+    this.showPassword = !this.showPassword;
   }
 }
