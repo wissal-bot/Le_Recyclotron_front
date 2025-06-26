@@ -167,6 +167,7 @@ input[type="checkbox"] {
 
 .password-wrapper input {
   flex: 1;
+  padding-right: 40px; /* Ensure input doesn't cover the button */
 }
 
 .eye-btn {
@@ -182,6 +183,7 @@ input[type="checkbox"] {
   height: 100%;
   display: flex;
   align-items: center;
+  z-index: 2; /* Ensure button is above input */
 }
 
 .eye-btn:active {

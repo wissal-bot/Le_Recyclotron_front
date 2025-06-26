@@ -110,3 +110,35 @@ input:focus {
   margin-bottom: 25px; /* Increased from 20px */
   font-size: 1rem; /* Increased from 0.9rem */
 }
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  flex: 1;
+  /* Ensure input doesn't cover the button */
+  padding-right: 40px;
+}
+
+.eye-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  padding: 0 6px;
+  font-size: 1.2rem;
+  color: #888;
+  outline: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  z-index: 2; /* Ensure button is above input */
+}
+
+.eye-btn:active {
+  color: #388e3c;
+}

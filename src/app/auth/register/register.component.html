@@ -82,14 +82,59 @@
 
         <div class="form-group">
           <label for="password">Mot de passe</label>
-          <input
-            type="password"
-            id="password"
-            formControlName="password"
-            placeholder="Choisissez un mot de passe"
-            autocomplete="new-password"
-          />
-
+          <div class="password-wrapper">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              formControlName="password"
+              placeholder="Choisissez un mot de passe"
+              autocomplete="new-password"
+            />
+            <button
+              type="button"
+              class="eye-btn"
+              (click)="toggleShowPassword()"
+              [attr.aria-label]="
+                showPassword
+                  ? 'Masquer le mot de passe'
+                  : 'Afficher le mot de passe'
+              "
+              tabindex="-1"
+            >
+              <ng-container *ngIf="showPassword; else eyeClosed1">
+                <!-- Eye Open SVG -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#388e3c"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <ellipse cx="12" cy="12" rx="8" ry="5"></ellipse>
+                  <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+              </ng-container>
+              <ng-template #eyeClosed1>
+                <!-- Eye Closed SVG -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#888"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <ellipse cx="12" cy="12" rx="8" ry="5"></ellipse>
+                  <line x1="4" y1="19" x2="20" y2="5"></line>
+                </svg>
+              </ng-template>
+            </button>
+          </div>
           <div
             class="error-message"
             *ngIf="
@@ -108,14 +153,59 @@
 
         <div class="form-group">
           <label for="confirmPassword">Confirmez le mot de passe</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            formControlName="confirmPassword"
-            placeholder="Confirmez votre mot de passe"
-            autocomplete="new-password"
-          />
-
+          <div class="password-wrapper">
+            <input
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              placeholder="Confirmez votre mot de passe"
+              autocomplete="new-password"
+            />
+            <button
+              type="button"
+              class="eye-btn"
+              (click)="toggleShowConfirmPassword()"
+              [attr.aria-label]="
+                showConfirmPassword
+                  ? 'Masquer le mot de passe'
+                  : 'Afficher le mot de passe'
+              "
+              tabindex="-1"
+            >
+              <ng-container *ngIf="showConfirmPassword; else eyeClosed2">
+                <!-- Eye Open SVG -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#388e3c"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <ellipse cx="12" cy="12" rx="8" ry="5"></ellipse>
+                  <circle cx="12" cy="12" r="2"></circle>
+                </svg>
+              </ng-container>
+              <ng-template #eyeClosed2>
+                <!-- Eye Closed SVG -->
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#888"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <ellipse cx="12" cy="12" rx="8" ry="5"></ellipse>
+                  <line x1="4" y1="19" x2="20" y2="5"></line>
+                </svg>
+              </ng-template>
+            </button>
+          </div>
           <div
             class="error-message"
             *ngIf="

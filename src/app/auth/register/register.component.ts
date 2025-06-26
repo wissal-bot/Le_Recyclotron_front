@@ -23,6 +23,9 @@ export class RegisterComponent {
   error: string | null = null;
   loading = false;
 
+  showPassword = false;
+  showConfirmPassword = false;
+
   constructor(
     private fb: FormBuilder,
     private authService: Api_authService,
@@ -97,5 +100,13 @@ export class RegisterComponent {
           this.error = err.message || 'Registration failed. Please try again.';
         },
       });
+  }
+
+  toggleShowPassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleShowConfirmPassword(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 }
